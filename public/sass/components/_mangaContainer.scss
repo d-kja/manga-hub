@@ -1,0 +1,57 @@
+@use "../abstract" as *;
+
+.manga-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    &__item {
+        position: relative;
+
+        height: 32.5rem;
+        width: 20.5rem;
+        border-radius: 8px;
+
+        background: rgba($color: $palleteBlack, $alpha: 0.2);
+        margin-bottom: 1.5rem;
+
+        &:not(:last-child) {
+            margin-right: 1.5rem;
+        }
+
+        &__image {
+            width: 19rem;
+            position: relative;
+            top: 0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+
+            filter: grayscale(100%) opacity(0.5);
+        }
+        &__btn {
+            font-weight: 200;
+            font-size: 1.6rem;
+            position: absolute;
+            left: 2rem;
+            bottom: 5rem;
+
+            background-color: $palleteGrey;
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+        }
+        &__date {
+            font-weight: 400;
+            float: right;
+            margin-top: -2.7rem;
+            margin-right: 1.5rem;
+        }
+        &__title {
+            font-weight: 600;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-top: 0.7rem;
+        }
+    }
+}

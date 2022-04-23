@@ -1,0 +1,9 @@
+@use "../abstract" as *;
+
+.btn {
+    text-decoration: none;
+    &:link,
+    &:visited {
+        color: $palleteWhite;
+    }
+}

@@ -3,7 +3,7 @@ import MangaContainer from "./MangaContainer";
 
 function MangaList() {
     return (
-        <div className="manga-list">
+        <div className="manga-list pagePadding--sideways">
             {/* Todo
                     Each has:
                         ID
@@ -11,6 +11,17 @@ function MangaList() {
                         IMG
                         KEY
             */}
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
+            <MangaContainer />
             <MangaContainer />
         </div>
     );
