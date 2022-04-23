@@ -173,6 +173,7 @@ body {
   justify-content: center;
 }
 .manga-list__item {
+  text-transform: uppercase;
   position: relative;
   height: 32.5rem;
   width: 20.5rem;
@@ -212,7 +213,7 @@ body {
   font-weight: 600;
   font-size: 1.6rem;
   text-align: center;
-  margin-top: 0.7rem;
+  margin-top: 1rem;
 }
 
 /*# sourceMappingURL=App.css.map */

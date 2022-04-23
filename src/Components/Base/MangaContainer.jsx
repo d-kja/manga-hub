@@ -10,7 +10,6 @@ function MangaContainer() {
         <div className="manga-list__item">
             <img
                 className="manga-list__item__image"
-                // TEMPORARY AS A PLACEHOLDER!!
                 src="https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png"
                 alt=""
             />

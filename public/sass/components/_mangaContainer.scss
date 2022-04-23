@@ -7,6 +7,7 @@
     margin: 0 auto;
     justify-content: center;
     &__item {
+        text-transform: uppercase;
         position: relative;
 
         height: 32.5rem;
@@ -51,7 +52,7 @@
             font-weight: 600;
             font-size: 1.6rem;
             text-align: center;
-            margin-top: 0.7rem;
+            margin-top: 1rem;
         }
     }
 }
