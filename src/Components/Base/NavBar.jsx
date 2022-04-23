@@ -33,8 +33,8 @@ function NavBar() {
     };
 
     return (
-        <>
-            <div className="navbar">
+        <div className="nav-container">
+            <div className="navbar mw--165">
                 <ClickAwayListener onClickAway={handleClickAway}>
                     <div className="navbar__search-bar">
                         <Box sx={{ position: "relative" }}>
@@ -105,7 +105,7 @@ function NavBar() {
                     </Box>
                 </ClickAwayListener>
             </div>
-        </>
+        </div>
     );
 }
 

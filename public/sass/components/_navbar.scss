@@ -1,7 +1,14 @@
 @use "../abstract" as *;
 
-.navbar {
+.nav-container {
     background-color: $palleteBlack;
+    position: relative;
+
+    width: 100%;
+}
+
+.navbar {
+    margin: 0 auto;
     padding: 0 2.5rem;
     height: 6rem;
 
@@ -12,21 +19,22 @@
     justify-content: space-between;
     align-items: center;
 
-    position: relative;
-
     &__brand {
         color: $palleteRed;
     }
     &__menu {
         z-index: 100;
+
         &:hover {
             color: $palleteRed;
         }
         &--container {
+            z-index: 100;
+
             display: inline-block;
             padding: 50px 35px;
             height: 100vh;
-            width: 35vw;
+            width: 35rem;
 
             position: absolute;
             top: 0;
@@ -38,7 +46,7 @@
             & :visited,
             & :link {
                 display: inline-block;
-                width: 65%;
+                width: 5rem;
                 font-size: 1.6rem;
                 color: $palleteWhite;
                 text-decoration: none;

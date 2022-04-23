@@ -57,13 +57,29 @@ body {
 .pagePadding--sideways {
   padding: 0 2.5rem;
 }
+.pagePadding--both--big {
+  padding: 3rem;
+}
+.pagePadding--both--normal {
+  padding: 2.5rem;
+}
 
 .overflow-off {
   overflow: hidden;
 }
 
-.navbar {
+.mw--165 {
+  max-width: 165rem;
+}
+
+.nav-container {
   background-color: #171717;
+  position: relative;
+  width: 100%;
+}
+
+.navbar {
+  margin: 0 auto;
   padding: 0 2.5rem;
   height: 6rem;
   line-height: 1;
@@ -71,7 +87,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 .navbar__brand {
   color: #da0037;
@@ -83,10 +98,11 @@ body {
   color: #da0037;
 }
 .navbar__menu--container {
+  z-index: 100;
   display: inline-block;
   padding: 50px 35px;
   height: 100vh;
-  width: 35vw;
+  width: 35rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -96,7 +112,7 @@ body {
 }
 .navbar__menu--container :visited, .navbar__menu--container :link {
   display: inline-block;
-  width: 65%;
+  width: 5rem;
   font-size: 1.6rem;
   color: #ededed;
   text-decoration: none;

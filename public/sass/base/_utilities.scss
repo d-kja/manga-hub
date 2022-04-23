@@ -2,7 +2,6 @@
 
 .block {
     background: rgba($palleteBlack, 0.3);
-
     height: 23rem;
 }
 
@@ -14,8 +13,23 @@
     &--sideways {
         padding: 0 2.5rem;
     }
+
+    &--both {
+        &--big {
+            padding: 3rem;
+        }
+        &--normal {
+            padding: 2.5rem;
+        }
+    }
 }
 
 .overflow-off {
     overflow: hidden;
+}
+
+.mw {
+    &--165 {
+        max-width: 165rem;
+    }
 }
