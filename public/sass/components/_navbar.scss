@@ -1,0 +1,22 @@
+@use "../abstract" as *;
+
+.navbar {
+    background-color: $palleteBlack;
+    padding: 0 2.5rem;
+    height: 6rem;
+
+    line-height: 1;
+    font-size: 1.6rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__brand {
+        color: $palleteRed;
+    }
+    &__menu {
+    }
+    &__search-bar {
+    }
+}

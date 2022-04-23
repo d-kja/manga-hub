@@ -1,3 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+*, *::after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
 
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  line-height: 1.7;
+  background-color: #444444;
+  color: #ededed;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #171717;
+  padding: 0 2.5rem;
+  height: 6rem;
+  line-height: 1;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar__brand {
+  color: #da0037;
+}
 
 /*# sourceMappingURL=App.css.map */
