@@ -10,6 +10,10 @@
     }
 }
 
+img {
+    max-width: 100%;
+}
+
 ul {
     list-style: none;
 }
@@ -25,7 +29,7 @@ body {
     font-weight: 800;
     line-height: 1.7;
 
-    background-color: $palleteGrey;
+    background-color: darken($palleteGrey, 12.6);
     color: $palleteWhite;
 
     box-sizing: border-box;

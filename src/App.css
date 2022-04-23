@@ -5,6 +5,10 @@
   box-sizing: inherit;
 }
 
+img {
+  max-width: 100%;
+}
+
 ul {
   list-style: none;
 }
@@ -17,7 +21,7 @@ body {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
   line-height: 1.7;
-  background-color: #444444;
+  background-color: #242424;
   color: #ededed;
   box-sizing: border-box;
 }
@@ -52,7 +56,7 @@ body {
 }
 .block {
   background: rgba(23, 23, 23, 0.3);
-  height: 23rem;
+  height: 35rem;
 }
 
 .pagePadding--upright {
@@ -149,13 +153,52 @@ body {
 }
 
 .slick-prev::before {
-  position: absolute;
-  right: -35px;
+  display: none;
 }
 
 .slick-next::before {
+  display: none;
+}
+
+.carousel {
+  box-shadow: 0 0 6px 4px rgba(23, 23, 23, 0.45);
+}
+.carousel__item {
+  margin: 2.5px 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+.carousel__item::after {
+  content: "";
+  display: block;
   position: absolute;
-  left: -35px;
+  height: 300%;
+  width: 750px;
+  left: -50px;
+  background-image: linear-gradient(to right bottom, #000, rgba(23, 23, 23, 0.75));
+  filter: blur(75px);
+}
+.carousel__item__img {
+  filter: grayscale(100%);
+}
+.carousel__item__text {
+  z-index: 100;
+}
+.carousel__item__text > div {
+  position: absolute;
+  width: 45rem;
+}
+.carousel__item__text h1 {
+  font-weight: 600;
+  font-size: 2.6rem;
+}
+.carousel__item__text p, .carousel__item__text span {
+  font-weight: 300;
+  font-size: 1.6rem;
 }
 
 .btn {
@@ -178,7 +221,7 @@ body {
   height: 32.5rem;
   width: 20.5rem;
   border-radius: 8px;
-  background: rgba(23, 23, 23, 0.2);
+  background: rgba(23, 23, 23, 0.3);
   margin-bottom: 1.5rem;
 }
 .manga-list__item:not(:last-child) {
@@ -191,7 +234,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 8px;
-  filter: grayscale(100%) opacity(0.5);
+  filter: grayscale(100%) opacity(0.7);
 }
 .manga-list__item__btn {
   font-weight: 200;

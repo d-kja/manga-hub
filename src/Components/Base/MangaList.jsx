@@ -3,7 +3,7 @@ import MangaContainer from "./MangaContainer";
 
 function MangaList() {
     return (
-        <div className="manga-list pagePadding--sideways">
+        <div className="manga-list pagePadding--sideways mw--165">
             {/* Todo
                     Each has:
                         ID

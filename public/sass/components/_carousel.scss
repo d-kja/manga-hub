@@ -1,12 +1,61 @@
+@use "../abstract" as *;
+
 .slick-prev {
     &::before {
-        position: absolute;
-        right: -35px;
+        display: none;
     }
 }
 .slick-next {
     &::before {
-        position: absolute;
-        left: -35px;
+        display: none;
+    }
+}
+
+.carousel {
+    box-shadow: 0 0 6px 4px rgba($color: $palleteBlack, $alpha: 0.45);
+    &__item {
+        margin: 2.5px 15px;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        position: relative;
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            height: 300%;
+            width: 750px;
+            left: -50px;
+
+            background-image: linear-gradient(
+                to right bottom,
+                #000,
+                rgba($palleteBlack, 0.75)
+            );
+
+            filter: blur(75px);
+        }
+        &__img {
+            filter: grayscale(100%);
+        }
+        &__text {
+            z-index: 100;
+            & > div {
+                position: absolute;
+                width: 45rem;
+            }
+            & h1 {
+                font-weight: 600;
+                font-size: 2.6rem;
+            }
+            & p,
+            & span {
+                font-weight: 300;
+                font-size: 1.6rem;
+            }
+        }
     }
 }
