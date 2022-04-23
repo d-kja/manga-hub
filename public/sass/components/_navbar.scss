@@ -68,13 +68,11 @@
             border-radius: 6px;
             height: 3rem;
 
-            border: none;
-            border-bottom: 1px solid rgba($palleteWhite, 0.25);
-            background: rgba($palleteGrey, 0.25);
+            border: 1px solid rgba($palleteWhite, 0.25);
+            background: transparent;
             color: $palleteWhite;
 
             transform-origin: left;
-            transform: translateX(-100%);
             animation: inputScale 0.35s ease-in both;
 
             padding: 1rem;

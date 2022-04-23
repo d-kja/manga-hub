@@ -127,12 +127,10 @@ body {
 .navbar__search-bar__input {
   border-radius: 6px;
   height: 3rem;
-  border: none;
-  border-bottom: 1px solid rgba(237, 237, 237, 0.25);
-  background: rgba(68, 68, 68, 0.25);
+  border: 1px solid rgba(237, 237, 237, 0.25);
+  background: transparent;
   color: #ededed;
   transform-origin: left;
-  transform: translateX(-100%);
   animation: inputScale 0.35s ease-in both;
   padding: 1rem;
 }
