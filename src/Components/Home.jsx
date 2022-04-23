@@ -1,6 +1,6 @@
 import React from "react";
-import NavBar from "./Base/NavBar";
 import Carousel from "./Base/Carousel";
+import MangaList from "./Base/MangaList";
 
 function Home() {
     return (
@@ -8,6 +8,8 @@ function Home() {
             <div className="pagePadding--upright overflow-off">
                 <Carousel />
             </div>
+
+            <MangaList />
         </div>
     );
 }
