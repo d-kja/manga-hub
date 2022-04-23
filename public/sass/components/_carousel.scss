@@ -1,0 +1,12 @@
+.slick-prev {
+    &::before {
+        position: absolute;
+        right: -35px;
+    }
+}
+.slick-next {
+    &::before {
+        position: absolute;
+        left: -35px;
+    }
+}

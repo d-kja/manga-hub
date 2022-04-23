@@ -1,0 +1,21 @@
+@use "../abstract" as *;
+
+.block {
+    background: rgba($palleteBlack, 0.3);
+
+    height: 23rem;
+}
+
+.pagePadding {
+    &--upright {
+        padding: 2.5rem 0;
+    }
+
+    &--sideways {
+        padding: 0 2.5rem;
+    }
+}
+
+.overflow-off {
+    overflow: hidden;
+}

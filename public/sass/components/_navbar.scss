@@ -12,11 +12,76 @@
     justify-content: space-between;
     align-items: center;
 
+    position: relative;
+
     &__brand {
         color: $palleteRed;
     }
     &__menu {
+        z-index: 100;
+        &:hover {
+            color: $palleteRed;
+        }
+        &--container {
+            display: inline-block;
+            padding: 50px 35px;
+            height: 100vh;
+            width: 35vw;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            background: rgba($palleteBlack, 0.45);
+
+            text-align: center;
+            & :visited,
+            & :link {
+                display: inline-block;
+                width: 65%;
+                font-size: 1.6rem;
+                color: $palleteWhite;
+                text-decoration: none;
+
+                border-bottom: 1px solid rgba($palleteWhite, 0.45);
+            }
+            & ul > li {
+                &:not(:last-child) {
+                    margin-bottom: 2rem;
+                }
+            }
+
+            animation: menu 0.65s ease-out both;
+        }
     }
     &__search-bar {
+        display: flex;
+        &__input {
+            border-radius: 6px;
+            height: 3rem;
+
+            border: none;
+            border-bottom: 1px solid rgba($palleteWhite, 0.25);
+            background: rgba($palleteGrey, 0.25);
+            color: $palleteWhite;
+
+            transform-origin: left;
+            transform: translateX(-100%);
+            animation: inputScale 0.35s ease-in both;
+
+            padding: 1rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &__label {
+            padding: 5px;
+
+            &:hover {
+                color: $palleteRed;
+            }
+        }
     }
 }

@@ -5,6 +5,10 @@
   box-sizing: inherit;
 }
 
+ul {
+  list-style: none;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -18,6 +22,46 @@ body {
   box-sizing: border-box;
 }
 
+@keyframes menu {
+  0% {
+    opacity: 0;
+    transform: translateX(-500%);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translateX(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes inputScale {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.block {
+  background: rgba(23, 23, 23, 0.3);
+  height: 23rem;
+}
+
+.pagePadding--upright {
+  padding: 2.5rem 0;
+}
+.pagePadding--sideways {
+  padding: 0 2.5rem;
+}
+
+.overflow-off {
+  overflow: hidden;
+}
+
 .navbar {
   background-color: #171717;
   padding: 0 2.5rem;
@@ -27,9 +71,73 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .navbar__brand {
   color: #da0037;
+}
+.navbar__menu {
+  z-index: 100;
+}
+.navbar__menu:hover {
+  color: #da0037;
+}
+.navbar__menu--container {
+  display: inline-block;
+  padding: 50px 35px;
+  height: 100vh;
+  width: 35vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(23, 23, 23, 0.45);
+  text-align: center;
+  animation: menu 0.65s ease-out both;
+}
+.navbar__menu--container :visited, .navbar__menu--container :link {
+  display: inline-block;
+  width: 65%;
+  font-size: 1.6rem;
+  color: #ededed;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(237, 237, 237, 0.45);
+}
+.navbar__menu--container ul > li:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.navbar__search-bar {
+  display: flex;
+}
+.navbar__search-bar__input {
+  border-radius: 6px;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid rgba(237, 237, 237, 0.25);
+  background: rgba(68, 68, 68, 0.25);
+  color: #ededed;
+  transform-origin: left;
+  transform: translateX(-100%);
+  animation: inputScale 0.35s ease-in both;
+  padding: 1rem;
+}
+.navbar__search-bar__input:focus {
+  outline: none;
+}
+.navbar__search-bar__label {
+  padding: 5px;
+}
+.navbar__search-bar__label:hover {
+  color: #da0037;
+}
+
+.slick-prev::before {
+  position: absolute;
+  right: -35px;
+}
+
+.slick-next::before {
+  position: absolute;
+  left: -35px;
 }
 
 /*# sourceMappingURL=App.css.map */

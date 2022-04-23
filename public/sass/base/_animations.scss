@@ -1,0 +1,26 @@
+@keyframes menu {
+    0% {
+        opacity: 0;
+        transform: translateX(-500%);
+    }
+    50% {
+        opacity: 0.35;
+        transform: translateX(-50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes inputScale {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
