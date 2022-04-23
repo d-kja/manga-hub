@@ -42,4 +42,4 @@
 ## Others
 
 -   [Figma Project](https://www.figma.com/file/Kcx9jFPDIu12fkrWYtahCf/TCC-Prototype?node-id=0%3A1)
--   [Color Palette](colorhunt.co/palette/171717444444da0037ededed)
+-   [Color Palette](https://colorhunt.co/palette/171717444444da0037ededed)
