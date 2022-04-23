@@ -34,10 +34,7 @@
 
 ## Some Ideas
 
-<!--
-    -   What I've learned through the development of this application:
-    -   What could've been changed or improved:
--->
+-   (...):
 
 ## Others
 

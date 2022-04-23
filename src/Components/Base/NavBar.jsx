@@ -39,7 +39,7 @@ function NavBar() {
                     <div className="navbar__search-bar">
                         <Box sx={{ position: "relative" }}>
                             <label
-                                className="navbar__search-bar__label"
+                                className="navbar__search-bar__label btn-click"
                                 onClick={handleClick}
                                 htmlFor="search-bar__input"
                             >
@@ -66,13 +66,16 @@ function NavBar() {
                         </Box>
                     </div>
                 </ClickAwayListener>
-                <Link to="/" className="navbar__brand">
+                <Link to="/" className="navbar__brand btn-click">
                     <FaReact size={25} />
                 </Link>
 
                 <ClickAwayListener onClickAway={handleMenuAway}>
                     <Box>
-                        <i className="navbar__menu" onClick={handleMenu}>
+                        <i
+                            className="navbar__menu btn-click"
+                            onClick={handleMenu}
+                        >
                             {menu ? (
                                 <IoCloseSharp size={25} />
                             ) : (

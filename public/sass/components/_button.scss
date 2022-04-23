@@ -6,4 +6,7 @@
     &:visited {
         color: $palleteWhite;
     }
+    &-click:hover {
+        cursor: pointer;
+    }
 }

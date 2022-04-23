@@ -207,6 +207,9 @@ body {
 .btn:link, .btn:visited {
   color: #ededed;
 }
+.btn-click:hover {
+  cursor: pointer;
+}
 
 .manga-list {
   display: flex;
