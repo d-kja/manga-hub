@@ -24,7 +24,7 @@
 
 -   (1350):
     <p align="center"> 
-      <img src="https://github.com/Nyyu/TCC/tree/main/preview/desktop-preview.jpg"> 
+      <img src="https://github.com/Nyyu/TCC/blob/main/preview/desktop-preview.png"> 
     </p>
 
 ### Tablet
