@@ -24,7 +24,7 @@
 
 -   (1350):
     <p align="center"> 
-      <img src="./preview/desktop-preview.jpg"> 
+      <img src="preview/desktop-preview.jpg"> 
     </p>
 
 ### Tablet
