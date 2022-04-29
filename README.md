@@ -53,3 +53,5 @@ Some screenshots below
 
 -   [Figma Project](https://www.figma.com/file/Kcx9jFPDIu12fkrWYtahCf/TCC-Prototype?node-id=0%3A1)
 -   [Color Palette](https://colorhunt.co/palette/171717444444da0037ededed)
+
+_Obs_: for now i'm using a few placeholders, I do not pretend to use them for comercial purpose

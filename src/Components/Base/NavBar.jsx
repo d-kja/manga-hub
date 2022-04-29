@@ -95,10 +95,10 @@ function NavBar() {
                                 <Link to="/">Home</Link>
                             </li>
                             <li>
-                                <Link to="/list">Bookmarks</Link>
+                                <Link to="/bookmarks">Bookmarks</Link>
                             </li>
                             <li>
-                                <Link to="/about">List</Link>
+                                <Link to="/list">List</Link>
                             </li>
                         </ul>
                     </div>

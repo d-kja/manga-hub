@@ -1,25 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { FiClock } from "react-icons/fi";
-
-function MangaContainer() {
-    const [chap, setChap] = useState(0);
-    const [postDate, setPostDate] = useState(`MM/DD/YYYY`);
+function MangaContainer({ img, name, id }) {
     return (
         <div className="manga-list__item">
-            <img
-                className="manga-list__item__image"
-                src="https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png"
-                alt=""
-            />
-            <Link className="manga-list__item__btn btn" to="/">
-                CH. {chap}
+            <Link to="/">
+                <div className="relative">
+                    <img className="manga-list__item__image" src={img} alt="" />
+                    <Link
+                        to={`/${name}/${id}`}
+                        className="btn absolute left-5 bottom-0 text-2xl font-light"
+                    >
+                        CH. 0
+                    </Link>
+                </div>
+                <p className="mt-7 manga-list__item__title">{name}</p>
             </Link>
-            <span className="manga-list__item__date">
-                {postDate} <FiClock />
-            </span>
-            <p className="manga-list__item__title">placeholder</p>
         </div>
     );
 }
