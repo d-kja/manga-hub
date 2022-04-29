@@ -14,30 +14,40 @@
 
 ## Summary
 
-...
+This application is based on the idea of distributing mangas for free, unfortunately it's only (CC) content :c
 
 ## Preview
 
-...
+Some screenshots below
 
 ### Desktop
 
--   (1350):
+-   `(1350):`
     <p align="center"> 
-      <img src="https://github.com/Nyyu/TCC/blob/main/preview/desktop-preview.png"> 
+      <img src="https://github.com/Nyyu/TCC/blob/main/preview/desktop-preview.png" alt='Desktop preview'> 
     </p>
 
 ### Tablet
 
--   (Res):
+-   `(1350):`
+<p align="center"> 
+  <img src="#" alt='Tablet preview'> 
+</p>
 
 ### Mobile
 
--   (Res):
+-   `(1350):`
+<p align="center"> 
+  <img src="#" alt='Mobile preview'> 
+</p>
 
 ## Some Ideas
 
--   (...):
+-   Sass:
+
+    I can't quite keep up with the amount of time that I have to make this using solely sass, my solution is either mix a framework such as tailwind or I can just use the framework it self
+
+-   For now imma use a json mock and later on switch to a proper backend (Node/MongoDB) or use a REST API
 
 ## Others
 
