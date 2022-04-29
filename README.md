@@ -29,7 +29,7 @@ Some screenshots below
 
 ### Tablet
 
--   `(1350):`
+-   `(950):`
 <p align="center"> 
   <img src="#" alt='Tablet preview'> 
 </p>

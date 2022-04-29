@@ -4,7 +4,7 @@ import MangaList from "./Base/MangaList";
 
 function Home() {
     return (
-        <div className="container">
+        <div className="">
             <div className="pagePadding--upright overflow-off">
                 <Carousel />
             </div>

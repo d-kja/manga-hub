@@ -1,27 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaSearch, FaReact } from "react-icons/fa";
-import { FiMenu } from "react-icons/fi";
-import { IoCloseSharp } from "react-icons/io5";
+
+// MUI Presets
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Box from "@mui/material/Box";
+
+// Icons
+import { FiMenu } from "react-icons/fi";
+import { IoCloseSharp } from "react-icons/io5";
+import { FaSearch, FaReact } from "react-icons/fa";
 
 // PLACE HOLDER
 function NavBar() {
     const [inputText, setInputText] = useState("");
     const [open, setOpen] = React.useState(false);
-    const [menu, setMenu] = useState(false);
 
     const handleInputText = (e) => {
         const { value } = e.target;
         setInputText(value);
-    };
-
-    const handleMenu = () => {
-        setMenu((prev) => !prev);
-    };
-    const handleMenuAway = () => {
-        setMenu(false);
     };
 
     const handleClick = () => {
@@ -50,8 +46,8 @@ function NavBar() {
                                     style={{
                                         display: "inline-block",
                                         position: "absolute",
-                                        marginTop: "-.3rem",
-                                        marginLeft: 10,
+                                        marginTop: "-2.40rem",
+                                        marginLeft: 30,
                                     }}
                                 >
                                     <input
@@ -70,43 +66,43 @@ function NavBar() {
                     <FaReact size={25} />
                 </Link>
 
-                <ClickAwayListener onClickAway={handleMenuAway}>
-                    <Box>
-                        <i
-                            className="navbar__menu btn-click"
-                            onClick={handleMenu}
+                <div className="dropdown-end">
+                    <div className="dropdown">
+                        <label
+                            tabIndex="0"
+                            className="btn btn-ghost btn-circle"
                         >
-                            {menu ? (
-                                <IoCloseSharp size={25} />
-                            ) : (
-                                <FiMenu size={25} />
-                            )}
-                        </i>
-
-                        {menu && (
-                            <Box>
-                                <div
-                                    className="navbar__menu--container"
-                                    style={{
-                                        display: menu ? "block" : "none",
-                                    }}
-                                >
-                                    <ul>
-                                        <li>
-                                            <Link to={() => {}}>Home</Link>
-                                        </li>
-                                        <li>
-                                            <Link to={() => {}}>List</Link>
-                                        </li>
-                                        <li>
-                                            <Link to={() => {}}>About</Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </Box>
-                        )}
-                    </Box>
-                </ClickAwayListener>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-15 w-15"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h7"
+                                />
+                            </svg>
+                        </label>
+                        <ul
+                            tabIndex="0"
+                            className="menu dropdown-content mt-3 p-2 shadow bg-neutral-focus rounded-box w-60"
+                        >
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/list">Bookmarks</Link>
+                            </li>
+                            <li>
+                                <Link to="/about">List</Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     );

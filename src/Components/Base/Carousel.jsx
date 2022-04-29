@@ -14,7 +14,6 @@ export default class CenterMode extends Component {
             autoplay: true,
             autoplaySpeed: 6000,
             pauseOnHover: true,
-            dots: true,
         };
         return (
             <div
@@ -24,7 +23,13 @@ export default class CenterMode extends Component {
                 }}
                 className="carousel"
             >
-                <Slider {...settings}>
+                <Slider
+                    {...settings}
+                    style={{
+                        // Temp fix for override issue w tailwind
+                        width: "100%",
+                    }}
+                >
                     <div className="block">
                         <div className="carousel__item" style={{}}>
                             <div className="carousel__item__text">
