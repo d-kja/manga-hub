@@ -1,4 +1,4 @@
-# MY WEB APP
+# Manga App
 
 ## Table
 
@@ -27,9 +27,13 @@ To run the current version you need to open your CLI and type:
   npm run jserver
 ```
 
+JSON Backend running on port 5000
+
 ## Preview
 
-Some screenshots below
+- [Live](https://ny-manga-app.vercel.app)
+
+*Obs, it's not gonna run cus I need to set up a branch using a JSON file instead of using an JSON Backend*
 
 ### Desktop
 
