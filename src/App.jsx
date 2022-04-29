@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./Components/Base/NavBar";
 import Home from "./Components/Home";
 import NotFound from "./Components/NotFound";
+import Manga from "./Components/Context/Images/Manga/MangaPages/Manga";
 
 // Context
 import { MangaProvider } from "./Components/Context/Images/Manga/HomeList/MangaContext";
@@ -22,6 +23,8 @@ function App() {
                     <Route path="/bookmarks" element={<Home />} />
                     <Route path="/list" element={<Home />} />
                     <Route path="/*" element={<NotFound />} />
+
+                    <Route path="/:id" element={<Manga />} />
                 </Routes>
             </Router>
         </MangaProvider>

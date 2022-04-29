@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function MangaContainer({ img, name, id }) {
     return (
         <div className="manga-list__item">
-            <Link to="/">
+            <Link to={`/${id}`}>
                 <div className="relative">
                     <img className="manga-list__item__image" src={img} alt="" />
                     <Link
-                        to={`/${name}/${id}`}
+                        to={`/${id}`}
                         className="btn absolute left-5 bottom-0 text-2xl font-light"
                     >
+                        {/* 
+                        'TODO
+                            Last Chap per item'
+                        */}
                         CH. 0
                     </Link>
                 </div>

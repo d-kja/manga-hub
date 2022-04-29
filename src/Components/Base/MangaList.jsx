@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import MangaContainer from "./MangaContainer";
 
@@ -30,15 +31,19 @@ function MangaList() {
                         IMG
                         KEY
             */}
-            {mangas.map((element) => (
-                <MangaContainer
-                    key={element.id}
-                    id={element.id}
-                    name={element.name}
-                    rating={element.rating}
-                    img={element.img}
-                />
-            ))}
+            {loading ? (
+                <CircularProgress color="inherit" />
+            ) : (
+                mangas.map((element) => (
+                    <MangaContainer
+                        key={element.id}
+                        id={element.id}
+                        name={element.name}
+                        rating={element.rating}
+                        img={element.img}
+                    />
+                ))
+            )}
         </div>
     );
 }
