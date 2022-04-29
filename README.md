@@ -5,6 +5,7 @@
 - [MY WEB APP](#my-web-app)
   - [Table](#table)
   - [Summary](#summary)
+  - [Commands](#commands)
   - [Preview](#preview)
     - [Desktop](#desktop)
     - [Tablet](#tablet)
@@ -15,6 +16,16 @@
 ## Summary
 
 This application is based on the idea of distributing mangas for free, unfortunately it's only (CC) content :c
+
+## Commands
+
+To run the current version you need to open your CLI and type:
+
+```
+  npm start
+  npm run compile:sass
+  npm run jserver
+```
 
 ## Preview
 
@@ -45,9 +56,11 @@ Some screenshots below
 
 -   Sass:
 
-    I can't quite keep up with the amount of time that I have to make this using solely sass, my solution is either mix a framework such as tailwind or I can just use the framework it self
+I can't quite keep up with the amount of time that I have to make this using solely sass, my solution is either mix a framework such as tailwind or I can just use the framework it self
 
--   For now imma use a json mock and later on switch to a proper backend (Node/MongoDB) or use a REST API
+-   Other:
+
+For now imma use a json mock and later on switch to a proper backend (Node/MongoDB) or use a REST API
 
 ## Others
 
