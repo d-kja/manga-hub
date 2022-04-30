@@ -16,6 +16,7 @@ function CarouselItem() {
                     alt="Manga cover"
                     style={{
                         objectFit: "cover",
+                        margin: "0 auto",
                         height: 450,
                     }}
                 />

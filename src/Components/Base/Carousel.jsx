@@ -18,9 +18,17 @@ export default class CenterMode extends Component {
             lazyLoad: true,
             responsive: [
                 {
-                    breakpoint: 1200,
+                    breakpoint: 3000,
                     settings: {
-                        slidesToShow: 3,
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                    },
+                },
+                {
+                    breakpoint: 1500,
+                    settings: {
+                        slidesToShow: 1,
                         slidesToScroll: 1,
                         initialSlide: 1,
                     },
