@@ -33,3 +33,10 @@
         max-width: 165rem;
     }
 }
+
+.i-d {
+    &__center {
+        transform: translateX(-50%);
+        left: 50%;
+    }
+}

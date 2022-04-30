@@ -15,12 +15,12 @@ function Strip() {
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
             <div className="mangapage--table lg:mx-64 md:mx-64 mt-12">
-                <div className="block"></div>
-                <div className="block"></div>
-                <div className="block"></div>
-                <div className="block"></div>
-                <div className="block"></div>
-                <div className="block"></div>
+                <div className="block lg:mx-64"></div>
+                <div className="block lg:mx-64"></div>
+                <div className="block lg:mx-64"></div>
+                <div className="block lg:mx-64"></div>
+                <div className="block lg:mx-64"></div>
+                <div className="block lg:mx-64"></div>
             </div>
             <div className="block mt-20">Comment Session</div>
         </>

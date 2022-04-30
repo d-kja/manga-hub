@@ -20,7 +20,7 @@ export default class CenterMode extends Component {
                 {
                     breakpoint: 3000,
                     settings: {
-                        slidesToShow: 2,
+                        slidesToShow: 3,
                         slidesToScroll: 1,
                         initialSlide: 1,
                     },
@@ -35,14 +35,6 @@ export default class CenterMode extends Component {
                 },
                 {
                     breakpoint: 750,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        initialSlide: 1,
-                    },
-                },
-                {
-                    breakpoint: 500,
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
@@ -67,6 +59,7 @@ export default class CenterMode extends Component {
                     }}
                 >
                     {/* MAKE IT RESPOSIVE + COMPONENT! */}
+                    <CarouselItem />
                     <CarouselItem />
                     <CarouselItem />
                     <CarouselItem />

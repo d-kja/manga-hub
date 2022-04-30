@@ -22,40 +22,43 @@
         height: 100%;
         position: relative;
 
-        &::after {
-            content: "";
-            display: block;
-            position: absolute;
-            height: 300%;
-            width: 750px;
-            left: -50px;
-
-            background-image: linear-gradient(
-                to right bottom,
-                #000,
-                rgba($palleteBlack, 0.75)
-            );
-
-            filter: blur(75px);
-        }
         &__img {
-            filter: grayscale(100%);
-        }
-        &__text {
-            z-index: 100;
-            & > div {
+            position: relative;
+            &--after {
+                content: "";
+                display: block;
                 position: absolute;
-                width: 45rem;
+                height: 100%;
+                width: 75%;
+                right: 0;
+                top: 0;
+
+                // background: #000;
+                background-image: linear-gradient(
+                    to right bottom,
+                    rgba($palleteBlack, 0.9),
+                    rgba($palleteGrey, 1)
+                );
+                clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+
+                display: grid;
+                place-items: center;
             }
-            & h1 {
-                font-weight: 600;
-                font-size: 2.6rem;
-            }
-            & p,
-            & span {
-                font-weight: 300;
-                font-size: 1.6rem;
-            }
+
+            filter: grayscale(75%);
         }
+        // &__text {
+        //     & > div {
+        //     }
+        //     // & h1 {
+        //     //     font-weight: 600;
+        //     //     font-size: 2.3rem;
+        //     // }
+        //     // & p,
+        //     // & span {
+        //     //     font-weight: 300;
+        //     //     font-size: 1.6rem;
+        //     // }
+        // }
     }
 }

@@ -8,7 +8,7 @@ import MangaButton from "../Layout/MangaButton";
 function Manga() {
     const params = useParams();
     return (
-        <>
+        <div className="lg:max-w-screen-2xl relative i-d__center">
             <div className="mangapage--banner">
                 <div className="block my-12"></div>
             </div>
@@ -41,7 +41,7 @@ function Manga() {
                 <MangaButton />
                 <MangaButton />
             </div>
-        </>
+        </div>
     );
 }
 
