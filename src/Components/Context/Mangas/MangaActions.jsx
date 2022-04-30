@@ -4,3 +4,17 @@ export const fetchMangas = async () => {
 
     return mangaData;
 };
+
+export const fetchBanners = async (id) => {
+    const mbannerPromise = await fetch(`/mangas/${id}`);
+    const mData = await mbannerPromise.json();
+
+    return mData;
+};
+
+export const fetchPages = async (id) => {
+    const pagesPromise = await fetch(`/mangas/${id}`);
+    const pages = await pagesPromise.json();
+
+    return pages;
+};

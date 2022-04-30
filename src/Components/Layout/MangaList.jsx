@@ -24,13 +24,6 @@ function MangaList() {
     }, [dispatch]);
     return (
         <div className="manga-list pagePadding--sideways mw--165 w-full">
-            {/* Todo
-                    Each has:
-                        ID
-                        NAME
-                        IMG
-                        KEY
-            */}
             {loading ? (
                 <div
                     className="grid place-items-center"

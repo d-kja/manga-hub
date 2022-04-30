@@ -11,6 +11,18 @@ const mangaReducer = (state, action) => {
                 ...state,
                 loading: true,
             };
+        case "SET_BANNERS":
+            return {
+                ...state,
+                loading: false,
+                banners: action.payload,
+            };
+        case "SET_PAGES":
+            return {
+                ...state,
+                loading: false,
+                pages: action.payload,
+            };
 
         default:
             return state;
