@@ -5,9 +5,71 @@
             "img": "https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png",
             "name": "Omnisciente reader's view point",
             "Rating": 10
+        },
+        {
+            "id": 2,
+            "img": "https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png",
+            "name": "Another name",
+            "Rating": 7
         }
     ],
     "mangas": [
+        {
+            "id": 1,
+            "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",
+            "name": "ORV",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 2,
+            "img": "https://image.mostraveller.com/uploads/images/comics/64702/thumbnail.png",
+            "name": "Hell Mode",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 3,
+            "img": "https://image.mostraveller.com/uploads/images/comics/71996/thumbnail.png",
+            "name": "My Gift LVL 9999",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 4,
+            "img": "https://image.mostraveller.com/uploads/images/comics/70530/thumbnail.png",
+            "name": "Return of the 8th",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 1,
+            "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",
+            "name": "ORV",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 2,
+            "img": "https://image.mostraveller.com/uploads/images/comics/64702/thumbnail.png",
+            "name": "Hell Mode",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 3,
+            "img": "https://image.mostraveller.com/uploads/images/comics/71996/thumbnail.png",
+            "name": "My Gift LVL 9999",
+            "rating": 10,
+            "chap": []
+        },
+        {
+            "id": 4,
+            "img": "https://image.mostraveller.com/uploads/images/comics/70530/thumbnail.png",
+            "name": "Return of the 8th",
+            "rating": 10,
+            "chap": []
+        },
         {
             "id": 1,
             "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",

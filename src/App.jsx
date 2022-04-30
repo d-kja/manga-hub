@@ -6,12 +6,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
 import NavBar from "./Components/Base/NavBar";
-import Home from "./Components/Home";
-import NotFound from "./Components/NotFound";
-import Manga from "./Components/Context/Images/Manga/MangaPages/Manga";
+import Home from "./Components/Pages/Home";
+import NotFound from "./Components/Pages/NotFound";
+import Manga from "./Components/Pages/Manga";
 
 // Context
-import { MangaProvider } from "./Components/Context/Images/Manga/HomeList/MangaContext";
+import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
+import Footer from "./Components/Base/Footer";
 
 function App() {
     return (
@@ -20,12 +21,14 @@ function App() {
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/bookmarks" element={<Home />} />
-                    <Route path="/list" element={<Home />} />
+                    <Route exact path="/bookmarks" element={<Home />} />
+                    <Route exact path="/list" element={<Home />} />
+                    <Route exact path="/about" element={<Home />} />
                     <Route path="/*" element={<NotFound />} />
 
                     <Route path="/:id" element={<Manga />} />
                 </Routes>
+                <Footer />
             </Router>
         </MangaProvider>
     );

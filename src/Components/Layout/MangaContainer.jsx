@@ -4,12 +4,19 @@ import { Link } from "react-router-dom";
 function MangaContainer({ img, name, id }) {
     return (
         <div className="manga-list__item">
-            <Link to={`/${id}`}>
+            <div className="hover:text-red-700">
                 <div className="relative">
-                    <img className="manga-list__item__image" src={img} alt="" />
+                    <Link to={`/${id}`}>
+                        <img
+                            className="manga-list__item__image
+                            "
+                            src={img}
+                            alt=""
+                        />
+                    </Link>
                     <Link
                         to={`/${id}`}
-                        className="btn absolute left-5 bottom-0 text-2xl font-light"
+                        className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
                     >
                         {/* 
                         'TODO
@@ -18,8 +25,8 @@ function MangaContainer({ img, name, id }) {
                         CH. 0
                     </Link>
                 </div>
-                <p className="mt-7 manga-list__item__title">{name}</p>
-            </Link>
+                <p className="mt-5 manga-list__item__title">{name}</p>
+            </div>
         </div>
     );
 }

@@ -2,7 +2,7 @@
 
 ## Table
 
-- [MY WEB APP](#my-web-app)
+- [Manga App](#manga-app)
   - [Table](#table)
   - [Summary](#summary)
   - [Commands](#commands)
@@ -31,9 +31,9 @@ JSON Backend running on port 5000
 
 ## Preview
 
-- [Live](https://ny-manga-app.vercel.app)
+-   [Live](https://ny-manga-app.vercel.app)
 
-*Obs, it's not gonna run cus I need to set up a branch using a JSON file instead of using an JSON Backend*
+_Obs, it's not gonna run cus I need to set up a branch using a JSON file instead of using an JSON Backend_
 
 ### Desktop
 
@@ -71,4 +71,4 @@ For now imma use a json mock and later on switch to a proper backend (Node/Mongo
 -   [Figma Project](https://www.figma.com/file/Kcx9jFPDIu12fkrWYtahCf/TCC-Prototype?node-id=0%3A1)
 -   [Color Palette](https://colorhunt.co/palette/171717444444da0037ededed)
 
-_Obs_: for now i'm using a few placeholders, I do not intend to use them for comercial purpose
+_Obs_: for now i'm using a few placeholders, but lemme be clear! I do not intend to use them for comercial purpose, they r temporary and if you are the owner and don't like the fact that i'm using it I'll remove it.

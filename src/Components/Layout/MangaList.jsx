@@ -3,8 +3,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import MangaContainer from "./MangaContainer";
 
-import MangaContext from "../Context/Images/Manga/HomeList/MangaContext";
-import { fetchMangas } from "../Context/Images/Manga/HomeList/MangaActions";
+import MangaContext from "../Context/Mangas/MangaContext";
+import { fetchMangas } from "../Context/Mangas/MangaActions";
 
 function MangaList() {
     const { dispatch, loading, mangas } = useContext(MangaContext);
@@ -31,8 +31,15 @@ function MangaList() {
                         IMG
                         KEY
             */}
-            {loading ? (
-                <CircularProgress color="inherit" />
+            {true ? (
+                <div
+                    className="grid place-items-center"
+                    style={{
+                        minHeight: 300,
+                    }}
+                >
+                    <CircularProgress color="inherit" />
+                </div>
             ) : (
                 mangas.map((element) => (
                     <MangaContainer
