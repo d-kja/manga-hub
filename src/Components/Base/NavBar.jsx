@@ -6,8 +6,6 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Box from "@mui/material/Box";
 
 // Icons
-import { FiMenu } from "react-icons/fi";
-import { IoCloseSharp } from "react-icons/io5";
 import { FaSearch, FaReact } from "react-icons/fa";
 
 // PLACE HOLDER

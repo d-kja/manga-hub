@@ -10,7 +10,6 @@
     - [Desktop](#desktop)
     - [Tablet](#tablet)
     - [Mobile](#mobile)
-  - [Some Ideas](#some-ideas)
   - [Others](#others)
 
 ## Summary
@@ -55,16 +54,6 @@ _Obs, it's not gonna run cus I need to set up a branch using a JSON file instead
 <p align="center"> 
   <img src="#" alt='Mobile preview'> 
 </p>
-
-## Some Ideas
-
--   Sass:
-
-I can't quite keep up with the amount of time that I have to make this using solely sass, my solution is either mix a framework such as tailwind or I can just use the framework it self
-
--   Other:
-
-For now imma use a json mock and later on switch to a proper backend (Node/MongoDB) or use a REST API
 
 ## Others
 
