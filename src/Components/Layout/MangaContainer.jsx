@@ -6,7 +6,7 @@ function MangaContainer({ img, name, id }) {
         <div className="manga-list__item">
             <div className="hover:text-red-700">
                 <div className="relative">
-                    <Link to={`/${id}`}>
+                    <Link to={`/mangas/${id}`}>
                         <img
                             className="manga-list__item__image
                             "
@@ -15,7 +15,7 @@ function MangaContainer({ img, name, id }) {
                         />
                     </Link>
                     <Link
-                        to={`/${id}`}
+                        to={`/mangas/${id}`}
                         className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
                     >
                         {/* 

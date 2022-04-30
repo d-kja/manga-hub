@@ -26,7 +26,7 @@ function App() {
                     <Route exact path="/about" element={<Home />} />
                     <Route path="/*" element={<NotFound />} />
 
-                    <Route path="/:id" element={<Manga />} />
+                    <Route path="/mangas/:id" element={<Manga />} />
                 </Routes>
                 <Footer />
             </Router>
