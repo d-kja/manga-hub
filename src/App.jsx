@@ -9,6 +9,7 @@ import NavBar from "./Components/Base/NavBar";
 import Home from "./Components/Pages/Home";
 import NotFound from "./Components/Pages/NotFound";
 import Manga from "./Components/Pages/Manga";
+import Strip from "./Components/Pages/Strip";
 
 // Context
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
@@ -26,7 +27,12 @@ function App() {
                     <Route exact path="/about" element={<Home />} />
                     <Route path="/*" element={<NotFound />} />
 
-                    <Route path="/mangas/:id" element={<Manga />} />
+                    <Route exact path="/mangas/:id" element={<Manga />} />
+                    <Route
+                        exact
+                        path="/mangas/:id/chapter/:chapId"
+                        element={<Strip />}
+                    />
                 </Routes>
                 <Footer />
             </Router>

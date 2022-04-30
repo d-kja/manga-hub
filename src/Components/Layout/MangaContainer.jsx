@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function MangaContainer({ img, name, id }) {
+function MangaContainer({ img, name, id, chapId }) {
     return (
         <div className="manga-list__item">
             <div className="hover:text-red-700">
@@ -14,7 +14,7 @@ function MangaContainer({ img, name, id }) {
                         />
                     </Link>
                     <Link
-                        to={`/mangas/${id}`}
+                        to={`/mangas/${id}/chapter/${chapId}`}
                         className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
                     >
                         {/* 
