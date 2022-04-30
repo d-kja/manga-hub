@@ -31,7 +31,7 @@ function MangaList() {
                         IMG
                         KEY
             */}
-            {true ? (
+            {loading ? (
                 <div
                     className="grid place-items-center"
                     style={{

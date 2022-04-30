@@ -5,7 +5,7 @@ import { FaHome } from "react-icons/fa";
 function NotFound() {
     return (
         <div
-            className="hero absolute"
+            className="hero relative"
             style={{
                 top: "50%",
                 transform: "translateY(-50%)",
