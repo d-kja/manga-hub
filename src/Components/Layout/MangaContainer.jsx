@@ -8,8 +8,7 @@ function MangaContainer({ img, name, id }) {
                 <div className="relative">
                     <Link to={`/mangas/${id}`}>
                         <img
-                            className="manga-list__item__image
-                            "
+                            className="manga-list__item__image"
                             src={img}
                             alt=""
                         />

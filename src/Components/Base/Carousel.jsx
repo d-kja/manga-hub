@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Slider from "react-slick";
+import CarouselItem from "./CarouselItem";
 
 export default class CenterMode extends Component {
     render() {
@@ -14,6 +15,33 @@ export default class CenterMode extends Component {
             autoplay: true,
             autoplaySpeed: 6000,
             pauseOnHover: true,
+            lazyLoad: true,
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                    },
+                },
+                {
+                    breakpoint: 750,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                    },
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                    },
+                },
+            ],
         };
         return (
             <div
@@ -30,100 +58,10 @@ export default class CenterMode extends Component {
                         width: "100%",
                     }}
                 >
-                    <div className="block">
-                        <div className="carousel__item" style={{}}>
-                            <div className="carousel__item__text">
-                                <div>
-                                    <h1>1</h1>
-                                    <p>
-                                        Rating <span>Status</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <img
-                                className="carousel__item__img"
-                                src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
-                                alt="Manga cover"
-                            />
-                        </div>
-                    </div>
-                    <div className="block">
-                        <div className="carousel__item" style={{}}>
-                            <div className="carousel__item__text">
-                                <div>
-                                    <h1>2</h1>
-                                    <p>
-                                        Rating <span>Status</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <img
-                                className="carousel__item__img"
-                                src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
-                                alt="Manga cover"
-                            />
-                        </div>
-                    </div>
-                    <div className="block">
-                        <div className="carousel__item" style={{}}>
-                            <div className="carousel__item__text">
-                                <div>
-                                    <h1>3</h1>
-                                    <p>
-                                        Rating <span>Status</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <img
-                                className="carousel__item__img"
-                                src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
-                                alt="Manga cover"
-                            />
-                        </div>
-                    </div>
-                    <div className="block">
-                        <div className="carousel__item" style={{}}>
-                            <div className="carousel__item__text">
-                                <div>
-                                    <h1>4</h1>
-                                    <p>
-                                        Rating <span>Status</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <img
-                                className="carousel__item__img"
-                                src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
-                                alt="Manga cover"
-                            />
-                        </div>
-                    </div>
-                    <div className="block">
-                        <div className="carousel__item" style={{}}>
-                            <div className="carousel__item__text">
-                                <div>
-                                    <h1>5</h1>
-                                    <p>
-                                        Rating <span>Status</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <img
-                                className="carousel__item__img"
-                                src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
-                                alt="Manga cover"
-                            />
-                        </div>
-                    </div>
-                    {/* <div className="block">
-                        <h3>3</h3>
-                    </div>
-                    <div className="block">
-                        <h3>4</h3>
-                    </div>
-                    <div className="block">
-                        <h3>5</h3>
-                    </div> */}
+                    {/* MAKE IT RESPOSIVE + COMPONENT! */}
+                    <CarouselItem />
+                    <CarouselItem />
+                    <CarouselItem />
                 </Slider>
             </div>
         );

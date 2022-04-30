@@ -11,7 +11,11 @@ function Home() {
                 <Carousel />
             </div>
             <div className="divider mx-20 mb-7 font-light text-2xl">
-                UPDATES <LocalFireDepartmentIcon className="-ml-2" />
+                UPDATES{" "}
+                <LocalFireDepartmentIcon
+                    className="-ml-2 hover:text-red-700"
+                    sx={{ fontSize: 17 }}
+                />
             </div>
             <MangaList />
         </div>
