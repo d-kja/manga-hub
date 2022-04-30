@@ -36,7 +36,7 @@ _Obs, it's not gonna run cus I need to set up a branch using a JSON file instead
 
 ### Desktop
 
--   `(1350):`
+-   `(1600):`
     <p align="center"> 
       <img src="https://github.com/Nyyu/TCC/blob/main/preview/desktop-preview.png" alt='Desktop preview'> 
     </p>
@@ -45,14 +45,14 @@ _Obs, it's not gonna run cus I need to set up a branch using a JSON file instead
 
 -   `(950):`
 <p align="center"> 
-  <img src="#" alt='Tablet preview'> 
+  <img src="https://github.com/Nyyu/TCC/blob/main/preview/tablet-preview.png" alt='Tablet preview'> 
 </p>
 
 ### Mobile
 
--   `(1350):`
+-   `(600):`
 <p align="center"> 
-  <img src="#" alt='Mobile preview'> 
+  <img src="https://github.com/Nyyu/TCC/blob/main/preview/mobile-preview.png" alt='Mobile preview'> 
 </p>
 
 ## Others

@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 function CarouselItem() {
     return (
         <div className="block">
-            <div className="carousel__item" style={{}}>
+            <div className="carousel__item">
                 <div>
                     <img
                         className="carousel__item__img"
@@ -16,15 +18,17 @@ function CarouselItem() {
                     <div className="carousel__item__img--after">
                         <div className="carousel__item__text ml-10">
                             <div>
-                                <h1 className="text-lg md:text-2xl lg:text-3xl px-7">
-                                    Omniscient Reader's View Point
-                                </h1>
-                                <p className="text-lg md:text-xl lg:text-2xl font-normal">
-                                    Rating: 10{" "}
-                                    <span className="badge badge-info rounded-lg ml-2">
-                                        active
-                                    </span>
-                                </p>
+                                <Link to="/">
+                                    <h1 className="text-xl md:text-2xl lg:text-3xl px-10 pl-20 mb-2">
+                                        Omniscient Reader's View Point
+                                    </h1>
+                                    <p className="text-lg md:text-xl lg:text-2xl font-normal">
+                                        Rating: 10{" "}
+                                        <span className="badge badge-info rounded-lg ml-2">
+                                            active
+                                        </span>
+                                    </p>
+                                </Link>
                             </div>
                         </div>
                     </div>
