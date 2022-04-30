@@ -5,10 +5,9 @@ import { FaHome } from "react-icons/fa";
 function NotFound() {
     return (
         <div
-            className="hero relative"
+            className="hero mt-50"
             style={{
-                top: "50%",
-                transform: "translateY(-50%)",
+                minHeight: 750,
             }}
         >
             <div className="text-center hero-content">
