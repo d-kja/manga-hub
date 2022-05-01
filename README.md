@@ -21,9 +21,14 @@ This application is based on the idea of distributing mangas for free, unfortuna
 To run the current version you need to open your CLI and type:
 
 ```
-  npm start
+  // Starts the app
+  npm start 
+  
+  // Mock JSON Backend (temporary)
+  npm run jserver 
+  
+  // if my css isn't compiling, run this to compile Sass again
   npm run compile:sass
-  npm run jserver
 ```
 
 JSON Backend running on port 5000
