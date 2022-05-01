@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 import { motion } from "framer-motion";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Strip() {
+    const par = useParams();
+    const nav = useNavigate();
+
+    useEffect(() => {
+        if (par.chapId === "undefined") {
+            nav("/notfound");
+        }
+    }, []);
+
     return (
         <motion.div
             initial={{ x: 75, opacity: 0 }}
