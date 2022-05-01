@@ -30,7 +30,7 @@ To run the current version you need to open your CLI and type:
   npm run jserver 
 ```
   
-- if my css isn't compiling for some odd reason, use this command to compile Sass once again
+- if for some odd reason my css isn't compiling, use this command to compile Sass once again
 ```
   npm run compile:sass
 ```
