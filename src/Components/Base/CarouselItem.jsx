@@ -2,14 +2,27 @@ import { Link } from "react-router-dom";
 
 import StarIcon from "@mui/icons-material/Star";
 
-function CarouselItem() {
+function CarouselItem({ key, name, img, rating, status }) {
+    function checkStatus(stat) {
+        switch (stat) {
+            case "Ongoing":
+                return "success";
+            case "Droppped":
+                return "accent";
+            case "Hiatus":
+                return "primary";
+            default:
+                return "neutral";
+        }
+    }
+
     return (
         <div className="block">
             <div className="carousel__item">
                 <div>
                     <img
                         className="carousel__item__img"
-                        src="https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png"
+                        src={img}
                         alt="Manga cover"
                         style={{
                             objectFit: "cover",
@@ -24,15 +37,19 @@ function CarouselItem() {
                             <div>
                                 <Link to="/">
                                     <h1 className="text-xl md:text-2xl lg:text-4xl px-10 pl-20 mb-2">
-                                        Omniscient Reader's View Point
+                                        {name}
                                     </h1>
                                     <p className="text-lg md:text-xl lg:text-2xl font-normal">
                                         <span className="badge badge-ghost rounded-lg ml-2 text-lg">
-                                            {10}{" "}
+                                            {rating}{" "}
                                             <StarIcon className="ml-1 text-amber-400" />
                                         </span>
-                                        <span className="badge badge-success badge-outline rounded-lg ml-2">
-                                            Ongoing
+                                        <span
+                                            className={`badge badge-${checkStatus(
+                                                status
+                                            )} badge-outline rounded-lg ml-2`}
+                                        >
+                                            {status}
                                         </span>
                                     </p>
                                 </Link>

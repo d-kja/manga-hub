@@ -2,98 +2,121 @@
     "banners": [
         {
             "id": 1,
-            "img": "https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
             "name": "Omnisciente reader's view point",
-            "Rating": 10
+            "rating": 10,
+            "status": "Ongoing"
         },
         {
             "id": 2,
-            "img": "https://flamescans.org/wp-content/uploads/2021/01/sxthx_crap-1.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
             "name": "Another name",
-            "Rating": 7
+            "rating": 7,
+            "status": "Droppped"
+        },
+        {
+            "id": 3,
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
+            "name": "Another name",
+            "rating": 7,
+            "status": "Hiatus"
+        },
+        {
+            "id": 4,
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
+            "name": "Another name",
+            "rating": 2,
+            "status": "Ongoing"
+        },
+        {
+            "id": 5,
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
+            "name": "Another name",
+            "rating": 7,
+            "status": "Droppped"
         }
     ],
     "mangas": [
         {
             "id": 1,
-            "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "ORV",
             "rating": 10,
             "chap": []
         },
         {
             "id": 2,
-            "img": "https://image.mostraveller.com/uploads/images/comics/64702/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Hell Mode",
             "rating": 10,
             "chap": []
         },
         {
             "id": 3,
-            "img": "https://image.mostraveller.com/uploads/images/comics/71996/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "My Gift LVL 9999",
             "rating": 10,
             "chap": []
         },
         {
             "id": 4,
-            "img": "https://image.mostraveller.com/uploads/images/comics/70530/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Return of the 8th",
             "rating": 10,
             "chap": []
         },
         {
             "id": 5,
-            "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "ORV",
             "rating": 10,
             "chap": []
         },
         {
             "id": 6,
-            "img": "https://image.mostraveller.com/uploads/images/comics/64702/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Hell Mode",
             "rating": 10,
             "chap": []
         },
         {
             "id": 7,
-            "img": "https://image.mostraveller.com/uploads/images/comics/71996/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "My Gift LVL 9999",
             "rating": 10,
             "chap": []
         },
         {
             "id": 8,
-            "img": "https://image.mostraveller.com/uploads/images/comics/70530/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Return of the 8th",
             "rating": 10,
             "chap": []
         },
         {
             "id": 9,
-            "img": "https://image.mostraveller.com/uploads/images/comics/57915/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "ORV",
             "rating": 10,
             "chap": []
         },
         {
             "id": 10,
-            "img": "https://image.mostraveller.com/uploads/images/comics/64702/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Hell Mode",
             "rating": 10,
             "chap": []
         },
         {
             "id": 11,
-            "img": "https://image.mostraveller.com/uploads/images/comics/71996/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "My Gift LVL 9999",
             "rating": 10,
             "chap": []
         },
         {
             "id": 12,
-            "img": "https://image.mostraveller.com/uploads/images/comics/70530/thumbnail.png",
+            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
             "name": "Return of the 8th",
             "rating": 10,
             "chap": []

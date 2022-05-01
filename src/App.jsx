@@ -19,37 +19,44 @@ import NotFound from "./Components/Pages/NotFound";
 
 // Context
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
+import { BannerProvider } from "./Components/Context/Banners/BannerContext";
 
 import { AnimatePresence } from "framer-motion";
 
 function App() {
     return (
-        <MangaProvider>
-            <Router>
-                <NavBar />
-                <AnimatePresence>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route
-                            exact
-                            path="/bookmarks"
-                            element={<Bookmarks />}
-                        />
-                        <Route exact path="/list" element={<MangaList />} />
-                        <Route exact path="/about" element={<About />} />
-                        <Route path="/*" element={<NotFound />} />
+        <BannerProvider>
+            <MangaProvider>
+                <Router>
+                    <NavBar />
+                    <AnimatePresence>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route
+                                exact
+                                path="/bookmarks"
+                                element={<Bookmarks />}
+                            />
+                            <Route exact path="/list" element={<MangaList />} />
+                            <Route exact path="/about" element={<About />} />
+                            <Route path="/*" element={<NotFound />} />
 
-                        <Route exact path="/mangas/:id" element={<Manga />} />
-                        <Route
-                            exact
-                            path="/mangas/:id/chapter/:chapId"
-                            element={<Strip />}
-                        />
-                    </Routes>
-                </AnimatePresence>
-                <Footer />
-            </Router>
-        </MangaProvider>
+                            <Route
+                                exact
+                                path="/mangas/:id"
+                                element={<Manga />}
+                            />
+                            <Route
+                                exact
+                                path="/mangas/:id/chapter/:chapId"
+                                element={<Strip />}
+                            />
+                        </Routes>
+                    </AnimatePresence>
+                    <Footer />
+                </Router>
+            </MangaProvider>
+        </BannerProvider>
     );
 }
 
