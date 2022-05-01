@@ -189,7 +189,7 @@ body {
   width: 75%;
   right: 0;
   top: 0;
-  background-image: linear-gradient(to right bottom, rgba(23, 23, 23, 0.9), #444444);
+  background-image: linear-gradient(to right bottom, rgba(23, 23, 23, 0.95), rgba(68, 68, 68, 0.25));
   clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
   display: grid;
   place-items: center;
@@ -231,7 +231,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 8px;
-  filter: grayscale(100%) opacity(0.7);
+  filter: grayscale(75%) opacity(0.7);
 }
 .manga-list__item__btn {
   font-weight: 200;

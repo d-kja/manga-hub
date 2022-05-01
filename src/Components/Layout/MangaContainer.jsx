@@ -1,9 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { motion } from "framer-motion";
+
 function MangaContainer({ img, name, id, chapId }) {
     return (
-        <div className="manga-list__item">
+        <motion.li
+            className="manga-list__item"
+            variants={{
+                hidden: { opacity: 0, x: 75 },
+                show: { opacity: 1, x: 0 },
+            }}
+            whileHover={{
+                scale: 1.05,
+            }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+                delay: 0.2,
+            }}
+        >
             <div className="hover:text-red-700">
                 <div className="relative">
                     <Link to={`/mangas/${id}`}>
@@ -26,7 +43,7 @@ function MangaContainer({ img, name, id, chapId }) {
                 </div>
                 <p className="mt-5 manga-list__item__title">{name}</p>
             </div>
-        </div>
+        </motion.li>
     );
 }
 

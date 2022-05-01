@@ -58,7 +58,6 @@ export default class CenterMode extends Component {
                         width: "100%",
                     }}
                 >
-                    {/* MAKE IT RESPOSIVE + COMPONENT! */}
                     <CarouselItem />
                     <CarouselItem />
                     <CarouselItem />
@@ -68,5 +67,3 @@ export default class CenterMode extends Component {
         );
     }
 }
-
-// Package: https://www.npmjs.com/package/react-slick

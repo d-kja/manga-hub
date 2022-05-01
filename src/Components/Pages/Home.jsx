@@ -4,9 +4,19 @@ import MangaList from "../Layout/MangaList";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
+import { motion } from "framer-motion";
+
 function Home() {
     return (
-        <div className="">
+        <motion.div
+            initial={{ x: 75, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+            }}
+        >
             <div className="pagePadding--upright overflow-off">
                 <Carousel />
             </div>
@@ -18,7 +28,7 @@ function Home() {
                 />
             </div>
             <MangaList />
-        </div>
+        </motion.div>
     );
 }
 

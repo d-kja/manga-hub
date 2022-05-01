@@ -6,6 +6,8 @@ import MangaContainer from "./MangaContainer";
 import MangaContext from "../Context/Mangas/MangaContext";
 import { fetchMangas } from "../Context/Mangas/MangaActions";
 
+import { motion } from "framer-motion";
+
 function MangaList() {
     const { dispatch, loading, mangas } = useContext(MangaContext);
 
@@ -22,8 +24,22 @@ function MangaList() {
 
         getMangas();
     }, [dispatch]);
+
     return (
-        <div className="manga-list pagePadding--sideways mw--165 w-full">
+        <motion.ul
+            className="manga-list pagePadding--sideways mw--165 w-full"
+            variants={{
+                hidden: { opacity: 0 },
+                show: {
+                    opacity: 1,
+                    transition: {
+                        delay: 0.2,
+                    },
+                },
+            }}
+            initial="hidden"
+            animate="show"
+        >
             {loading ? (
                 <div
                     className="grid place-items-center"
@@ -44,7 +60,7 @@ function MangaList() {
                     />
                 ))
             )}
-        </div>
+        </motion.ul>
     );
 }
 

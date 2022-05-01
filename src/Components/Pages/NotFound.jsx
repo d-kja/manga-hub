@@ -2,9 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 
+import { motion } from "framer-motion";
+
 function NotFound() {
     return (
-        <div
+        <motion.div
+            initial={{ x: 75, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+            }}
             className="hero mt-50"
             style={{
                 minHeight: 750,
@@ -18,7 +27,7 @@ function NotFound() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

@@ -15,25 +15,29 @@ import Strip from "./Components/Pages/Strip";
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
 import Footer from "./Components/Base/Footer";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 function App() {
     return (
         <MangaProvider>
             <Router>
                 <NavBar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route exact path="/bookmarks" element={<Home />} />
-                    <Route exact path="/list" element={<Home />} />
-                    <Route exact path="/about" element={<Home />} />
-                    <Route path="/*" element={<NotFound />} />
+                <AnimatePresence>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route exact path="/bookmarks" element={<Home />} />
+                        <Route exact path="/list" element={<Home />} />
+                        <Route exact path="/about" element={<Home />} />
+                        <Route path="/*" element={<NotFound />} />
 
-                    <Route exact path="/mangas/:id" element={<Manga />} />
-                    <Route
-                        exact
-                        path="/mangas/:id/chapter/:chapId"
-                        element={<Strip />}
-                    />
-                </Routes>
+                        <Route exact path="/mangas/:id" element={<Manga />} />
+                        <Route
+                            exact
+                            path="/mangas/:id/chapter/:chapId"
+                            element={<Strip />}
+                        />
+                    </Routes>
+                </AnimatePresence>
                 <Footer />
             </Router>
         </MangaProvider>

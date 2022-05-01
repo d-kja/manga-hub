@@ -5,10 +5,23 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MangaButton from "../Layout/MangaButton";
 
+import { motion } from "framer-motion";
+
 function Manga() {
     const params = useParams();
     return (
-        <div className="lg:max-w-screen-2xl relative i-d__center">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+                delay: 0.3,
+            }}
+            className="lg:max-w-screen-2xl relative i-d__center"
+        >
             <div className="mangapage--banner">
                 <div className="block my-12"></div>
             </div>
@@ -41,7 +54,7 @@ function Manga() {
                 <MangaButton />
                 <MangaButton />
             </div>
-        </div>
+        </motion.div>
     );
 }
 
