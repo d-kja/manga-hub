@@ -18,7 +18,6 @@ function MangaContainer({ img, name, id, chapId }) {
                 type: "spring",
                 stiffness: 100,
                 ease: "easeIn",
-                delay: 0.2,
             }}
         >
             <div className="hover:text-red-700">
