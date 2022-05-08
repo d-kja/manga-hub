@@ -1,16 +1,16 @@
 import React from "react";
-import Carousel from "../Base/Carousel";
-import MangaList from "../Layout/MangaList";
 
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import Carousel from "../Layout/Carousel/Carousel";
+import MangaList from "../Layout/Manga/MangaList";
 
 import { motion } from "framer-motion";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 
 function Home() {
     return (
         <motion.div
-            initial={{ x: 75, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            initial={{ y: 75, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{
                 type: "spring",
                 stiffness: 100,

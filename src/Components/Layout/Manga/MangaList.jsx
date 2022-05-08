@@ -1,12 +1,12 @@
 import React, { useEffect, useContext } from "react";
+
 import CircularProgress from "@mui/material/CircularProgress";
+import { motion } from "framer-motion";
 
 import MangaContainer from "./MangaContainer";
 
-import MangaContext from "../Context/Mangas/MangaContext";
-import { fetchMangas } from "../Context/Mangas/MangaActions";
-
-import { motion } from "framer-motion";
+import MangaContext from "../../Context/Mangas/MangaContext";
+import { fetchMangas } from "../../Context/Mangas/MangaActions";
 
 function MangaList() {
     const { dispatch, loading, mangas } = useContext(MangaContext);

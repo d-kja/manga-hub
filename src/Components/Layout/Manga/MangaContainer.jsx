@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { motion } from "framer-motion";
 
 function MangaContainer({ img, name, id, chapId }) {
@@ -8,8 +7,8 @@ function MangaContainer({ img, name, id, chapId }) {
         <motion.li
             className="manga-list__item"
             variants={{
-                hidden: { opacity: 0, x: 75 },
-                show: { opacity: 1, x: 0 },
+                hidden: { opacity: 0, y: 75 },
+                show: { opacity: 1, y: 0 },
             }}
             whileHover={{
                 scale: 1.05,

@@ -5,8 +5,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 function Footer() {
     return (
-        <div>
-            <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded mt-20">
+        <div className="shadow-lg shadow-neutral">
+            <footer className="footer footer-center p-10 bg-neutral text-base-content rounded mt-20">
                 <div className="grid grid-flow-col gap-4">
                     <Link className="link link-hover" to="/about">
                         About us

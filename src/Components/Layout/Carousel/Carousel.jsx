@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 
-import Slider from "react-slick";
-import CarouselItem from "./CarouselItem";
 import CircularProgress from "@mui/material/CircularProgress";
+import Slider from "react-slick";
 
-import BannerContext from "../Context/Banners/BannerContext";
-import { fetchBanner } from "../Context/Banners/BannerActions";
+import CarouselItem from "./CarouselItem";
+
+import BannerContext from "../../Context/Banners/BannerContext";
+import { fetchBanner } from "../../Context/Banners/BannerActions";
 
 function CenterMode() {
     const { banners, loading, dispatch } = useContext(BannerContext);

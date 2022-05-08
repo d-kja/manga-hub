@@ -14,12 +14,14 @@ function Strip() {
         if (par.chapId === "undefined") {
             nav("/notfound");
         }
+
+        // eslint-disable-next-line
     }, []);
 
     return (
         <motion.div
-            initial={{ x: 75, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            initial={{ y: 75, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{
                 type: "spring",
                 stiffness: 100,

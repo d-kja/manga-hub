@@ -1,18 +1,19 @@
 import React from "react";
+
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import MangaButton from "../Layout/MangaButton";
 
-import { motion } from "framer-motion";
+import MangaButton from "../Layout/Manga/MangaButton";
 
 function Manga() {
     const params = useParams();
     return (
         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ y: 75, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
                 type: "spring",
@@ -20,7 +21,7 @@ function Manga() {
                 ease: "easeIn",
                 delay: 0.3,
             }}
-            className="lg:max-w-screen-2xl relative i-d__center"
+            className="lg:max-w-screen-2xl relative "
         >
             <div className="mangapage--banner">
                 <div className="block my-12"></div>
