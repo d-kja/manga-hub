@@ -20,18 +20,17 @@ This application is based on the idea of distributing mangas for free, unfortuna
 
 To run the current version you need to open your CLI and type:
 
-```
-
- # Starts the app: npm start
- # Mock JSON Backend (temporary): npm run jserver
+-   Starts the app || # Mock JSON Backend (temporary):
 
 ```
+ npm start
+ npm run jserver
+```
+
+-   if for some odd reason my css isn't compiling, use this command to compile Sass once again:
 
 ```
- # if for some odd reason my css isn't compiling, use this command to compile Sass once again:
-
-  - npm run compile:sass
-
+ npm run compile:sass
 ```
 
 ---
