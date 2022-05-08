@@ -58,7 +58,7 @@ function App() {
                             />
                         </Routes>
                     </AnimatePresence>
-                    <div className="divider mx-20 my-14 font-light text-2xl" />
+                    {/* <div className="divider mx-20 my-14 font-light text-2xl" /> */}
                     <Footer />
                 </Router>
             </MangaProvider>

@@ -20,19 +20,18 @@ This application is based on the idea of distributing mangas for free, unfortuna
 
 To run the current version you need to open your CLI and type:
 
-- Starts the app
-```
-  npm start 
 ```
 
-- Mock JSON Backend (temporary) `running on port 5000`
+ # Starts the app: npm start
+ # Mock JSON Backend (temporary): npm run jserver
+
 ```
-  npm run jserver 
+
 ```
-  
-- if for some odd reason my css isn't compiling, use this command to compile Sass once again
-```
-  npm run compile:sass
+ # if for some odd reason my css isn't compiling, use this command to compile Sass once again:
+
+  - npm run compile:sass
+
 ```
 
 ---
@@ -68,5 +67,3 @@ _Obs, it's not gonna run cus I need to set up a branch using a JSON file instead
 
 -   [Figma Project](https://www.figma.com/file/Kcx9jFPDIu12fkrWYtahCf/TCC-Prototype?node-id=0%3A1)
 -   [Color Palette](https://colorhunt.co/palette/171717444444da0037ededed)
-
-_Obs_: for now i'm using a few placeholders, but lemme be clear! I do not intend to use them for comercial purpose, they r temporary and if you are the owner and don't like the fact that i'm using it I'll remove it.

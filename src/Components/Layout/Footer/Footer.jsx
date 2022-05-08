@@ -54,7 +54,10 @@ function Footer() {
                     </div>
                 </div>
                 <div>
-                    <p>Copyright © 2022 - All right reserved</p>
+                    <p>
+                        Copyright © {new Date().getFullYear()} - All right
+                        reserved
+                    </p>
                 </div>
             </footer>
         </div>
