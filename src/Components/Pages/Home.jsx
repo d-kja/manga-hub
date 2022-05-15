@@ -20,7 +20,7 @@ function Home() {
             <div className="pagePadding--upright overflow-off">
                 <Carousel />
             </div>
-            <div className="divider mx-20 mb-7 font-light text-2xl">
+            <div className="divider mx-20 mb-12 font-light text-2xl">
                 UPDATES{" "}
                 <LocalFireDepartmentIcon
                     className="-ml-2 hover:text-red-700"

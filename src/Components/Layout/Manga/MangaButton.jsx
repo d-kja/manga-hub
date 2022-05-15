@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function MangaButton({ id, chapId }) {
+function MangaButton({ id, chapId, title = "CHAPTER 00" }) {
     return (
         <Link
             to={`/mangas/${id}/chapter/${chapId}`}
@@ -16,7 +16,7 @@ function MangaButton({ id, chapId }) {
                 rounded-lg
                 "
         >
-            CHAPTER 01
+            {title}
         </Link>
     );
 }

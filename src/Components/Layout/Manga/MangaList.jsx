@@ -57,6 +57,7 @@ function MangaList() {
                         name={data.name}
                         rating={data.rating}
                         img={data.bannerSmall}
+                        chap={data.chapters}
                     />
                 ))
             )}

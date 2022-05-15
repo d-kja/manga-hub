@@ -1,17 +1,26 @@
 import { Link } from "react-router-dom";
 
 import StarIcon from "@mui/icons-material/Star";
+import { useRef } from "react";
 
 function CarouselItem({ key, name, img, rating, status }) {
+    const myStatus = useRef("");
     function checkStatus(stat) {
         switch (stat) {
-            case "Ongoing":
+            case 0:
+                myStatus.current = "Comming";
+                return "neutral";
+            case 1:
+                myStatus.current = "Ongoing";
                 return "success";
-            case "Droppped":
-                return "accent";
-            case "Hiatus":
+            case 2:
+                myStatus.current = "Hiatus";
+                return "info";
+            case 3:
+                myStatus.current = "Dropped";
                 return "primary";
             default:
+                myStatus.current = "?";
                 return "neutral";
         }
     }
@@ -49,7 +58,7 @@ function CarouselItem({ key, name, img, rating, status }) {
                                                 status
                                             )} badge-outline rounded-lg ml-2`}
                                         >
-                                            {status}
+                                            {myStatus.current}
                                         </span>
                                     </p>
                                 </Link>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-function MangaContainer({ img, name, id, chapId }) {
+function MangaContainer({ img, name, id, rating, chap }) {
     return (
         <motion.li
             className="manga-list__item overflow-hidden"
@@ -25,18 +25,18 @@ function MangaContainer({ img, name, id, chapId }) {
                         <img
                             className="manga-list__item__image"
                             src={img}
-                            alt=""
+                            alt="manga banner"
                         />
                     </Link>
                     <Link
-                        to={`/mangas/${id}/chapter/${chapId}`}
+                        to={`/mangas/${id}/chapter/0`}
                         className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
                     >
                         {/* 
                         'TODO
                             Last Chap per item'
                         */}
-                        CH. 0
+                        {chap[0].title}
                     </Link>
                 </div>
                 <p className="mt-5 manga-list__item__title">{name}</p>
