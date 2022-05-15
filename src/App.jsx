@@ -1,9 +1,11 @@
 // Compiled Scss
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // Imports
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { ToastContainer } from "react-toastify";
 
 // Components
 import NavBar from "./Components/Layout/Navbar/NavBar";
@@ -61,6 +63,7 @@ function App() {
                     {/* <div className="divider mx-20 my-14 font-light text-2xl" /> */}
                     <Footer />
                 </Router>
+                <ToastContainer />
             </MangaProvider>
         </BannerProvider>
     );

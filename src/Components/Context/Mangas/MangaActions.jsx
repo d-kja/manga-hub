@@ -1,4 +1,4 @@
-import { doc, getDocs, collection } from "firebase/firestore";
+import { doc, getDocs, getDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
 export const fetchMangas = async (query) => {
@@ -15,13 +15,6 @@ export const fetchMangas = async (query) => {
     });
 
     return mangasData;
-};
-
-export const fetchBanners = async (id) => {
-    //const mbannerPromise = await fetch(`/mangas/${id}`);
-    //const mData = await mbannerPromise.json();
-
-    return [];
 };
 
 export const fetchPages = async (id) => {
