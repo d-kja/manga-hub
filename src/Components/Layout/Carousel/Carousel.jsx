@@ -88,13 +88,16 @@ function CenterMode() {
                             width: "100%",
                         }}
                     >
-                        {banners.map((item) => (
+                        {banners.map(({ id, data }) => (
                             <CarouselItem
-                                key={item.id}
-                                name={item.name}
-                                img={item.img}
-                                rating={item.rating}
-                                status={item.status}
+                                key={id}
+                                name={data.name}
+                                img={data.banner}
+                                rating={(
+                                    data.rating.totalRating /
+                                    data.rating.totalUsers
+                                ).toFixed(1)}
+                                status={data.status}
                             />
                         ))}
                     </Slider>

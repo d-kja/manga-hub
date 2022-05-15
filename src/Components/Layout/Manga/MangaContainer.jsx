@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 function MangaContainer({ img, name, id, chapId }) {
     return (
         <motion.li
-            className="manga-list__item"
+            className="manga-list__item overflow-hidden"
             variants={{
                 hidden: { opacity: 0, y: 75 },
                 show: { opacity: 1, y: 0 },

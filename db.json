@@ -1,125 +1,21 @@
 {
-    "banners": [
-        {
-            "id": 1,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
-            "name": "Omnisciente reader's view point",
-            "rating": 10,
-            "status": "Ongoing"
-        },
-        {
-            "id": 2,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
-            "name": "Another name",
-            "rating": 7,
-            "status": "Droppped"
-        },
-        {
-            "id": 3,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
-            "name": "Another name",
-            "rating": 7,
-            "status": "Hiatus"
-        },
-        {
-            "id": 4,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
-            "name": "Another name",
-            "rating": 2,
-            "status": "Ongoing"
-        },
-        {
-            "id": 5,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
-            "name": "Another name",
-            "rating": 7,
-            "status": "Droppped"
-        }
-    ],
     "mangas": [
         {
-            "id": 1,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "ORV",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 2,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Hell Mode",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 3,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "My Gift LVL 9999",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 4,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Return of the 8th",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 5,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "ORV",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 6,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Hell Mode",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 7,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "My Gift LVL 9999",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 8,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Return of the 8th",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 9,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "ORV",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 10,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Hell Mode",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 11,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "My Gift LVL 9999",
-            "rating": 10,
-            "chap": []
-        },
-        {
-            "id": 12,
-            "img": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
-            "name": "Return of the 8th",
-            "rating": 10,
-            "chap": []
+            "id": "",
+            "name": "",
+            "banner": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
+            "bannerSmall": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
+            "chapters": [
+                {
+                    "title": "",
+                    "strip": []
+                }
+            ],
+            "rating": {
+                "totalRating": "",
+                "totalUsers": ""
+            },
+            "status": "0, 1, 2, 3"
         }
     ]
 }

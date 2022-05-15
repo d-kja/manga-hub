@@ -41,8 +41,8 @@ function SearchManga() {
                             </button>
                         </div>
                     </div>
-                    <select class="select select-bordered select-lg w-full max-w-xs">
-                        <option disabled selected>
+                    <select className="select select-bordered select-lg w-full max-w-xs">
+                        <option defaultValue value={null}>
                             Select Theme
                         </option>
                         <option>THEME 1</option>

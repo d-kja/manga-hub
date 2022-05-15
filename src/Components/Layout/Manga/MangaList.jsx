@@ -50,13 +50,13 @@ function MangaList() {
                     <CircularProgress color="inherit" />
                 </div>
             ) : (
-                mangas.map((element) => (
+                mangas.map(({ id, data }) => (
                     <MangaContainer
-                        key={element.id}
-                        id={element.id}
-                        name={element.name}
-                        rating={element.rating}
-                        img={element.img}
+                        key={id}
+                        id={id}
+                        name={data.name}
+                        rating={data.rating}
+                        img={data.bannerSmall}
                     />
                 ))
             )}
