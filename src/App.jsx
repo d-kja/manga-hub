@@ -29,39 +29,49 @@ function App() {
         <BannerProvider>
             <MangaProvider>
                 <Router>
-                    <NavBar />
-                    <AnimatePresence>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
+                    <div className="relative min-h-screen">
+                        <NavBar />
+                        <AnimatePresence>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
 
-                            <Route
-                                exact
-                                path="/bookmarks"
-                                element={<Bookmarks />}
-                            />
-                            <Route
-                                exact
-                                path="/search"
-                                element={<SearchManga />}
-                            />
-                            <Route exact path="/list" element={<MangaList />} />
-                            <Route exact path="/about" element={<About />} />
-                            <Route path="/*" element={<NotFound />} />
+                                <Route
+                                    exact
+                                    path="/bookmarks"
+                                    element={<Bookmarks />}
+                                />
+                                <Route
+                                    exact
+                                    path="/search"
+                                    element={<SearchManga />}
+                                />
+                                <Route
+                                    exact
+                                    path="/list"
+                                    element={<MangaList />}
+                                />
+                                <Route
+                                    exact
+                                    path="/about"
+                                    element={<About />}
+                                />
+                                <Route path="/*" element={<NotFound />} />
 
-                            <Route
-                                exact
-                                path="/mangas/:id"
-                                element={<Manga />}
-                            />
-                            <Route
-                                exact
-                                path="/mangas/:id/chapter/:chapId"
-                                element={<Strip />}
-                            />
-                        </Routes>
-                    </AnimatePresence>
-                    {/* <div className="divider mx-20 my-14 font-light text-2xl" /> */}
-                    <Footer />
+                                <Route
+                                    exact
+                                    path="/mangas/:id"
+                                    element={<Manga />}
+                                />
+                                <Route
+                                    exact
+                                    path="/mangas/:id/chapter/:chapId"
+                                    element={<Strip />}
+                                />
+                            </Routes>
+                        </AnimatePresence>
+                        <div className="divider mx-20 my-20 font-light text-2xl" />
+                        <Footer />
+                    </div>
                 </Router>
                 <ToastContainer />
             </MangaProvider>

@@ -11,7 +11,7 @@ function MangaContainer({ img, name, id, rating, chap }) {
                 show: { opacity: 1, y: 0 },
             }}
             whileHover={{
-                scale: 1.05,
+                scale: 1.025,
             }}
             transition={{
                 type: "spring",

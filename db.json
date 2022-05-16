@@ -15,7 +15,11 @@
                 "totalRating": "",
                 "totalUsers": ""
             },
-            "status": "0, 1, 2, 3"
+            "status": "0, 1, 2, 3",
+            "others": {
+                "synopsis": "",
+                "tags": []
+            }
         }
     ]
 }

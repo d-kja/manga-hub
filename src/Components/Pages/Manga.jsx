@@ -65,7 +65,7 @@ function Manga() {
             className="lg:max-w-screen-2xl relative "
         >
             <div className="mangapage--banner">
-                <div className="block my-12">
+                <div className="flex my-12">
                     <img
                         src={manga.data.banner}
                         alt="temp banner"
@@ -81,16 +81,21 @@ function Manga() {
                 </p>
                 <div>
                     <div className="mx-5 lg:mx-72 md:mx-72 mt-20 font-light text-2xl">
-                        <span className="font-bold">Synopsis: </span> Lorem
-                        ipsum dolor sit amet consectetur adipisicing elit. Earum
-                        deserunt tenetur rerum nesciunt doloremque sequi natus
-                        debitis consectetur commodi sunt, pariatur autem vel
-                        consequatur nostrum architecto labore eaque! Libero,
-                        aliquam.
+                        <span className="font-bold">Synopsis: </span>
+                        {manga.data.others.synopsis}
                     </div>
                     <div className="mx-5 lg:mx-72 md:mx-72 mt-7 font-light text-2xl">
-                        <span className="font-bold">Tags: </span> adventure,
-                        reincarnation, rpg, isekai...
+                        <span className="font-bold">Tags: </span>
+                        {manga.data.others.tags.map((item, idx) => {
+                            return (
+                                <div
+                                    className="badge badge-neutral ml-3 text-xl"
+                                    key={idx}
+                                >
+                                    {item}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -99,12 +104,14 @@ function Manga() {
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
             <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid grid-cols-2 gap-x-12 gap-y-7">
-                <MangaButton />
-                <MangaButton />
-                <MangaButton />
-                <MangaButton />
-                <MangaButton />
-                <MangaButton />
+                {manga.data.chapters.map((item, idx) => (
+                    <MangaButton
+                        id={params.id}
+                        key={idx}
+                        chapId={idx}
+                        title={item.title}
+                    />
+                ))}
             </div>
         </motion.div>
     );

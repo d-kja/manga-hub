@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function MangaButton({ id, chapId, title = "CHAPTER 00" }) {
+function MangaButton({ id, chapId, title = "LOADING..." }) {
     return (
         <Link
             to={`/mangas/${id}/chapter/${chapId}`}

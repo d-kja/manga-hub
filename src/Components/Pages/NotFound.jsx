@@ -14,9 +14,9 @@ function NotFound() {
                 stiffness: 100,
                 ease: "easeIn",
             }}
-            className="hero mt-50"
+            className="hero"
             style={{
-                minHeight: 750,
+                minHeight: 650,
             }}
         >
             <div className="text-center hero-content">
