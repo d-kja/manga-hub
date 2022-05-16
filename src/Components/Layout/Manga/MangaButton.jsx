@@ -5,14 +5,15 @@ function MangaButton({ id, chapId, title = "LOADING..." }) {
         <Link
             to={`/mangas/${id}/chapter/${chapId}`}
             className="
+                text-lg
                 btn 
-                btn-xs 
+                btn-lg
                 sm:btn-sm 
                 md:btn-md 
                 lg:btn-lg 
                 btn-block 
                 btn-ghost
-                py-7
+                
                 rounded-lg
                 "
         >

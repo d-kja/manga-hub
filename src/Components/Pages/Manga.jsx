@@ -1,46 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import MangaContext from "../Context/Mangas/MangaContext";
+import { fetchManga } from "../Context/Mangas/MangaActions";
+
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase.config";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-
-import MangaButton from "../Layout/Manga/MangaButton";
 import { CircularProgress } from "@mui/material";
 
+import MangaButton from "../Layout/Manga/MangaButton";
+
 function Manga() {
-    const [manga, setManga] = useState({
-        id: "",
-        data: {},
-    });
-    const [loading, setLoading] = useState(true);
     const params = useParams();
     const nav = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async (id) => {
-            const mangaRef = doc(db, "mangas", id);
-            const mangaSnap = await getDoc(mangaRef);
+    const { manga, loading, dispatch } = useContext(MangaContext);
 
-            if (mangaSnap.exists()) {
-                setManga({
-                    id: mangaSnap.id,
-                    data: mangaSnap.data(),
-                });
-            } else {
+    useEffect(() => {
+        dispatch({ type: "SET_LOADING" });
+        const fetchData = async (id) => {
+            const { id: mangaId, data: mangaData } = await fetchManga(id);
+            dispatch({
+                type: "SET_MANGA",
+                payload: mangaData,
+            });
+
+            if (mangaData === null) {
                 toast.error("Couldn't find item", {
                     theme: "dark",
                 });
                 nav("/notfound");
             }
-            setLoading(false);
         };
-
         fetchData(params.id);
-    }, [params.id, nav]);
+        // eslint-disable-next-line
+    }, []);
 
     return loading ? (
         <div
@@ -67,7 +63,7 @@ function Manga() {
             <div className="mangapage--banner">
                 <div className="flex my-12">
                     <img
-                        src={manga.data.banner}
+                        src={manga.banner}
                         alt="temp banner"
                         style={{
                             height: "100%",
@@ -76,17 +72,15 @@ function Manga() {
                 </div>
             </div>
             <div className="">
-                <p className="font-light text-4xl text-center">
-                    {manga.data.name}
-                </p>
+                <p className="font-light text-4xl text-center">{manga.name}</p>
                 <div>
                     <div className="mx-5 lg:mx-72 md:mx-72 mt-20 font-light text-2xl">
                         <span className="font-bold">Synopsis: </span>
-                        {manga.data.others.synopsis}
+                        {manga.others.synopsis}
                     </div>
                     <div className="mx-5 lg:mx-72 md:mx-72 mt-7 font-light text-2xl">
                         <span className="font-bold">Tags: </span>
-                        {manga.data.others.tags.map((item, idx) => {
+                        {manga.others.tags.map((item, idx) => {
                             return (
                                 <div
                                     className="badge badge-neutral ml-3 text-xl"
@@ -104,7 +98,7 @@ function Manga() {
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
             <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid grid-cols-2 gap-x-12 gap-y-7">
-                {manga.data.chapters.map((item, idx) => (
+                {manga.chapters.map((item, idx) => (
                     <MangaButton
                         id={params.id}
                         key={idx}

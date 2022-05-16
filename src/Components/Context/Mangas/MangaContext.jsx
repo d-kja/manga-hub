@@ -7,6 +7,22 @@ export function MangaProvider({ children }) {
     const initialState = {
         loading: false,
         mangas: [],
+        manga: {
+            name: "",
+            chapters: [],
+            banner: "",
+            bannerSmall: "",
+            others: {
+                synopsis: "",
+                tags: [],
+            },
+            rating: {
+                totalRating: null,
+                totalUsers: null,
+            },
+            status: null,
+        },
+        pages: [],
     };
 
     const [state, dispatch] = useReducer(mangaReducer, initialState);

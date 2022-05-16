@@ -69,7 +69,7 @@ function App() {
                                 />
                             </Routes>
                         </AnimatePresence>
-                        <div className="divider mx-20 my-20 font-light text-2xl" />
+                        <div className="mx-20 my-20 font-light text-2xl" />
                         <Footer />
                     </div>
                 </Router>

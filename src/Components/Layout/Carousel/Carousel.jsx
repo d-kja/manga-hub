@@ -60,7 +60,7 @@ function CenterMode() {
         };
 
         fetchBanners();
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>

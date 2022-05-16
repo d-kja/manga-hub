@@ -17,6 +17,22 @@ export const fetchMangas = async (query) => {
     return mangasData;
 };
 
+export const fetchManga = async (id) => {
+    const mangaRef = doc(db, "mangas", id);
+    const mangaSnap = await getDoc(mangaRef);
+
+    let mangaData = null;
+
+    if (mangaSnap.exists()) {
+        mangaData = {
+            id: mangaSnap.id,
+            data: mangaSnap.data(),
+        };
+    }
+
+    return mangaData;
+};
+
 export const fetchPages = async (id) => {
     //const pagesPromise = await fetch(`/mangas/${id}`);
     //const pages = await pagesPromise.json();

@@ -5,6 +5,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
+// import { fetchMangas } from "../Context/Mangas/MangaActions";
 
 function Strip() {
     const par = useParams();
@@ -13,6 +14,7 @@ function Strip() {
     useEffect(() => {
         if (par.chapId === "undefined") {
             nav("/notfound");
+        } else {
         }
 
         // eslint-disable-next-line
@@ -36,14 +38,9 @@ function Strip() {
             <div className="divider mx-5 lg:mx-64 md:mx-64 mt-20 font-light text-2xl">
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
-            <div className="mangapage--table lg:mx-64 md:mx-64 mt-12">
-                <div className="block lg:mx-64"></div>
-                <div className="block lg:mx-64"></div>
-                <div className="block lg:mx-64"></div>
-                <div className="block lg:mx-64"></div>
-                <div className="block lg:mx-64"></div>
-                <div className="block lg:mx-64"></div>
-            </div>
+            <div className="mangapage--table lg:mx-64 md:mx-64 mt-12"></div>
+
+            {/* TODO */}
             <div className="block mt-20">Comment Session</div>
         </motion.div>
     );
