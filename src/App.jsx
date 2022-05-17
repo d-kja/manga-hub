@@ -69,7 +69,7 @@ function App() {
                                 />
                             </Routes>
                         </AnimatePresence>
-                        <div className="inline-block mx-20 mb-52 font-light text-2xl" />
+                        <div className="inline-block mx-20 mb-56 font-light text-2xl" />
                         <Footer />
                     </div>
                 </Router>

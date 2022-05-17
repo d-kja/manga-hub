@@ -16,7 +16,7 @@ function NotFound() {
             }}
             className="hero"
             style={{
-                minHeight: 650,
+                minHeight: 670,
             }}
         >
             <div className="text-center hero-content">

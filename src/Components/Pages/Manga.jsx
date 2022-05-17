@@ -21,6 +21,7 @@ function Manga() {
     useEffect(() => {
         dispatch({ type: "SET_LOADING" });
         const fetchData = async (id) => {
+            // eslint-disable-next-line
             const { id: mangaId, data: mangaData } = await fetchManga(id);
             dispatch({
                 type: "SET_MANGA",
@@ -58,16 +59,18 @@ function Manga() {
                 ease: "easeIn",
                 delay: 0.3,
             }}
-            className="lg:max-w-screen-2xl relative "
+            className="lg:max-w-screen-2xl relative mx-auto"
         >
             <div className="mangapage--banner">
-                <div className="flex my-12">
+                <div className="flex my-12 mx-16">
                     <img
                         src={manga.banner}
                         alt="temp banner"
                         style={{
                             height: "100%",
+                            filter: `grayscale(${65}%)`,
                         }}
+                        className="rounded-3xl"
                     />
                 </div>
             </div>
