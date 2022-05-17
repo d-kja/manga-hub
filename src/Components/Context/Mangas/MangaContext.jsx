@@ -24,7 +24,6 @@ export function MangaProvider({ children }) {
         },
         pages: [],
     };
-
     const [state, dispatch] = useReducer(mangaReducer, initialState);
 
     return (
