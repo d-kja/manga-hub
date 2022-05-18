@@ -158,12 +158,7 @@ function NavBar() {
                 </div>
             </div>
 
-            <SearchBox
-                options={queryResult}
-                style={{
-                    zIndex: 100000,
-                }}
-            />
+            <SearchBox options={queryResult} />
         </>
     );
 }
