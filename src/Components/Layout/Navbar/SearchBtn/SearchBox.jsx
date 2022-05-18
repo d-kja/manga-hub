@@ -6,7 +6,8 @@ function SearchBox({ options }) {
     useEffect(() => {
         setItems(options);
         console.log(items);
-    }, [options, items]);
+        //eslint-disable-next-line
+    }, [options]);
 
     return (
         <ul
