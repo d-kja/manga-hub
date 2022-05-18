@@ -29,9 +29,10 @@ function NavBar() {
                 type: "QUERY_MANGA",
                 payload: searchBarQueryResults,
             });
-        } else {
-            resetSearchBar();
         }
+        // else {
+        //     resetSearchBar();
+        // }
     };
     const resetSearchBar = () => {
         dispatch({

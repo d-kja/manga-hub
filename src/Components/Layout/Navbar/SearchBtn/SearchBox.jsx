@@ -5,7 +5,7 @@ function SearchBox({ options }) {
     const [items, setItems] = useState([]);
     useEffect(() => {
         setItems(options);
-        console.log(items);
+        console.log(items, options);
         //eslint-disable-next-line
     }, [options]);
 
