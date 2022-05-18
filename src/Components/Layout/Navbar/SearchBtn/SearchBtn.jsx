@@ -25,8 +25,8 @@ function SearchBtn({
             return;
         }
         if (!open) {
-            // resetSearchBar();
-            // setSearchInput("");
+            resetSearchBar();
+            setSearchInput("");
         }
 
         setState({ ...state, [anchor]: open });
@@ -96,6 +96,7 @@ function SearchBtn({
                     anchor={"top"}
                     open={state["top"]}
                     onClose={toggleDrawer("top", false)}
+                    hideBackdrop={true}
                 >
                     {list("top")}
                 </Drawer>

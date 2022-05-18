@@ -24,15 +24,16 @@ function NavBar() {
     };
     const handleSearchBarChange = async (e, searchInput) => {
         if (e.target.value.length > 0) {
-            const searchBarQueryResults = await queryManga(searchInput);
-            dispatch({
-                type: "QUERY_MANGA",
-                payload: searchBarQueryResults,
-            });
+            setTimeout(async () => {
+                const searchBarQueryResults = await queryManga(searchInput);
+                dispatch({
+                    type: "QUERY_MANGA",
+                    payload: searchBarQueryResults,
+                });
+            }, 1500);
+        } else {
+            resetSearchBar();
         }
-        // else {
-        //     resetSearchBar();
-        // }
     };
     const resetSearchBar = () => {
         dispatch({

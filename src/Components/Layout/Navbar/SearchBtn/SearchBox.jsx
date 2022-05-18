@@ -18,23 +18,21 @@ function SearchBox({ options }) {
                 transform: `translateX(${-50}%)`,
             }}
         >
-            {items.map((item) => (
+            {options.map((item) => (
                 <li key={item.id}>
-                    <Link to="/">
-                        <div className="card card-side bg-base-100 shadow-xl">
-                            <img
-                                src={item.data.bannerSmall}
-                                className="max-h-40 mt-3 ml-3 rounded-lg"
-                                alt="card banner"
-                            />
-                            <div className="card-body my-auto">
-                                <h2 className="card-title">{item.data.name}</h2>
-                                <p className="w-72 whitespace-nowrap overflow-hidden text-ellipsis">
-                                    {item.data.others.synopsis}
-                                </p>
-                            </div>
+                    <div className="card card-side bg-base-100 shadow-xl">
+                        <img
+                            src={item.data.bannerSmall}
+                            className="max-h-40 mt-3 ml-3 rounded-lg"
+                            alt="card banner"
+                        />
+                        <div className="card-body my-auto">
+                            <h2 className="card-title">{item.data.name}</h2>
+                            <p className="w-72 whitespace-nowrap overflow-hidden text-ellipsis">
+                                {item.data.others.synopsis}
+                            </p>
                         </div>
-                    </Link>
+                    </div>
                 </li>
             ))}
         </ul>
