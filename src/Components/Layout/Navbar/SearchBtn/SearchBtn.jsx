@@ -25,8 +25,8 @@ function SearchBtn({
             return;
         }
         if (!open) {
-            resetSearchBar();
-            setSearchInput("");
+            // resetSearchBar();
+            // setSearchInput("");
         }
 
         setState({ ...state, [anchor]: open });
