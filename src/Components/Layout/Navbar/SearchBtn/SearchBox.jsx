@@ -18,7 +18,7 @@ function SearchBox({ options }) {
                 transform: `translateX(${-50}%)`,
             }}
         >
-            {items?.map((item) => (
+            {items.map((item) => (
                 <li key={item.id}>
                     <Link to="/">
                         <div className="card card-side bg-base-100 shadow-xl">
