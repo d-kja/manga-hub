@@ -1,14 +1,16 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import Avatar from "@mui/material/Avatar";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 export default function UserIcon() {
     return (
         <div className="top-16 text-right">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <Menu.Button className="inline-flex w-full justify-center rounded-md  bg-opacity-20 px-4 py-2 text-2xl font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        <Avatar alt="User icon" src="" />
+                    <Menu.Button className="inline-flex w-full justify-center rounded-md  bg-opacity-20 px-4 py-2 text-2xl font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 btn btn-ghost">
+                        {/* <Avatar alt="User icon" src="" /> */}
+                        <MoreVertIcon sx={{ fontSize: 20 }} />
                     </Menu.Button>
                 </div>
                 <Transition

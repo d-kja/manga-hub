@@ -53,9 +53,9 @@ function MangaList({ query }) {
                 <>
                     {query
                         ? mangas.map(({ id, data }) => {
-                              const rgx = new RegExp(query);
+                              const rgx = new RegExp(query.toLowerCase());
                               return (
-                                  data.name.match(rgx) && (
+                                  data.name.toLowerCase().match(rgx) && (
                                       <MangaContainer
                                           key={id}
                                           id={id}
