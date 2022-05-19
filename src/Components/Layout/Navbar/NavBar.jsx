@@ -1,45 +1,31 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import SearchContext from "../../Context/Search/SearchContext";
-import { queryManga } from "../../Context/Search/SearchActions";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import SearchBtn from "./SearchBtn/SearchBtn";
 import UserIcon from "./UserIcon";
-import SearchBox from "./SearchBtn/SearchBox";
 
 function NavBar() {
-    const { dispatch, queryResult } = useContext(SearchContext);
+    const { dispatch, queryResult, loading } = useContext(SearchContext);
+    const [data, setData] = useState([]);
+
+    const nav = useNavigate();
 
     const handleSearchBarSubmit = async (e, searchInput) => {
         e.preventDefault();
+        nav(`/search/${searchInput}`);
+    };
+
+    const handleSearchBarChange = async (e, searchInput) => {
+        // dispatch({ type: "SET_LOADING" });
         // const searchBarQueryResults = await queryManga(searchInput);
-        // dispatch({
+        // await dispatch({
         //     type: "QUERY_MANGA",
         //     payload: searchBarQueryResults,
         // });
-
-        console.log("TODO - SEND TO SEARCH PAGE W PARAMS");
-    };
-    const handleSearchBarChange = async (e, searchInput) => {
-        if (e.target.value.length > 0) {
-            setTimeout(async () => {
-                const searchBarQueryResults = await queryManga(searchInput);
-                dispatch({
-                    type: "QUERY_MANGA",
-                    payload: searchBarQueryResults,
-                });
-            }, 1500);
-        } else {
-            resetSearchBar();
-        }
-    };
-    const resetSearchBar = () => {
-        dispatch({
-            type: "QUERY_MANGA",
-            payload: [],
-        });
+        setData(searchInput);
     };
 
     return (
@@ -86,7 +72,7 @@ function NavBar() {
                                         <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
                                     </svg>
                                 </span>
-                                <ul className="p-2">
+                                <ul className="p-2 bg-base-100">
                                     <li>
                                         <Link to="/bookmarks">Bookmarks</Link>
                                     </li>
@@ -130,7 +116,7 @@ function NavBar() {
                                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                                 </svg>
                             </span>
-                            <ul className="p-2 bg-neutral">
+                            <ul className="p-2 bg-base-100">
                                 <li>
                                     <Link to="/bookmarks">Bookmarks</Link>
                                 </li>
@@ -152,15 +138,48 @@ function NavBar() {
                 >
                     <SearchBtn
                         handleSearchBarSubmit={handleSearchBarSubmit}
-                        resetSearchBar={resetSearchBar}
                         handleSearchBarChange={handleSearchBarChange}
-                        options={queryResult}
                     />
                     <UserIcon />
                 </div>
             </div>
-
-            <SearchBox options={queryResult} />
+            {/* 
+            <ul
+                className="menu bg-base-100 absolute top-28 rounded-lg"
+                style={{
+                    zIndex: 100,
+                    left: "50%",
+                    transform: `translateX(${-50}%)`,
+                }}
+            >
+                {/* {loading ? (
+                    <div
+                        className="grid px-12 place-items-center"
+                        style={{
+                            minHeight: 100,
+                        }}
+                    >
+                        <CircularProgress color="inherit" />
+                    </div>
+                ) : (
+                    queryResult && (
+                        <>
+                            {queryResult.map((item, idx) => (
+                                <SearchBox options={item} key={idx} />
+                            ))}
+                        </>
+                    )
+                )} 
+                {data.length > 0 && (
+                    <>
+                        {console.log(data)}
+                        {data.map((item, idx) => (
+                            <SearchBox options={item} key={idx} />
+                        ))}
+                    </>
+                )}
+            </ul> 
+            */}
         </>
     );
 }

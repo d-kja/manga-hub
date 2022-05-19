@@ -49,6 +49,11 @@ function App() {
                                     />
                                     <Route
                                         exact
+                                        path="/search/:query"
+                                        element={<SearchManga />}
+                                    />
+                                    <Route
+                                        exact
                                         path="/list"
                                         element={<MangaList />}
                                     />

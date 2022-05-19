@@ -8,7 +8,7 @@ import MangaContainer from "./MangaContainer";
 import MangaContext from "../../Context/Mangas/MangaContext";
 import { fetchMangas } from "../../Context/Mangas/MangaActions";
 
-function MangaList() {
+function MangaList({ query }) {
     const { dispatch, loading, mangas } = useContext(MangaContext);
 
     useEffect(() => {
@@ -50,16 +50,34 @@ function MangaList() {
                     <CircularProgress color="inherit" />
                 </div>
             ) : (
-                mangas.map(({ id, data }) => (
-                    <MangaContainer
-                        key={id}
-                        id={id}
-                        name={data.name}
-                        rating={data.rating}
-                        img={data.bannerSmall}
-                        chap={data.chapters}
-                    />
-                ))
+                <>
+                    {query
+                        ? mangas.map(({ id, data }) => {
+                              const rgx = new RegExp(query);
+                              return (
+                                  data.name.match(rgx) && (
+                                      <MangaContainer
+                                          key={id}
+                                          id={id}
+                                          name={data.name}
+                                          rating={data.rating}
+                                          img={data.bannerSmall}
+                                          chap={data.chapters}
+                                      />
+                                  )
+                              );
+                          })
+                        : mangas.map(({ id, data }) => (
+                              <MangaContainer
+                                  key={id}
+                                  id={id}
+                                  name={data.name}
+                                  rating={data.rating}
+                                  img={data.bannerSmall}
+                                  chap={data.chapters}
+                              />
+                          ))}
+                </>
             )}
         </motion.ul>
     );

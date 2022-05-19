@@ -9,7 +9,7 @@ export const queryManga = async (searchQuery) => {
     );
     const result = [];
 
-    await onSnapshot(q, (mangaSnap) => {
+    onSnapshot(q, (mangaSnap) => {
         mangaSnap.forEach((item) =>
             result.push({
                 id: item.id,

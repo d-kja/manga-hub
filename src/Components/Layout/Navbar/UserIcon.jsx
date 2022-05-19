@@ -42,7 +42,7 @@ export default function UserIcon() {
                                                 aria-hidden="true"
                                             />
                                         )}
-                                        Edit
+                                        Login
                                     </button>
                                 )}
                             </Menu.Item>

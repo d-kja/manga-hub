@@ -1,9 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import MangaList from "../Layout/Manga/MangaList";
 
 function SearchManga() {
+    const params = useParams();
+
     return (
         <motion.div
             initial={{ y: 75, opacity: 0 }}
@@ -45,14 +48,18 @@ function SearchManga() {
                         <option defaultValue value={null}>
                             Select Theme
                         </option>
-                        <option>THEME 1</option>
-                        <option>THEME 2</option>
-                        <option>THEME 3</option>
+                        <option>Adventure</option>
+                        <option>Fantasy</option>
+                        <option>ur mom</option>
                     </select>
                 </div>
                 <div className="divider"></div>
                 <div className="my-16">
-                    <MangaList />
+                    {params.query ? (
+                        <MangaList query={params.query} />
+                    ) : (
+                        <MangaList />
+                    )}
                 </div>
             </div>
         </motion.div>

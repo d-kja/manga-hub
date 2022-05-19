@@ -6,16 +6,16 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 
-function SearchBtn({
-    handleSearchBarSubmit,
-    handleSearchBarChange,
-    resetSearchBar,
-    options,
-}) {
+function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
     const [searchInput, setSearchInput] = useState("");
     const [state, setState] = React.useState({
         top: false,
     });
+
+    const onChangeInput = (e) => {
+        setSearchInput(e.target.value);
+        handleSearchBarChange(e, e.target.value);
+    };
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (
@@ -23,10 +23,6 @@ function SearchBtn({
             (event.key === "Tab" || event.key === "Shift")
         ) {
             return;
-        }
-        if (!open) {
-            resetSearchBar();
-            setSearchInput("");
         }
 
         setState({ ...state, [anchor]: open });
@@ -52,10 +48,7 @@ function SearchBtn({
                                 placeholder="Search…"
                                 className="input input-bordered input-lg"
                                 value={searchInput}
-                                onChange={(e) => {
-                                    setSearchInput(e.target.value);
-                                    handleSearchBarChange(e, searchInput);
-                                }}
+                                onChange={onChangeInput}
                             />
                             <button
                                 className="btn btn-square btn-lg"
@@ -96,7 +89,6 @@ function SearchBtn({
                     anchor={"top"}
                     open={state["top"]}
                     onClose={toggleDrawer("top", false)}
-                    hideBackdrop={true}
                 >
                     {list("top")}
                 </Drawer>
