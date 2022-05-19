@@ -1,22 +1,20 @@
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
 export const queryManga = async (searchQuery) => {
-    const q = query(
-        collection(db, "mangas"),
-        where("name", ">=", searchQuery),
-        where("name", "<=", searchQuery + "\uf8ff")
-    );
-    const result = [];
+    const mangasRef = collection(db, "mangas");
+    const mangasSnap = await getDocs(mangasRef);
 
-    onSnapshot(q, (mangaSnap) => {
-        mangaSnap.forEach((item) =>
-            result.push({
+    const mangasData = [];
+    const rgx = new RegExp(`${searchQuery}\\w*`, "i");
+
+    mangasSnap.forEach((item) => {
+        item.data().name.match(rgx) &&
+            mangasData.push({
                 id: item.id,
                 data: item.data(),
-            })
-        );
+            });
     });
 
-    return result;
+    return mangasData;
 };

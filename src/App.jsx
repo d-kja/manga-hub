@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 // Components
 import NavBar from "./Components/Layout/Navbar/NavBar";
 import Footer from "./Components/Layout/Footer/Footer";
+import GoUpButton from "./Components/Layout/GoUpButton";
 //
 import Home from "./Components/Pages/Home";
 import Manga from "./Components/Pages/Manga";
@@ -24,7 +25,6 @@ import NotFound from "./Components/Pages/NotFound";
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
 import { BannerProvider } from "./Components/Context/Banners/BannerContext";
 import { SearchProvider } from "./Components/Context/Search/SearchContext";
-
 function App() {
     return (
         <BannerProvider>
@@ -79,6 +79,7 @@ function App() {
                             <div className="inline-block mx-20 mb-56 font-light text-2xl" />
                             <Footer />
                         </div>
+                        <GoUpButton windowRef={window} />
                     </Router>
                     <ToastContainer />
                 </SearchProvider>

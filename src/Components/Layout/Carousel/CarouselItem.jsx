@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import { useRef } from "react";
 
-function CarouselItem({ key, name, img, rating, status }) {
+function CarouselItem({ id, name, img, rating, status }) {
     const myStatus = useRef("");
     function checkStatus(stat) {
         switch (stat) {
@@ -44,7 +44,7 @@ function CarouselItem({ key, name, img, rating, status }) {
                     <div className="carousel__item__img--after">
                         <div className="carousel__item__text ml-10">
                             <div>
-                                <Link to="/">
+                                <Link to={`/mangas/${id}`}>
                                     <h1 className="text-xl md:text-2xl lg:text-4xl px-10 pl-20 mb-2">
                                         {name}
                                     </h1>

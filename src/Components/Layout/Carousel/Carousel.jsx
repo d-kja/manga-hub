@@ -91,6 +91,7 @@ function CenterMode() {
                         {banners.map(({ id, data }) => (
                             <CarouselItem
                                 key={id}
+                                id={id}
                                 name={data.name}
                                 img={data.banner}
                                 rating={(
