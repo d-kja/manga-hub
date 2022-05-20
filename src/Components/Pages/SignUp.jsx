@@ -1,10 +1,67 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+} from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase.config";
 
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { motion } from "framer-motion";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { toast } from "react-toastify";
 
 function SignUp() {
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+    const { name, email, password } = formData;
+    const auth = getAuth();
+    const nav = useNavigate();
+
+    const handleFormChange = (e) => {
+        const { id, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const userRef = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            const user = userRef.user;
+            updateProfile(auth.currentUser, { displayName: name });
+
+            const copyFormData = { ...formData };
+            delete copyFormData.password;
+            copyFormData.timestamp = serverTimestamp();
+
+            await setDoc(doc(db, "users", user.uid), copyFormData);
+
+            toast.success(
+                "Nice, all done! Now you can enjoy your reading smoothly",
+                {
+                    theme: "dark",
+                }
+            );
+            nav("/");
+        } catch (error) {
+            toast.error("Unable to complete action", {
+                theme: "dark",
+            });
+        }
+    };
+
     return (
         <motion.div
             initial={{ y: 75, opacity: 0 }}
@@ -36,8 +93,7 @@ function SignUp() {
                         </div>
                         <form
                             className="mt-8 space-y-6"
-                            action="#"
-                            method="POST"
+                            onSubmit={handleSubmit}
                         >
                             <input type="hidden" name="remember" value="true" />
                             <div className="rounded-md shadow-sm -space-y-px">
@@ -49,12 +105,13 @@ function SignUp() {
                                         User name
                                     </label>
                                     <input
-                                        id="user-name"
+                                        id="name"
                                         name="username"
                                         type="text"
                                         autoComplete="off"
                                         required
-                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                        onChange={handleFormChange}
+                                        className="appearance-none rounded-none relative inline-block w-full px-3 border border-gray-300 placeholder-gray-500 py-3 font-semibold text-zinc-800 sm:text-md rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 "
                                         placeholder="User name"
                                     />
                                 </div>
@@ -66,12 +123,13 @@ function SignUp() {
                                         Email address
                                     </label>
                                     <input
-                                        id="email-address"
+                                        id="email"
                                         name="email"
                                         type="email"
                                         autoComplete="email"
                                         required
-                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                        onChange={handleFormChange}
+                                        className="appearance-none rounded-none relative inline-block w-full px-3 border border-gray-300 placeholder-gray-500 py-3 font-semibold text-zinc-800 sm:text-md rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 "
                                         placeholder="Email address"
                                     />
                                 </div>
@@ -86,9 +144,10 @@ function SignUp() {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        onChange={handleFormChange}
                                         autoComplete="current-password"
                                         required
-                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                        className="appearance-none rounded-none relative inline-block w-full px-3  border border-gray-300 placeholder-gray-500 py-3 font-semibold text-zinc-800 sm:text-md rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 "
                                         placeholder="Password"
                                     />
                                 </div>
@@ -108,7 +167,7 @@ function SignUp() {
                             <div>
                                 <button
                                     type="submit"
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-bold rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 >
                                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                         <svg

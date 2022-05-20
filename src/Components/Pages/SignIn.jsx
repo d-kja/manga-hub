@@ -1,10 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 function SignIn() {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const { name, email, password } = formData;
+    const nav = useNavigate();
+
+    const handleFormChange = (e) => {
+        const { id, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const auth = getAuth();
+            const userCredentials = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            if (userCredentials.user) {
+                toast.success("Done, you are logged in!", {
+                    theme: "dark",
+                });
+                nav("/");
+            }
+        } catch (error) {
+            toast.error("Error, invalid credentials", {
+                theme: "dark",
+            });
+        }
+    };
+
     return (
         <motion.div
             initial={{ y: 75, opacity: 0 }}
@@ -16,13 +57,14 @@ function SignIn() {
                 ease: "easeIn",
                 delay: 0.3,
             }}
-            className="lg:max-w-screen-2xl relative mx-auto"
+            className="lg:max-w-screen-2xl relative mx-auto text-zinc-800"
         >
-            <div className="grid items-center mt-6 text-white">
+            <div className="grid items-center mt-6 ">
                 <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-md w-full space-y-8">
                         <div className="grid items-center">
                             <LocalFireDepartmentIcon
+                                className="text-white"
                                 sx={{
                                     height: 50,
                                     width: 50,
@@ -36,25 +78,22 @@ function SignIn() {
                         </div>
                         <form
                             className="mt-8 space-y-6"
-                            action="#"
-                            method="POST"
+                            onSubmit={handleSubmit}
                         >
                             <input type="hidden" name="remember" value="true" />
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div>
-                                    <label
-                                        htmlFor="email-address"
-                                        className="sr-only"
-                                    >
+                                    <label htmlFor="email" className="sr-only">
                                         Email address
                                     </label>
                                     <input
-                                        id="email-address"
+                                        id="email"
                                         name="email"
                                         type="email"
+                                        onChange={handleFormChange}
                                         autoComplete="email"
                                         required
-                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 font-semibold text-zinc-800 sm:text-md rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
                                         placeholder="Email address"
                                     />
                                 </div>
@@ -69,9 +108,10 @@ function SignIn() {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        onChange={handleFormChange}
                                         autoComplete="current-password"
                                         required
-                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                        className="appearance-none rounded-none relative inline-block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 font-semibold text-zinc-800 sm:text-md rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10"
                                         placeholder="Password"
                                     />
                                 </div>
@@ -91,7 +131,7 @@ function SignIn() {
                             <div>
                                 <button
                                     type="submit"
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-bold rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 >
                                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                         <svg
