@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import MangaList from "../Layout/Manga/MangaList";
@@ -9,9 +9,9 @@ import { queryManga } from "../Context/Search/SearchActions";
 
 function SearchManga() {
     const { loading, dispatch } = useContext(MangaContext);
-
     const [searchInput, setSearchInput] = useState("");
     const params = useParams();
+    const nav = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +19,7 @@ function SearchManga() {
         dispatch({ type: "SET_LOADING" });
         const mangaRef = await queryManga(searchInput);
         dispatch({ type: "SET_MANGAS", payload: mangaRef });
+        nav("/search");
     };
 
     return (
