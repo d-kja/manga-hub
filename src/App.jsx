@@ -13,18 +13,24 @@ import Footer from "./Components/Layout/Footer/Footer";
 import GoUpButton from "./Components/Layout/GoUpButton";
 //
 import Home from "./Components/Pages/Home";
-import Manga from "./Components/Pages/Manga";
 import Strip from "./Components/Pages/Strip";
+import Manga from "./Components/Pages/Manga";
 import MangaList from "./Components/Pages/MangaList";
 import SearchManga from "./Components/Pages/SearchManga";
+import Profile from "./Components/Pages/Profile";
 import Bookmarks from "./Components/Pages/Bookmarks";
 import About from "./Components/Pages/About";
+//
+import SignIn from "./Components/Pages/SignIn";
+import SignUp from "./Components/Pages/SignUp";
+import PrivateRoute from "./Components/Pages/PrivateRoute";
 import NotFound from "./Components/Pages/NotFound";
 
 // Context
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext";
 import { BannerProvider } from "./Components/Context/Banners/BannerContext";
 import { SearchProvider } from "./Components/Context/Search/SearchContext";
+
 function App() {
     return (
         <BannerProvider>
@@ -36,11 +42,37 @@ function App() {
                             <AnimatePresence>
                                 <Routes>
                                     <Route path="/" element={<Home />} />
-
                                     <Route
                                         exact
                                         path="/bookmarks"
-                                        element={<Bookmarks />}
+                                        element={<PrivateRoute />}
+                                    >
+                                        <Route
+                                            exact
+                                            path="/bookmarks"
+                                            element={<Bookmarks />}
+                                        />
+                                    </Route>
+                                    <Route
+                                        exact
+                                        path="/profile"
+                                        element={<PrivateRoute />}
+                                    >
+                                        <Route
+                                            exact
+                                            path="/profile"
+                                            element={<Profile />}
+                                        />
+                                    </Route>
+                                    <Route
+                                        exact
+                                        path="/signIn"
+                                        element={<SignIn />}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/signUp"
+                                        element={<SignUp />}
                                     />
                                     <Route
                                         exact

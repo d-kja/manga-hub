@@ -1,7 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Link } from "react-router-dom";
 
 export default function UserIcon() {
     return (
@@ -26,7 +27,8 @@ export default function UserIcon() {
                         <div className="px-1 py-1 ">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <button
+                                    <Link
+                                        to="/signIn"
                                         className={`${
                                             active
                                                 ? "bg-violet-500 text-white"
@@ -45,12 +47,13 @@ export default function UserIcon() {
                                             />
                                         )}
                                         Login
-                                    </button>
+                                    </Link>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <button
+                                    <Link
+                                        to="/options"
                                         className={`${
                                             active
                                                 ? "bg-violet-500 text-white"
@@ -68,15 +71,16 @@ export default function UserIcon() {
                                                 aria-hidden="true"
                                             />
                                         )}
-                                        Duplicate
-                                    </button>
+                                        Options
+                                    </Link>
                                 )}
                             </Menu.Item>
                         </div>
                         <div className="px-1 py-1">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <button
+                                    <Link
+                                        to="/logOut"
                                         className={`${
                                             active
                                                 ? "bg-violet-500 text-white"
@@ -94,58 +98,8 @@ export default function UserIcon() {
                                                 aria-hidden="true"
                                             />
                                         )}
-                                        Archive
-                                    </button>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        className={`${
-                                            active
-                                                ? "bg-violet-500 text-white"
-                                                : "text-gray-200"
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-2xl`}
-                                    >
-                                        {active ? (
-                                            <MoveActiveIcon
-                                                className="mr-2 h-7 w-7"
-                                                aria-hidden="true"
-                                            />
-                                        ) : (
-                                            <MoveInactiveIcon
-                                                className="mr-2 h-7 w-7"
-                                                aria-hidden="true"
-                                            />
-                                        )}
-                                        Move
-                                    </button>
-                                )}
-                            </Menu.Item>
-                        </div>
-                        <div className="px-1 py-1">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        className={`${
-                                            active
-                                                ? "bg-violet-500 text-white"
-                                                : "text-gray-200"
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-2xl`}
-                                    >
-                                        {active ? (
-                                            <DeleteActiveIcon
-                                                className="mr-2 h-7 w-7 text-violet-400"
-                                                aria-hidden="true"
-                                            />
-                                        ) : (
-                                            <DeleteInactiveIcon
-                                                className="mr-2 h-7 w-7 text-violet-400"
-                                                aria-hidden="true"
-                                            />
-                                        )}
-                                        Delete
-                                    </button>
+                                        LogOut
+                                    </Link>
                                 )}
                             </Menu.Item>
                         </div>
@@ -302,6 +256,7 @@ function ArchiveActiveIcon(props) {
     );
 }
 
+// eslint-disable-next-line
 function MoveInactiveIcon(props) {
     return (
         <svg
@@ -317,6 +272,7 @@ function MoveInactiveIcon(props) {
     );
 }
 
+// eslint-disable-next-line
 function MoveActiveIcon(props) {
     return (
         <svg
@@ -332,6 +288,7 @@ function MoveActiveIcon(props) {
     );
 }
 
+// eslint-disable-next-line
 function DeleteInactiveIcon(props) {
     return (
         <svg
@@ -355,6 +312,7 @@ function DeleteInactiveIcon(props) {
     );
 }
 
+// eslint-disable-next-line
 function DeleteActiveIcon(props) {
     return (
         <svg
