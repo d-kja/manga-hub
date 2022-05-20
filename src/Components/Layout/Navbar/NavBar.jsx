@@ -1,15 +1,18 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import SearchContext from "../../Context/Search/SearchContext";
+import { useCurrentAuth } from "../../../Hooks/useCurrentAuth";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import SearchBtn from "./SearchBtn/SearchBtn";
+import { CircularProgress } from "@mui/material";
+
 import UserIcon from "./UserIcon";
+import SearchContext from "../../Context/Search/SearchContext";
+import SearchBtn from "./SearchBtn/SearchBtn";
 
 function NavBar() {
     const { dispatch, queryResult, loading } = useContext(SearchContext);
     const [data, setData] = useState([]);
+    const { isLoading, isLogged } = useCurrentAuth();
 
     const nav = useNavigate();
 
@@ -27,6 +30,10 @@ function NavBar() {
         // });
         setData(searchInput);
     };
+
+    if (isLoading) {
+        return <CircularProgress />;
+    }
 
     return (
         <>
@@ -140,7 +147,7 @@ function NavBar() {
                         handleSearchBarSubmit={handleSearchBarSubmit}
                         handleSearchBarChange={handleSearchBarChange}
                     />
-                    <UserIcon />
+                    <UserIcon isLogged={isLogged} />
                 </div>
             </div>
             {/* 

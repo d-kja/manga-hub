@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import MangaList from "../Layout/Manga/MangaList";
 
+import MangaContext from "../Context/Mangas/MangaContext";
+import { queryManga } from "../Context/Search/SearchActions";
+
 function SearchManga() {
+    const { loading, dispatch } = useContext(MangaContext);
+
+    const [searchInput, setSearchInput] = useState("");
     const params = useParams();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        dispatch({ type: "SET_LOADING" });
+        const mangaRef = await queryManga(searchInput);
+        dispatch({ type: "SET_MANGAS", payload: mangaRef });
+    };
 
     return (
         <motion.div
@@ -18,15 +32,26 @@ function SearchManga() {
             }}
         >
             <div>
-                <div className="flex gap-5 justify-center my-12">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex gap-5 justify-center my-12"
+                >
                     <div className="form-control">
                         <div className="input-group input-group-lg">
                             <input
                                 type="text"
+                                value={searchInput}
+                                onChange={({ target }) =>
+                                    setSearchInput(target.value)
+                                }
+                                id="searchInput"
                                 placeholder="Search title…"
                                 className="input input-lg input-bordered"
                             />
-                            <button className="btn btn-square btn-lg">
+                            <button
+                                className="btn btn-square btn-lg"
+                                type="submit"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-6 w-6"
@@ -52,7 +77,7 @@ function SearchManga() {
                         <option>Fantasy</option>
                         <option>ur mom</option>
                     </select>
-                </div>
+                </form>
                 <div className="divider"></div>
                 <div className="my-16">
                     {params.query ? (

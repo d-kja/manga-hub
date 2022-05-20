@@ -8,16 +8,19 @@ export const useCurrentAuth = () => {
     const isMounted = useRef(true);
 
     useEffect(() => {
-        if (isMounted) {
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    setIsLogged(true);
-                }
-                setIsLoading(false);
-            });
-        }
+        const handleUser = async () => {
+            if (isMounted) {
+                const auth = getAuth();
+                await onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        setIsLogged(true);
+                    }
+                    setIsLoading(false);
+                });
+            }
+        };
 
+        handleUser();
         return () => {
             isMounted.current = false;
         };
