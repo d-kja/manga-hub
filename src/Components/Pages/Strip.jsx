@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import Disqus from "disqus-react";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 
 import mangaContext from "../Context/Mangas/MangaContext";
 import { fetchManga } from "../Context/Mangas/MangaActions";
+import { toast } from "react-toastify";
 
 function Strip() {
     const par = useParams();
@@ -37,6 +38,12 @@ function Strip() {
         // eslint-disable-next-line
     }, []);
 
+    // {try {
+    // } catch (error) {
+    //     toast.error("Couldn't complete action");
+    //     nav(`/mangas/${idRef}`);
+    // }}
+
     return loading ? (
         <div
             className="grid place-items-center"
@@ -46,7 +53,7 @@ function Strip() {
         >
             <Spinner color="inherit" />
         </div>
-    ) : (
+    ) : manga.banner ? (
         <motion.div
             initial={{ y: 75, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -96,6 +103,16 @@ function Strip() {
                 }}
             />
         </motion.div>
+    ) : (
+        <>
+            {toast.info(
+                "Couldn't complete action, hard reload isn't recommended",
+                {
+                    theme: "dark",
+                }
+            )}
+            <Navigate to={`/mangas/${par.id}`} />
+        </>
     );
 }
 
