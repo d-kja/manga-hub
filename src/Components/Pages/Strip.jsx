@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Disqus from "disqus-react";
 
@@ -13,8 +13,8 @@ import { fetchManga } from "../Context/Mangas/MangaActions";
 function Strip() {
     const par = useParams();
     const nav = useNavigate();
-
     const { loading, manga, dispatch } = useContext(mangaContext);
+    const [idRef, setidRef] = useState();
 
     useEffect(() => {
         if (par.chapId > manga.chapters.length || par.chapId === undefined) {
@@ -24,6 +24,7 @@ function Strip() {
             const fetchData = async (id) => {
                 // eslint-disable-next-line
                 const { id: idx, data: mangaRef } = await fetchManga(id);
+                setidRef(idx);
                 dispatch({
                     type: "SET_MANGA",
                     payload: mangaRef,
@@ -32,7 +33,6 @@ function Strip() {
 
             fetchData(par.id);
         }
-        console.log(manga);
 
         // eslint-disable-next-line
     }, []);
@@ -90,8 +90,8 @@ function Strip() {
                 className="mt-24"
                 shortname="ny-manga-hub"
                 config={{
-                    url: "https://ny-manga-app.vercel.app",
-                    identifier: `${manga.name}-${par.chapId}`,
+                    url: `https://ny-manga-app.vercel.app/mangas/${idRef}/chapter/${par.chapId}`,
+                    identifier: `${manga.name}-${idRef}-${par.chapId}`,
                     title: `${manga.name}, CH. ${par.chapId}`,
                 }}
             />
