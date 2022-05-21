@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Disqus from "disqus-react";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { CircularProgress as Spinner } from "@mui/material";
-
 import { motion } from "framer-motion";
-import { useParams, useNavigate } from "react-router-dom";
+
 import mangaContext from "../Context/Mangas/MangaContext";
 import { fetchManga } from "../Context/Mangas/MangaActions";
 
@@ -85,8 +86,15 @@ function Strip() {
                 ))}
             </div>
 
-            {/* TODO */}
-            <div className="block mt-20">Comment Session</div>
+            <Disqus.DiscussionEmbed
+                className="mt-24"
+                shortname="ny-manga-hub"
+                config={{
+                    url: "https://ny-manga-app.vercel.app",
+                    identifier: `${manga.name}-${par.chapId}`,
+                    title: `${manga.name}, CH. ${par.chapId}`,
+                }}
+            />
         </motion.div>
     );
 }

@@ -32,7 +32,16 @@ function NavBar() {
     };
 
     if (isLoading) {
-        return <CircularProgress />;
+        return (
+            <div
+                className="grid place-items-center text-white"
+                style={{
+                    minHeight: 300,
+                }}
+            >
+                <CircularProgress color="inherit" />
+            </div>
+        );
     }
 
     return (

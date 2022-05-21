@@ -8,7 +8,7 @@ import MangaContext from "../Context/Mangas/MangaContext";
 import { queryManga } from "../Context/Search/SearchActions";
 
 function SearchManga() {
-    const { loading, dispatch } = useContext(MangaContext);
+    const { dispatch } = useContext(MangaContext);
     const [searchInput, setSearchInput] = useState("");
     const params = useParams();
     const nav = useNavigate();

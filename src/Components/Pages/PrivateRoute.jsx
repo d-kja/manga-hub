@@ -10,7 +10,7 @@ function PrivateRoute() {
     if (isLoading)
         return (
             <div
-                className="grid place-items-center"
+                className="grid place-items-center text-white"
                 style={{
                     minHeight: 300,
                 }}
