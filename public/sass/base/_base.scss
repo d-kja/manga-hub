@@ -33,8 +33,29 @@ body {
     color: $palleteWhite;
 
     box-sizing: border-box;
+
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
-    display: none;
+    position: absolute;
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(
+        $color: $palleteRed,
+        $alpha: 0.3
+    ); /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: none; /* creates padding around scroll thumb */
+
+    transition: background-color;
+    &:hover {
+        background-color: rgba($color: $palleteRed, $alpha: 0.5);
+    }
 }

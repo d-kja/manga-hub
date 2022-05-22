@@ -5,6 +5,7 @@ import MangaList from "../Layout/Manga/MangaList";
 
 import { motion } from "framer-motion";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Link } from "react-router-dom";
 
 function Home() {
     return (
@@ -28,6 +29,14 @@ function Home() {
                 />
             </div>
             <MangaList />
+            <div className="divider mt-24 font-light text-2xl">
+                <Link
+                    to="/list"
+                    className="btn font-bold text-2xl btn-ghost -mt-5 btn-lg m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-4"
+                >
+                    More
+                </Link>
+            </div>
         </motion.div>
     );
 }

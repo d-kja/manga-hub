@@ -1,15 +1,27 @@
 import React, { useContext, useEffect } from "react";
 
-import CircularProgress from "@mui/material/CircularProgress";
 import Slider from "react-slick";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import CarouselItem from "./CarouselItem";
 
 import BannerContext from "../../Context/Banners/BannerContext";
 import { fetchBanner } from "../../Context/Banners/BannerActions";
+import useStorage, {
+    checkExpiredStorageItem,
+    setExpirationDate,
+    getFromStorage,
+} from "../../../Hooks/useStorage";
 
 function CenterMode() {
     const { banners, loading, dispatch } = useContext(BannerContext);
+    const { storageItem, updateStorageItem } = useStorage({
+        key: "banners",
+        data: {
+            items: banners,
+            expire: setExpirationDate(new Date().getTime()),
+        },
+    });
 
     const settings = {
         className: "center",
@@ -52,7 +64,28 @@ function CenterMode() {
 
     useEffect(() => {
         const fetchBanners = async () => {
-            const bannersData = await fetchBanner();
+            dispatch({ type: "SET_LOADING" });
+            let bannersData;
+            const fetchStorage = getFromStorage("banners");
+
+            if (getFromStorage("banners")) {
+                const { items } = fetchStorage.data
+                    ? fetchStorage.data
+                    : fetchStorage;
+
+                bannersData = items;
+                console.log("using storage! {banner}");
+            } else {
+                bannersData = await fetchBanner();
+                updateStorageItem({
+                    key: "banners",
+                    data: {
+                        items: bannersData,
+                        expire: setExpirationDate(new Date().getTime()),
+                    },
+                });
+                console.log("not using storage {banner}");
+            }
             dispatch({
                 type: "FETCH_BANNERS",
                 payload: bannersData,
@@ -60,6 +93,7 @@ function CenterMode() {
         };
 
         fetchBanners();
+        //eslint-disable-next-line
     }, [dispatch]);
 
     return (

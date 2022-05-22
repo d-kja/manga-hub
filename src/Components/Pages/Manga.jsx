@@ -11,24 +11,55 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { CircularProgress } from "@mui/material";
 
 import MangaButton from "../Layout/Manga/MangaButton";
+import useStorage, {
+    getFromStorage,
+    setExpirationDate,
+} from "../../Hooks/useStorage";
 
 function Manga() {
     const params = useParams();
     const nav = useNavigate();
 
     const { manga, loading, dispatch } = useContext(MangaContext);
+    const { storageItem, updateStorageItem } = useStorage({
+        key: "manga",
+        data: {
+            items: manga,
+            expire: setExpirationDate(new Date().getTime()),
+        },
+    });
 
     useEffect(() => {
-        dispatch({ type: "SET_LOADING" });
         const fetchData = async (id) => {
-            // eslint-disable-next-line
-            const { id: mangaId, data: mangaData } = await fetchManga(id);
+            dispatch({ type: "SET_LOADING" });
+            let mangaRef;
+            const fetchStorage = getFromStorage("manga");
+
+            if (getFromStorage("manga")) {
+                const { items } = fetchStorage.data
+                    ? fetchStorage.data
+                    : fetchStorage;
+
+                mangaRef = items;
+                console.log("using storage! {single-manga}");
+            } else {
+                const { id: mangaId, data: mangaData } = await fetchManga(id);
+                mangaRef = mangaData;
+                updateStorageItem({
+                    key: "manga",
+                    data: {
+                        items: mangaData,
+                        expire: setExpirationDate(new Date().getTime()),
+                    },
+                });
+                console.log("NOT using storage! {single-manga}");
+            }
             dispatch({
                 type: "SET_MANGA",
-                payload: mangaData,
+                payload: mangaRef,
             });
 
-            if (mangaData === null) {
+            if (mangaRef === null) {
                 toast.error("Couldn't find item", {
                     theme: "dark",
                 });

@@ -92,7 +92,6 @@ function Strip() {
                     />
                 ))}
             </div>
-
             <Disqus.DiscussionEmbed
                 className="mt-24"
                 shortname="ny-manga-hub"
@@ -102,6 +101,7 @@ function Strip() {
                     title: `${manga.name}, CH. ${par.chapId}`,
                 }}
             />
+            <div className="divider mt-3 mb-24"></div>
         </motion.div>
     ) : (
         <>

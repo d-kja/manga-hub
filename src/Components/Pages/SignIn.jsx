@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { GoogleOAuth } from "../Layout/OAuth";
 
 function SignIn() {
     const [formData, setFormData] = useState({
@@ -121,7 +122,7 @@ function SignIn() {
                                 <div className="text-sm">
                                     <Link
                                         to="/forgotPassword"
-                                        className="font-medium text-primary hover:text-primary"
+                                        className="font-medium text-lg text-primary hover:text-primary"
                                     >
                                         Forgot your password?
                                     </Link>
@@ -131,7 +132,7 @@ function SignIn() {
                             <div>
                                 <button
                                     type="submit"
-                                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-bold rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                    className="btn group relative w-full flex justify-center py-2 px-4 border border-transparent text-lg font-bold rounded-md text-white btn-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-primary"
                                 >
                                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                         <svg
@@ -155,13 +156,16 @@ function SignIn() {
                                 <div className="text-sm">
                                     <Link
                                         to="/signUp"
-                                        className="font-medium text-primary hover:text-primary"
+                                        className="font-medium text-lg text-primary hover:text-primary"
                                     >
                                         Sign-Up instead
                                     </Link>
                                 </div>
                             </div>
                         </form>
+                        <div className="flex items-center justify-center">
+                            <GoogleOAuth />
+                        </div>
                     </div>
                 </div>
             </div>
