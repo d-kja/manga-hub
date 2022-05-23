@@ -31,7 +31,7 @@ export function clearStorage(key) {
 export function checkExpiredStorageItem(key) {
     const item = JSON.parse(localStorage.getItem(key));
     const time = new Date().getTime();
-    if (item && item.expire < time) return true;
+    if (item && item.expire <= time) return true;
     return false;
 }
 

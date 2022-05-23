@@ -28,11 +28,11 @@ function Home() {
                     sx={{ fontSize: 17 }}
                 />
             </div>
-            <MangaList />
+            <MangaList fromHome={true} />
             <div className="divider mt-24 font-light text-2xl">
                 <Link
                     to="/list"
-                    className="btn font-bold text-2xl btn-ghost -mt-5 btn-lg m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-4"
+                    className="btn font-bold text-2xl btn-ghost -mt-5 btn-lg m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
                 >
                     More
                 </Link>

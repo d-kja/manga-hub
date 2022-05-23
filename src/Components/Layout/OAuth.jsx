@@ -28,10 +28,14 @@ export const GoogleOAuth = () => {
                 });
             }
 
-            toast.success("Nice and clean, now you can enjoy your reading");
+            toast.success("Nice and clean, now you can enjoy your reading", {
+                theme: "dark",
+            });
             nav("/");
         } catch (error) {
-            toast.error("Couldn't authenticate using Google, try again later");
+            toast.error("Couldn't authenticate using Google, try again later", {
+                theme: "dark",
+            });
         }
     };
     return (

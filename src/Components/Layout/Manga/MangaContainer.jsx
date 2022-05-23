@@ -28,16 +28,21 @@ function MangaContainer({ img, name, id, rating, chap }) {
                             alt="manga banner"
                         />
                     </Link>
+
                     <Link
-                        to={`/mangas/${id}/chapter/0`}
+                        to={`/mangas/${id}/chapter/${chap.length - 1}`}
                         className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
                     >
-                        {/* 
-                        'TODO
-                            Last Chap per item'
-                        */}
-                        {chap[0].title}
+                        {chap[chap.length - 1].title}
                     </Link>
+                    {chap.length > 1 && (
+                        <Link
+                            to={`/mangas/${id}/chapter/${chap.length - 2}`}
+                            className="rounded-lg btn absolute left-5 bottom-14 text-2xl font-light"
+                        >
+                            {chap[chap.length - 2].title}
+                        </Link>
+                    )}
                 </div>
                 <p className="mt-5 manga-list__item__title">{name}</p>
             </div>

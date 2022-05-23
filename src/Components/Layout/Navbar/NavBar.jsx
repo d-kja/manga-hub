@@ -36,7 +36,7 @@ function NavBar() {
             <div
                 className="grid place-items-center text-white"
                 style={{
-                    minHeight: 300,
+                    minHeight: 100,
                 }}
             >
                 <CircularProgress color="inherit" />

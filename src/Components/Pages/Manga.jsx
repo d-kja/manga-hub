@@ -12,6 +12,7 @@ import { CircularProgress } from "@mui/material";
 
 import MangaButton from "../Layout/Manga/MangaButton";
 import useStorage, {
+    checkExpiredStorageItem,
     getFromStorage,
     setExpirationDate,
 } from "../../Hooks/useStorage";
@@ -21,7 +22,7 @@ function Manga() {
     const nav = useNavigate();
 
     const { manga, loading, dispatch } = useContext(MangaContext);
-    const { storageItem, updateStorageItem } = useStorage({
+    const { updateStorageItem } = useStorage({
         key: "manga",
         data: {
             items: manga,
@@ -35,15 +36,16 @@ function Manga() {
             let mangaRef;
             const fetchStorage = getFromStorage("manga");
 
-            if (getFromStorage("manga")) {
-                const { items } = fetchStorage.data
-                    ? fetchStorage.data
-                    : fetchStorage;
-
+            if (
+                fetchStorage &&
+                !checkExpiredStorageItem("manga") &&
+                fetchStorage.myId === params.id
+            ) {
+                const { items } = fetchStorage;
                 mangaRef = items;
-                console.log("using storage! {single-manga}");
             } else {
                 const { id: mangaId, data: mangaData } = await fetchManga(id);
+                mangaData.myId = mangaId;
                 mangaRef = mangaData;
                 updateStorageItem({
                     key: "manga",
@@ -52,7 +54,6 @@ function Manga() {
                         expire: setExpirationDate(new Date().getTime()),
                     },
                 });
-                console.log("NOT using storage! {single-manga}");
             }
             dispatch({
                 type: "SET_MANGA",
@@ -69,7 +70,6 @@ function Manga() {
         fetchData(params.id);
         // eslint-disable-next-line
     }, []);
-
     return loading ? (
         <div
             className="grid place-items-center"
@@ -92,38 +92,42 @@ function Manga() {
             }}
             className="lg:max-w-screen-2xl relative mx-auto"
         >
-            <div className="mangapage--banner">
-                <div className="flex my-12 mx-16">
-                    <img
-                        src={manga.banner}
-                        alt="temp banner"
-                        style={{
-                            height: "100%",
-                            filter: `grayscale(${65}%)`,
-                        }}
-                        className="rounded-3xl"
-                    />
-                </div>
-            </div>
-            <div className="">
-                <p className="font-light text-4xl text-center">{manga.name}</p>
-                <div>
-                    <div className="mx-5 lg:mx-72 md:mx-72 mt-20 font-light text-2xl">
-                        <span className="font-bold">Synopsis: </span>
-                        {manga.others.synopsis}
+            <div className="flex md:flex-row flex-col">
+                <div className="mangapage--banner flex-shrink-0 md:my-12 md:mx-7 transition-all grayscale hover:grayscale-0">
+                    <div className="flex items-center justify-center m-5 ">
+                        <img
+                            src={manga.bannerSmall}
+                            alt="temp banner"
+                            style={{
+                                height: "100%",
+                                filter: `grayscale(${65}%)`,
+                            }}
+                            className="rounded-3xl md:max-w-sm max-w-lg"
+                        />
                     </div>
-                    <div className="mx-5 lg:mx-72 md:mx-72 mt-7 font-light text-2xl">
-                        <span className="font-bold">Tags: </span>
-                        {manga.others.tags.map((item, idx) => {
-                            return (
-                                <div
-                                    className="badge badge-neutral ml-3 text-xl"
-                                    key={idx}
-                                >
-                                    {item}
-                                </div>
-                            );
-                        })}
+                </div>
+                <div className="flex flex-col justify-center items-center">
+                    <p className="font-light text-4xl text-center">
+                        {manga.name}
+                    </p>
+                    <div>
+                        <div className="mx-12 md:mx-5 md:mt-12 mt-20 font-light text-2xl">
+                            <span className="font-bold">Synopsis: </span>
+                            {manga.others.synopsis}
+                        </div>
+                        <div className="mx-12 md:mx-5 mt-7 font-light text-2xl">
+                            <span className="font-bold">Tags: </span>
+                            {manga.others.tags.map((item, idx) => {
+                                return (
+                                    <div
+                                        className="badge badge-neutral ml-3 text-xl"
+                                        key={idx}
+                                    >
+                                        {item}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

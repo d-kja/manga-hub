@@ -1,9 +1,23 @@
-import { doc, getDocs, getDoc, collection } from "firebase/firestore";
+import {
+    doc,
+    getDocs,
+    getDoc,
+    collection,
+    query,
+    limit,
+} from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
-export const fetchMangas = async (query) => {
+export const fetchMangas = async ({ type, q }) => {
+    let mangaQ;
     const mangasRef = collection(db, "mangas");
-    const mangasSnap = await getDocs(mangasRef);
+    if (type === "limit") {
+        mangaQ = query(mangasRef, limit(q));
+    } else {
+        mangaQ = mangasRef;
+    }
+
+    const mangasSnap = await getDocs(mangaQ);
 
     const mangasData = [];
 

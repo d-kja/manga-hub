@@ -38,7 +38,10 @@ function App() {
             <MangaProvider>
                 <SearchProvider>
                     <Router>
-                        <div className="relative min-h-screen">
+                        <div
+                            className="relative min-h-screen"
+                            onScroll={(e) => console.log(e)}
+                        >
                             <NavBar />
                             <AnimatePresence>
                                 <Routes>
@@ -56,12 +59,12 @@ function App() {
                                     </Route>
                                     <Route
                                         exact
-                                        path="/profile"
+                                        path="/options"
                                         element={<PrivateRoute />}
                                     >
                                         <Route
                                             exact
-                                            path="/profile"
+                                            path="/options"
                                             element={<Profile />}
                                         />
                                     </Route>

@@ -8,11 +8,12 @@ import MangaContainer from "./MangaContainer";
 import MangaContext from "../../Context/Mangas/MangaContext";
 import { fetchMangas } from "../../Context/Mangas/MangaActions";
 import useStorage, {
+    checkExpiredStorageItem,
     getFromStorage,
     setExpirationDate,
 } from "../../../Hooks/useStorage";
 
-function MangaList({ query }) {
+function MangaList({ query, fromHome }) {
     const { dispatch, loading, mangas } = useContext(MangaContext);
     const { updateStorageItem } = useStorage({
         key: "mangas",
@@ -28,15 +29,17 @@ function MangaList({ query }) {
             let data;
             const fetchStorage = getFromStorage("mangas");
 
-            if (getFromStorage("mangas")) {
+            if (
+                getFromStorage("mangas") &&
+                !checkExpiredStorageItem("mangas")
+            ) {
                 const { items } = fetchStorage.data
                     ? fetchStorage.data
                     : fetchStorage;
 
                 data = items;
-                console.log("using storage! {mangas}");
             } else {
-                data = await fetchMangas();
+                data = await fetchMangas({ tyoe: "limit", q: 10 });
                 updateStorageItem({
                     key: "mangas",
                     data: {
@@ -44,7 +47,6 @@ function MangaList({ query }) {
                         expire: setExpirationDate(new Date().getTime()),
                     },
                 });
-                console.log("not using storage! {mangas}");
             }
 
             dispatch({

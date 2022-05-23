@@ -1,8 +1,15 @@
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useScroll } from "../../Hooks/useScroll";
 
 function GoUpButton({ windowRef, screenOffsetRef }) {
+    const scrollOffSetCurrentValue = useScroll();
+
     return (
-        <div className={`fixed right-7 bottom-24 z-50`}>
+        <div
+            className={`fixed right-7 bottom-24 z-50 ${
+                scrollOffSetCurrentValue < 400 ? "opacity-0" : "opacity-100"
+            }`}
+        >
             <button
                 className="btn btn-primary btn-circle btn-outline rounded-full h-14 w-14"
                 onClick={() =>

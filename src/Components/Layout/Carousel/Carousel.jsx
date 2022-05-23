@@ -68,13 +68,15 @@ function CenterMode() {
             let bannersData;
             const fetchStorage = getFromStorage("banners");
 
-            if (getFromStorage("banners")) {
+            if (
+                getFromStorage("banners") &&
+                !checkExpiredStorageItem("banners")
+            ) {
                 const { items } = fetchStorage.data
                     ? fetchStorage.data
                     : fetchStorage;
 
                 bannersData = items;
-                console.log("using storage! {banner}");
             } else {
                 bannersData = await fetchBanner();
                 updateStorageItem({
@@ -84,7 +86,6 @@ function CenterMode() {
                         expire: setExpirationDate(new Date().getTime()),
                     },
                 });
-                console.log("not using storage {banner}");
             }
             dispatch({
                 type: "FETCH_BANNERS",
