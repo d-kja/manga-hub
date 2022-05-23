@@ -19,7 +19,8 @@ function Strip() {
 
     useEffect(() => {
         if (par.chapId > manga.chapters.length || par.chapId === undefined) {
-            nav("/notfound");
+            // Cus it loads before fetching it :D, i could use a loading state but kinda w/e
+            nav(`/mangas/${par.id}`);
         } else {
             dispatch({ type: "SET_LOADING" });
             const fetchData = async (id) => {
