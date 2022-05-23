@@ -21,7 +21,7 @@ function Bookmarks() {
     }, [storageItem]);
 
     return (
-        <motion.div
+        <motion.ul
             initial={{ y: 75, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -31,7 +31,7 @@ function Bookmarks() {
                 ease: "easeIn",
                 delay: 0.3,
             }}
-            className="lg:max-w-screen-2xl relative mx-auto"
+            className="lg:max-w-screen-2xl relative mx-auto list-none"
         >
             <div className="my-12 mx-5 flex flex-wrap items-center justify-center gap-2">
                 {items.length > 0
@@ -49,7 +49,7 @@ function Bookmarks() {
                       })
                     : "No bookmarks found"}
             </div>
-        </motion.div>
+        </motion.ul>
     );
 }
 
