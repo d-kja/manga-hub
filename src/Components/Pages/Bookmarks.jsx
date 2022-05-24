@@ -22,7 +22,7 @@ function Bookmarks() {
 
     return (
         <motion.ul
-            initial={{ y: 75, opacity: 0 }}
+            initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{

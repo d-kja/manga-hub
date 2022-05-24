@@ -6,7 +6,7 @@ function GoUpButton({ windowRef, screenOffsetRef }) {
 
     return (
         <div
-            className={`fixed right-7 bottom-24 z-50 ${
+            className={`fixed right-7 bottom-24 z-50 animate-bounce delay-150 duration-700 ease-in-out transition-all ${
                 scrollOffSetCurrentValue < 400 ? "opacity-0" : "opacity-100"
             }`}
         >

@@ -33,13 +33,8 @@ function NavBar() {
 
     if (isLoading) {
         return (
-            <div
-                className="grid place-items-center text-white"
-                style={{
-                    minHeight: 100,
-                }}
-            >
-                <CircularProgress color="inherit" />
+            <div className="navbar bg-neutral text-white">
+                <CircularProgress color="inherit" size={12} />
             </div>
         );
     }

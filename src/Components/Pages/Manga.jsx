@@ -176,7 +176,7 @@ function Manga() {
             className="lg:max-w-screen-2xl relative mx-auto"
         >
             <div className="flex md:flex-row flex-col lg:max-w-[1100px] mx-auto">
-                <div className="mangapage--banner flex-shrink-0 md:my-12 md:mx-7 transition-all grayscale-0 hover:grayscale">
+                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7 transition-all grayscale-0 hover:grayscale">
                     <div className="flex items-center justify-center m-5 ">
                         <img
                             src={manga.bannerSmall}
@@ -242,7 +242,7 @@ function Manga() {
                 </div>
             </div>
 
-            <div className="divider mx-5 lg:mx-72 md:mx-72 mt-20 font-light text-2xl">
+            <div className="divider mx-5 lg:mx-72 md:mx-72 font-light text-2xl">
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
             <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid grid-cols-2 gap-x-12 gap-y-7">

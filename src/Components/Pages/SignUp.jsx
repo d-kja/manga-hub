@@ -107,6 +107,7 @@ function SignUp() {
                                     </label>
                                     <input
                                         id="name"
+                                        value={name}
                                         name="username"
                                         type="text"
                                         autoComplete="off"
@@ -127,6 +128,7 @@ function SignUp() {
                                         id="email"
                                         name="email"
                                         type="email"
+                                        value={email}
                                         autoComplete="email"
                                         required
                                         onChange={handleFormChange}
@@ -145,6 +147,7 @@ function SignUp() {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        value={password}
                                         onChange={handleFormChange}
                                         autoComplete="current-password"
                                         required

@@ -23,6 +23,7 @@ import About from "./Components/Pages/About";
 //
 import SignIn from "./Components/Pages/SignIn";
 import SignUp from "./Components/Pages/SignUp";
+import ForgotPassword from "./Components/Pages/forgotPassword";
 import SignOut from "./Components/Pages/SignOut";
 import PrivateRoute from "./Components/Pages/PrivateRoute";
 import NotFound from "./Components/Pages/NotFound";
@@ -77,6 +78,11 @@ function App() {
                                         exact
                                         path="/signUp"
                                         element={<SignUp />}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/forgotPassword"
+                                        element={<ForgotPassword />}
                                     />
                                     <Route
                                         exact
