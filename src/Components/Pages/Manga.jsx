@@ -18,6 +18,7 @@ import useStorage, {
     getFromStorage,
     setExpirationDate,
 } from "../../Hooks/useStorage";
+import { getAuth } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
@@ -41,6 +42,7 @@ function Manga() {
 
     const [bookmark, setBookmark] = useState(checkStorageObj(manga.myId));
     const [rating, setRating] = useState(5);
+    const [alreadySet, setAlreadySet] = useState(false);
 
     const handleBookmarkClick = () => {
         setBookmark((prev) => !prev);
@@ -108,9 +110,16 @@ function Manga() {
 
     const handleRatingClick = async ({ value }) => {
         setRating(value);
-        const totalRating = +manga.rating.totalRating + +value;
+        const updatedRating = +value * 2;
+        const totalRating = +manga.rating.totalRating + updatedRating;
         const totalUsers = +manga.rating.totalUsers + 1;
-
+        if (alreadySet) {
+            toast.info(
+                "It's one vote per user, refrain from repeating this action",
+                { theme: "dark" }
+            );
+            return;
+        }
         console.log(totalRating, totalUsers);
 
         try {
@@ -121,10 +130,18 @@ function Manga() {
                     totalUsers,
                 },
             });
+
+            setAlreadySet(true);
         } catch (error) {
-            toast.error("Something went wrong, try again later", {
-                theme: "dark",
-            });
+            if (getAuth().currentUser) {
+                toast.error("Something went wrong, try again later", {
+                    theme: "dark",
+                });
+            } else {
+                toast.error("To complete this action, login is required", {
+                    theme: "dark",
+                });
+            }
             console.log(error);
         }
     };
