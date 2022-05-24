@@ -18,6 +18,8 @@ import useStorage, {
     getFromStorage,
     setExpirationDate,
 } from "../../Hooks/useStorage";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase.config";
 
 function Manga() {
     const { storageItem: strBookmarks, updateStorageItem: updateStrBookmarks } =
@@ -104,8 +106,27 @@ function Manga() {
         }
     }
 
-    const handleRatingClick = ({ value }) => {
+    const handleRatingClick = async ({ value }) => {
         setRating(value);
+        const totalRating = +manga.rating.totalRating + +value;
+        const totalUsers = +manga.rating.totalUsers + 1;
+
+        console.log(totalRating, totalUsers);
+
+        try {
+            const docRef = doc(db, "mangas", manga.myId);
+            await updateDoc(docRef, {
+                rating: {
+                    totalRating,
+                    totalUsers,
+                },
+            });
+        } catch (error) {
+            toast.error("Something went wrong, try again later", {
+                theme: "dark",
+            });
+            console.log(error);
+        }
     };
 
     useEffect(() => {
@@ -176,17 +197,19 @@ function Manga() {
             className="lg:max-w-screen-2xl relative mx-auto"
         >
             <div className="flex md:flex-row flex-col lg:max-w-[1100px] mx-auto">
-                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7 transition-all grayscale-0 hover:grayscale">
-                    <div className="flex items-center justify-center m-5 ">
-                        <img
-                            src={manga.bannerSmall}
-                            alt="temp banner"
-                            style={{
-                                height: "100%",
-                                filter: `grayscale(${65}%)`,
-                            }}
-                            className="rounded-3xl md:max-w-sm max-w-lg"
-                        />
+                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7">
+                    <div className="flex items-center justify-center m-5">
+                        <div className="outline outline-transparent hover:outline-primary outline-offset-4 rounded-3xl transition-all ease-in-out duration-200">
+                            <img
+                                src={manga.bannerSmall}
+                                alt="temp banner"
+                                style={{
+                                    height: "100%",
+                                    filter: `grayscale(${65}%)`,
+                                }}
+                                className="rounded-3xl md:max-w-sm max-w-lg"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center">
@@ -242,7 +265,7 @@ function Manga() {
                 </div>
             </div>
 
-            <div className="divider mx-5 lg:mx-72 md:mx-72 font-light text-2xl">
+            <div className="divider mx-5 mt-12 md:mt-auto md:mx-72 font-light text-2xl">
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
             <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid grid-cols-2 gap-x-12 gap-y-7">

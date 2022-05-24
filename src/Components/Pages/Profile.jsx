@@ -67,6 +67,7 @@ function Profile() {
                 stiffness: 100,
                 ease: "easeIn",
             }}
+            className="lg:max-w-screen-lg md:max-w-full w-full mx-auto"
         >
             <div className="py-12 px-7 flex flex-row gap-6 relative">
                 <div
