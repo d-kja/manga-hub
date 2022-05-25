@@ -13,6 +13,8 @@ import useStorage, {
     setExpirationDate,
 } from "../../../Hooks/useStorage";
 
+// https://tailwindui.com/preview#component-db11f83176d113e39bf2559da9344b1c
+
 function MangaList({ query, fromHome }) {
     const { dispatch, loading, mangas } = useContext(MangaContext);
     const { updateStorageItem } = useStorage({
