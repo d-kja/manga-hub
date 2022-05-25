@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ReactSelect from "../Layout/ReactSelect";
 
+import { motion } from "framer-motion";
+
 function Composer() {
-    const [selectedTags, setSelectedTags] = useState([]);
     const [formDataCreate, setFormDataCreate] = useState({
         name: "",
         banner: "",
@@ -25,24 +26,65 @@ function Composer() {
         formDataCreate;
     const { synopsis, tags } = others;
 
-    const handleFormCreate = () => {};
+    const handleFormCreate = (e) => {
+        e.preventDefault();
+        console.log(formDataCreate);
+    };
+
     const handleChangeDataCreate = (e) => {
         const { id, value } = e.target;
         setFormDataCreate((prev) => ({
             ...prev,
+            [id]: value,
+        }));
+    };
+    const handleChangeDataCreateNested = (e) => {
+        const { id, value } = e.target;
+        setFormDataCreate((prev) => ({
+            ...prev,
+            others: {
+                ...prev.others,
+                [id]: value,
+            },
+        }));
+    };
+    const handleMultipleInput = (items) => {
+        const temp = [];
+        items.map((item) => temp.push(item.value));
+        setFormDataCreate((prev) => ({
+            ...prev,
+            others: {
+                tags: temp,
+            },
         }));
     };
 
     return (
-        <>
-            <h1 className="mx-12 mt-16 text-3xl uppercase">
+        <motion.div
+            initial={{ y: 75, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+                delay: 0.3,
+            }}
+            className="lg:max-w-screen-2xl relative mx-auto"
+        >
+            <h1 className="mx-12 mt-16 text-3xl uppercase mb-12">
                 Upload or update mangas
             </h1>
             <div className="divider">
-                <div className="btn btn-ghost text-lg">Options</div>
+                <div className="btn font-bold text-lg btn-ghost -mt-5 m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1">
+                    Options
+                </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-x mt-12 divide-zinc-700 place-items-center">
-                <form className="relative p-12 flex gap-12 mb-16">
+            <div className="m-5 grid grid-cols-1 lg:grid-cols-2 divide-x mt-12 divide-zinc-700 place-items-center">
+                <form
+                    className="relative p-12 grid grid-cols-1 md:grid-cols-2 gap-12 mb-16"
+                    onSubmit={handleFormCreate}
+                >
                     <h2 className="absolute top-0 left-0">
                         Upload a new manga
                     </h2>
@@ -58,7 +100,7 @@ function Composer() {
                                 name={"name"}
                                 onChange={handleChangeDataCreate}
                                 placeholder="Manga name"
-                                className="input input-lg input-bordered input-ghost w-full max-w-xs"
+                                className="input input-lg input-bordered input-primary w-full max-w-xs"
                             />
                         </div>
                         <div className="form-control w-full max-w-xs mt-2">
@@ -68,11 +110,12 @@ function Composer() {
                                 </span>
                             </label>
                             <textarea
-                                className="textarea textarea-ghost"
+                                className="textarea textarea-primary"
                                 placeholder="Synopsis"
-                                onChange={handleChangeDataCreate}
+                                onChange={handleChangeDataCreateNested}
                                 value={synopsis}
                                 id="synopsis"
+                                name="synopsis"
                             />
                         </div>
                         <div className="form-control w-full max-w-xs">
@@ -82,23 +125,25 @@ function Composer() {
                                 </span>
                             </label>
                             <select
-                                className="select select-bordered select-ghost select-lg w-full max-w-xs"
+                                className="select select-bordered select-primary select-lg w-full max-w-xs"
                                 name="status"
                                 id="status"
                                 value={status}
                                 onChange={handleChangeDataCreate}
                             >
-                                <option disabled>Select</option>
-                                <option value={0}>Dropped</option>
-                                <option value={1}>Comming soon</option>
-                                <option value={2}>Ongoing</option>
-                                <option value={3}>Hiatus</option>
+                                <option value={0}>Comming soon</option>
+                                <option value={1}>Ongoing</option>
+                                <option value={2}>Hiatus</option>
+                                <option value={3}>Dropped</option>
                             </select>
                         </div>
                     </div>
                     <div className="">
                         <div className="form-control w-full max-w-xs">
-                            <ReactSelect setItems={setSelectedTags} />
+                            <label className="label">
+                                <span className="label-text text-lg">Tags</span>
+                            </label>
+                            <ReactSelect setItems={handleMultipleInput} />
                         </div>
                         <div className="form-control w-full max-w-xs mt-2">
                             <label className="label">
@@ -133,13 +178,16 @@ function Composer() {
                             />
                         </div>
                     </div>
-                    <div className="btn btn-ghost absolute -bottom-7 left-0">
+                    <button
+                        type="submit"
+                        className="font-bold text-lg  m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 btn btn-ghost absolute -bottom-7 right-0"
+                    >
                         Upload
-                    </div>
+                    </button>
                 </form>
-                <div>02</div>
+                <div>Second form</div>
             </div>
-        </>
+        </motion.div>
     );
 }
 

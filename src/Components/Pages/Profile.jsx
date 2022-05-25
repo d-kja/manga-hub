@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth, updateEmail, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
 import Bookmarks from "./Bookmarks";
+import { Link } from "react-router-dom";
 
 function Profile() {
     const auth = getAuth();
 
     const [changeBtn, setChangeBtn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [user, setUser] = useState({
         email: auth.currentUser.email,
         name: auth.currentUser.displayName,
@@ -19,6 +21,19 @@ function Profile() {
     });
 
     const { email, name, photoURL } = user;
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const docRef = doc(db, "users", auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists() && docSnap.data().admin) {
+                setIsAdmin(true);
+            }
+        };
+        fetchUser();
+        return () => {};
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -125,13 +140,21 @@ function Profile() {
                     </div>
                 </form>
             </div>
-            <div className="divider mt-12 font-light text-2xl">
-                <div
+            <div className="divider mt-12 font-light text-2xl relative">
+                {isAdmin && (
+                    <Link
+                        to="/compose"
+                        className="btn font-bold text-lg btn-ghost  m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 absolute -top-16 right-10"
+                    >
+                        Compose
+                    </Link>
+                )}
+                <Link
                     to="/list"
                     className="btn font-bold text-lg btn-ghost -mt-3 m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
                 >
                     Mangas
-                </div>
+                </Link>
             </div>
             <Bookmarks />
         </motion.div>
