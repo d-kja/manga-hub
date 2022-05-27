@@ -4,12 +4,12 @@ import Disqus from "disqus-react";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { CircularProgress as Spinner } from "@mui/material";
 import { motion } from "framer-motion";
 
 import mangaContext from "../Context/Mangas/MangaContext";
 import { fetchManga } from "../Context/Mangas/MangaActions";
 import { toast } from "react-toastify";
+import Spinner from "../Layout/Spinner";
 
 function Strip() {
     const par = useParams();
@@ -46,14 +46,7 @@ function Strip() {
     // }}
 
     return loading ? (
-        <div
-            className="grid place-items-center"
-            style={{
-                minHeight: 300,
-            }}
-        >
-            <Spinner color="inherit" />
-        </div>
+        <Spinner />
     ) : manga.banner ? (
         <motion.div
             initial={{ y: 75, opacity: 0 }}
@@ -94,7 +87,7 @@ function Strip() {
                 ))}
             </div>
             <Disqus.DiscussionEmbed
-                className="mt-24"
+                className="mt-24 mx-5"
                 shortname="ny-manga-hub"
                 config={{
                     url: `https://ny-manga-app.vercel.app/mangas/${idRef}/chapter/${par.chapId}`,

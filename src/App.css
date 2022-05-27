@@ -246,11 +246,13 @@ body {
 }
 .manga-list__item__image {
   width: 19rem;
+  height: 27rem;
   position: relative;
   top: 0.8rem;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 8px;
+  object-fit: cover;
   filter: grayscale(75%) opacity(0.7);
 }
 .manga-list__item__btn {
@@ -273,6 +275,12 @@ body {
   font-weight: 600;
   font-size: 1.6rem;
   text-align: center;
+  margin: 0.5rem;
+  margin-top: 2rem;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
 import Slider from "react-slick";
-import CircularProgress from "@mui/material/CircularProgress";
+import Spinner from "../Spinner";
 
 import CarouselItem from "./CarouselItem";
 
@@ -100,14 +100,7 @@ function CenterMode() {
     return (
         <div>
             {loading ? (
-                <div
-                    className="grid place-items-center"
-                    style={{
-                        minHeight: 300,
-                    }}
-                >
-                    <CircularProgress color="inherit" />
-                </div>
+                <Spinner />
             ) : (
                 <div
                     style={{

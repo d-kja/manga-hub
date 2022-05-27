@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 
-import CircularProgress from "@mui/material/CircularProgress";
 import { motion } from "framer-motion";
+import Spinner from "../Spinner";
 
 import MangaContainer from "./MangaContainer";
 
@@ -78,14 +78,7 @@ function MangaList({ query, fromHome }) {
             animate="show"
         >
             {loading ? (
-                <div
-                    className="grid place-items-center"
-                    style={{
-                        minHeight: 300,
-                    }}
-                >
-                    <CircularProgress color="inherit" />
-                </div>
+                <Spinner />
             ) : (
                 <>
                     {query

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { CircularProgress, Rating } from "@mui/material";
+import { Rating } from "@mui/material";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
@@ -21,6 +21,7 @@ import useStorage, {
 import { getAuth } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import Spinner from "../Layout/Spinner";
 
 function Manga() {
     const { storageItem: strBookmarks, updateStorageItem: updateStrBookmarks } =
@@ -192,14 +193,7 @@ function Manga() {
         // eslint-disable-next-line
     }, []);
     return loading ? (
-        <div
-            className="grid place-items-center"
-            style={{
-                minHeight: 300,
-            }}
-        >
-            <CircularProgress color="inherit" />
-        </div>
+        <Spinner />
     ) : (
         <motion.div
             initial={{ y: 75, opacity: 0 }}

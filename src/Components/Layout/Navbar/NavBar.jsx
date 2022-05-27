@@ -62,7 +62,7 @@ function NavBar() {
                         </label>
                         <ul
                             tabIndex={0}
-                            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                            className="menu menu-compact dropdown-content text-2xl mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                             style={{
                                 zIndex: 100,
                             }}
@@ -99,12 +99,12 @@ function NavBar() {
                     </div>
                     <Link
                         to="/"
-                        className="btn btn-ghost normal-case text-xl hover:text-primary transition-colors"
+                        className="btn btn-ghost normal-case text-2xl hover:text-primary transition-colors"
                     >
                         <LocalFireDepartmentIcon />
                     </Link>
                 </div>
-                <div className="navbar-center hidden lg:flex ">
+                <div className="navbar-center hidden px-2 py-2 text-2xl lg:flex">
                     <ul
                         className="menu menu-horizontal p-0"
                         style={{
@@ -137,7 +137,9 @@ function NavBar() {
                             </ul>
                         </li>
                         <li>
-                            <Link to="/list">List</Link>
+                            <Link className="px-2 py-2 text-2xl" to="/list">
+                                List
+                            </Link>
                         </li>
                     </ul>
                 </div>
