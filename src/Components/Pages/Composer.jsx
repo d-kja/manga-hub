@@ -1,7 +1,25 @@
 import React, { useState } from "react";
 import ReactSelect from "../Layout/ReactSelect";
+import { v4 as uuid } from "uuid";
+
+import { useCloudStorage } from "../../Hooks/useCloudStorage";
+import {
+    serverTimestamp,
+    doc,
+    updateDoc,
+    addDoc,
+    collection,
+} from "firebase/firestore";
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+} from "firebase/storage";
+import { db } from "../../firebase.config";
 
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 function Composer() {
     const [formDataCreate, setFormDataCreate] = useState({
@@ -26,17 +44,94 @@ function Composer() {
         formDataCreate;
     const { synopsis, tags } = others;
 
-    const handleFormCreate = (e) => {
+    const handleFormCreate = async (e) => {
         e.preventDefault();
-        console.log(formDataCreate);
+
+        // Upload images
+        const uploadImages = async (file) => {
+            return new Promise((resolve, reject) => {
+                const storage = getStorage();
+                const fileName = `${file.name}-${uuid()}`;
+                const storageRef = ref(storage, "mangas/" + fileName);
+
+                const uploadTask = uploadBytesResumable(storageRef, file);
+
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100;
+                        console.log("Upload is " + progress + "% done");
+                        switch (snapshot.state) {
+                            case "paused":
+                                console.log("Upload is paused");
+                                break;
+                            case "running":
+                                console.log("Upload is running");
+                                break;
+                            default:
+                                break;
+                        }
+                    },
+                    (error) => {
+                        reject(error);
+                    },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then(
+                            (downloadURL) => {
+                                resolve(downloadURL);
+                            }
+                        );
+                    }
+                );
+            });
+        };
+
+        const bannerUrl = await uploadImages(banner).catch((error) => {
+            toast.error("Something went wrong, unable to upload files", {
+                theme: "dark",
+            });
+            console.log(error);
+            return;
+        });
+        const bannerSmallUrl = await uploadImages(bannerSmall).catch(
+            (error) => {
+                toast.error("Something went wrong, unable to upload files", {
+                    theme: "dark",
+                });
+                console.log(error);
+                return;
+            }
+        );
+
+        const formDataDupe = { ...formDataCreate };
+
+        formDataDupe.banner = bannerUrl;
+        formDataDupe.bannerSmall = bannerSmallUrl;
+        formDataDupe.timestamp = serverTimestamp();
+
+        const docRef = collection(db, "mangas");
+        const docSnap = await addDoc(docRef, formDataDupe);
+        console.log(formDataDupe, docSnap.id);
     };
 
     const handleChangeDataCreate = (e) => {
-        const { id, value } = e.target;
-        setFormDataCreate((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
+        const { id, value, files } = e.target;
+
+        if (files) {
+            setFormDataCreate((prev) => ({
+                ...prev,
+                [id]: files[0],
+            }));
+        }
+
+        if (!files) {
+            setFormDataCreate((prev) => ({
+                ...prev,
+                [id]: value,
+            }));
+        }
     };
     const handleChangeDataCreateNested = (e) => {
         const { id, value } = e.target;
@@ -54,6 +149,7 @@ function Composer() {
         setFormDataCreate((prev) => ({
             ...prev,
             others: {
+                ...prev.others,
                 tags: temp,
             },
         }));
@@ -152,13 +248,12 @@ function Composer() {
                                 </span>
                             </label>
                             <input
-                                type="file"
-                                value={banner}
-                                id={"banner"}
-                                name={"banner"}
+                                id="banner"
                                 placeholder="Manga banner"
                                 onChange={handleChangeDataCreate}
-                                className="input input-lg w-full max-w-xs"
+                                accept=".jpg,.png,.jpeg"
+                                className="input input-lg w-full max-w-xs pt-3"
+                                type="file"
                             />
                         </div>
                         <div className="form-control w-full max-w-xs">
@@ -169,12 +264,11 @@ function Composer() {
                             </label>
                             <input
                                 type="file"
-                                value={bannerSmall}
-                                id={"bannerSmall"}
-                                name={"bannerSmall"}
+                                id="bannerSmall"
                                 onChange={handleChangeDataCreate}
+                                accept=".jpg,.png,.jpeg"
                                 placeholder="Banner small"
-                                className="input input-lg w-full max-w-xs"
+                                className="input input-lg w-full max-w-xs pt-3"
                             />
                         </div>
                     </div>

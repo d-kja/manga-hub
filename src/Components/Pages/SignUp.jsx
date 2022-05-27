@@ -18,6 +18,7 @@ function SignUp() {
         name: "",
         email: "",
         password: "",
+        admin: false,
     });
     const { name, email, password } = formData;
     const auth = getAuth();

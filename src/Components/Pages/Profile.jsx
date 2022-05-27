@@ -144,7 +144,7 @@ function Profile() {
                 {isAdmin && (
                     <Link
                         to="/compose"
-                        className="btn font-bold text-lg btn-ghost  m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 absolute -top-16 right-10"
+                        className="btn font-bold text-lg btn-ghost  m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 absolute -top-16 right-10"
                     >
                         Compose
                     </Link>

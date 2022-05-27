@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import Spinner from "../Layout/Spinner";
 import { getAuth } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
@@ -36,17 +36,7 @@ function AdminOnly() {
         };
     }, [isLogged]);
 
-    if (loadingAuth || loading)
-        return (
-            <div
-                className="grid place-items-center text-white"
-                style={{
-                    minHeight: 300,
-                }}
-            >
-                <CircularProgress color="inherit" />
-            </div>
-        );
+    if (loadingAuth || loading) return <Spinner />;
 
     return isLogged && isAdmin ? <Outlet /> : <Navigate to="/" />;
 }

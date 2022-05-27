@@ -29,19 +29,25 @@ function MangaContainer({ img, name, id, rating, chap }) {
                         />
                     </Link>
 
-                    <Link
-                        to={`/mangas/${id}/chapter/${chap.length - 1}`}
-                        className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
-                    >
-                        {chap[chap.length - 1].title}
-                    </Link>
-                    {chap.length > 1 && (
-                        <Link
-                            to={`/mangas/${id}/chapter/${chap.length - 2}`}
-                            className="rounded-lg btn absolute left-5 bottom-14 text-2xl font-light"
-                        >
-                            {chap[chap.length - 2].title}
-                        </Link>
+                    {chap.length > 0 && (
+                        <>
+                            <Link
+                                to={`/mangas/${id}/chapter/${chap.length - 1}`}
+                                className="rounded-lg btn absolute left-5 bottom-0 text-2xl font-light"
+                            >
+                                {chap[chap.length - 1].title}
+                            </Link>
+                            {chap.length > 1 && (
+                                <Link
+                                    to={`/mangas/${id}/chapter/${
+                                        chap.length - 2
+                                    }`}
+                                    className="rounded-lg btn absolute left-5 bottom-14 text-2xl font-light"
+                                >
+                                    {chap[chap.length - 2].title}
+                                </Link>
+                            )}
+                        </>
                     )}
                 </div>
                 <p className="mt-5 manga-list__item__title">{name}</p>
