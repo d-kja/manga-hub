@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Carousel from "../Layout/Carousel/Carousel";
 import MangaList from "../Layout/Manga/MangaList";
 
-import { motion } from "framer-motion";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { PopularList } from "../Layout/Manga/PopularList";
 
 function Home() {
     return (
@@ -22,7 +23,7 @@ function Home() {
                 <Carousel />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3">
-                <div className="md:col-span-2 col-span-3">
+                <div className="lg:col-span-2 col-span-3">
                     <div className="divider mx-20 mb-12 font-light text-2xl">
                         UPDATES{" "}
                         <LocalFireDepartmentIcon
@@ -32,12 +33,7 @@ function Home() {
                     </div>
                     <MangaList fromHome={true} />
                 </div>
-                <div className="md:col-span-1 col-span-3 drop-shadow-lg md:border-l md:border-t-0 sm:border-t border-zinc-700 border-opacity-40 m-16 mr-20 p-10 flex justify-center ">
-                    <div className="btn font-bold text-2xl btn-ghost -mt-5 btn-lg m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 mx-auto">
-                        Popular
-                    </div>
-                    {/* TODO - Filter rating */}
-                </div>
+                <PopularList />
             </div>
             <div className="divider mt-24 font-light text-2xl">
                 <Link

@@ -1,29 +1,10 @@
 import { Link } from "react-router-dom";
 
 import StarIcon from "@mui/icons-material/Star";
-import { useRef } from "react";
+import { useCheckStatus } from "../../../Hooks/useCheckStatus";
 
 function CarouselItem({ id, name, img, rating, status }) {
-    const myStatus = useRef("");
-    function checkStatus(stat) {
-        switch (stat) {
-            case 0:
-                myStatus.current = "Comming";
-                return "neutral";
-            case 1:
-                myStatus.current = "Ongoing";
-                return "success";
-            case 2:
-                myStatus.current = "Hiatus";
-                return "info";
-            case 3:
-                myStatus.current = "Dropped";
-                return "primary";
-            default:
-                myStatus.current = "?";
-                return "neutral";
-        }
-    }
+    const { checkStatus, myStatus } = useCheckStatus(status);
 
     return (
         <div className="block">

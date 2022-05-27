@@ -1,0 +1,72 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
+import StarIcon from "@mui/icons-material/Star";
+import { useCheckStatus } from "../../../Hooks/useCheckStatus";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+
+export const MangaWideContainer = ({
+    img,
+    name,
+    id,
+    rating = 0,
+    chap,
+    status,
+    clicks = 0,
+}) => {
+    const { myStatus, checkStatus } = useCheckStatus(status);
+    return (
+        <motion.li
+            className="overflow-hidden"
+            variants={{
+                hidden: { opacity: 0, y: 75 },
+                show: { opacity: 1, y: 0 },
+            }}
+            whileHover={{
+                scale: 1.025,
+            }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+            }}
+        >
+            <div className="hover:text-red-700 border-b border-zinc-700 border-opacity-60 sm:flex">
+                <div className="relative flex flex-row justify-evenly">
+                    <Link to={`/mangas/${id}`}>
+                        <img
+                            className="object-cover h-48 m-5 rounded-lg grayscale-[75%]"
+                            src={img}
+                            alt="manga banner"
+                        />
+                    </Link>
+
+                    <div className="my-8 flex flex-col relative min-w-[150px]">
+                        <h1 className="mt-4 text-xl">{name}</h1>
+                        <div className="flex mt-1">
+                            <span
+                                className={`badge badge-${checkStatus(
+                                    status
+                                )} badge-outline rounded-lg mr-2`}
+                            >
+                                {myStatus.current}
+                            </span>
+                            <div className="badge badge-neutral">
+                                <StarIcon
+                                    sx={{ color: "yellow", fontSize: 12 }}
+                                />
+                                {(
+                                    rating.totalRating / rating.totalUsers
+                                ).toFixed(0)}
+                            </div>
+                        </div>
+                        <div className="absolute badge badge-ghost bottom-0 right-0">
+                            <VisibilityOutlinedIcon className="mr-2" /> {clicks}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.li>
+    );
+};

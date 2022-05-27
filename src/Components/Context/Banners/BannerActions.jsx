@@ -2,7 +2,6 @@ import { useStorage } from "../../../Hooks/useStorage";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
-// TODO replace this, it's sort of useless to use a new context
 export const fetchBanner = async () => {
     const mangasRef = collection(db, "mangas");
     const mangasSnap = await getDocs(mangasRef);
