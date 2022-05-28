@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams, useNavigate, Navigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate, Link } from "react-router-dom";
 import Disqus from "disqus-react";
 
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
@@ -10,6 +10,7 @@ import mangaContext from "../Context/Mangas/MangaContext";
 import { fetchManga } from "../Context/Mangas/MangaActions";
 import { toast } from "react-toastify";
 import Spinner from "../Layout/Spinner";
+import { SelectChapter } from "../Layout/SelectChapter";
 
 function Strip() {
     const par = useParams();
@@ -39,12 +40,6 @@ function Strip() {
         // eslint-disable-next-line
     }, []);
 
-    // {try {
-    // } catch (error) {
-    //     toast.error("Couldn't complete action");
-    //     nav(`/mangas/${idRef}`);
-    // }}
-
     return loading ? (
         <Spinner />
     ) : manga.banner ? (
@@ -58,8 +53,11 @@ function Strip() {
             }}
             className="lg:max-w-screen-lg md:max-w-full w-full mx-auto"
         >
-            <div className="mangapage--banner mx-5">
-                <div className="my-12">
+            <div className="mt-12">
+                <SelectChapter id={par.id} chapId={par.chapId} />
+            </div>
+            <Link to={`/mangas/${par.id}`} className="mangapage--banner mx-5">
+                <div className="mb-6 mt-1">
                     <img
                         src={manga.banner}
                         className="rounded-3xl"
@@ -69,8 +67,13 @@ function Strip() {
                         alt="manga banner"
                     />
                 </div>
-            </div>
-            <p className="font-light text-4xl text-center">{manga.name}</p>
+            </Link>
+            <Link
+                to={`/mangas/${par.id}`}
+                className="font-semibold text-4xl flex justify-center"
+            >
+                {manga.name}
+            </Link>
 
             <div className="divider mx-5 mt-20 font-light text-2xl">
                 <ArrowLeftIcon /> {manga.chapters[par.chapId].title}
@@ -85,6 +88,9 @@ function Strip() {
                         className="w-full rounded-md"
                     />
                 ))}
+            </div>
+            <div className="mt-12">
+                <SelectChapter id={par.id} chapId={par.chapId} />
             </div>
             <Disqus.DiscussionEmbed
                 className="mt-24 mx-5"

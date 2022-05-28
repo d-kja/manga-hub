@@ -24,7 +24,7 @@ function Home() {
                 <Carousel />
             </div>
             <div className="flex flex-col items-center">
-                <div className="grid grid-cols-2 md:grid-cols-3 mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-3 mx-auto max-w-screen-2xl">
                     <div className="lg:col-span-2 col-span-3">
                         <div className="divider mx-20 mb-12 font-light text-2xl">
                             UPDATES{" "}

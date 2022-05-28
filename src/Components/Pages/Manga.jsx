@@ -232,7 +232,7 @@ function Manga() {
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                    <p className="font-bold capitalize text-4xl text-center">
+                    <p className="font-bold uppercase text-4xl text-center">
                         {manga.name}
                     </p>
                     <div>
@@ -240,44 +240,51 @@ function Manga() {
                             <span className="font-bold">Synopsis: </span>
                             {manga.others.synopsis}
                         </div>
-                        <div className="mx-12 md:mx-5 mt-7 font-normal text-2xl">
-                            <span className="font-bold">Tags: </span>
-                            {manga.others.tags.map((item, idx) => {
-                                return (
-                                    <div
-                                        className="badge badge-neutral ml-3 p-1 text-xl"
-                                        key={idx}
-                                    >
-                                        {item}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="flex mt-5">
-                            <Rating
-                                defaultValue={+rating}
-                                name="simple-controlled"
-                                value={+rating}
-                                className="m-auto"
-                                onChange={(e) => {
-                                    handleRatingClick(e.target);
-                                }}
-                                size="large"
-                            />
-                        </div>
-                        <div className="flex justify-end mr-24">
-                            <div
-                                className="btn btn-ghost hover:text-primary"
-                                onClick={handleBookmarkClick}
-                            >
-                                {bookmark ? (
-                                    <BookmarkAddedIcon
-                                        sx={{ fontSize: 25 }}
-                                        className="text-primary-focus"
+                        <div className="flex items-center justify-between mt-7 ml-8">
+                            <div className="mx-12 md:mx-5  font-normal text-2xl">
+                                <span className="font-bold">Tags: </span>
+                                {manga.others.tags.map((item, idx) => {
+                                    return (
+                                        <div
+                                            className="badge badge-neutral badge-lg ml-3 p-1 text-xl"
+                                            key={idx}
+                                        >
+                                            {item}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div className="flex items-center">
+                                <div className="flex  badge badge-neutral badge-lg">
+                                    <Rating
+                                        defaultValue={+rating}
+                                        name="simple-controlled"
+                                        value={+rating}
+                                        className=""
+                                        onChange={(e) => {
+                                            handleRatingClick(e.target);
+                                        }}
+                                        size="large"
                                     />
-                                ) : (
-                                    <BookmarkAddIcon sx={{ fontSize: 25 }} />
-                                )}
+                                    {" - " + (rating * 2).toFixed(1) + "/10"}
+                                </div>
+                                <div className="flex justify-end mr-24  ml-4">
+                                    <div
+                                        className="btn btn-ghost hover:text-primary"
+                                        onClick={handleBookmarkClick}
+                                    >
+                                        {bookmark ? (
+                                            <BookmarkAddedIcon
+                                                sx={{ fontSize: 25 }}
+                                                className="text-primary-focus"
+                                            />
+                                        ) : (
+                                            <BookmarkAddIcon
+                                                sx={{ fontSize: 25 }}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
