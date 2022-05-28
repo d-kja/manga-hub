@@ -5,6 +5,7 @@ import {
     collection,
     query,
     limit,
+    where,
 } from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
@@ -47,9 +48,19 @@ export const fetchManga = async (id) => {
     return mangaData;
 };
 
-export const fetchPages = async (id) => {
-    //const pagesPromise = await fetch(`/mangas/${id}`);
-    //const pages = await pagesPromise.json();
+export const queryTags = async (tagNumber) => {
+    const data = [];
 
-    return [];
+    const mangaRef = collection(db, "mangas");
+    const q = query(mangaRef, where("status", "==", tagNumber));
+
+    const mangas = await getDocs(q);
+    mangas.forEach((item) =>
+        data.push({
+            id: item.id,
+            data: item.data(),
+        })
+    );
+
+    return data;
 };

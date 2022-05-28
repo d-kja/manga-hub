@@ -35,9 +35,9 @@ export function checkExpiredStorageItem(key) {
     return false;
 }
 
-// default time (current + 10 min)
+// default time (current + 5 min)
 export function setExpirationDate(currentTime) {
-    return currentTime + 600000; // + 10 min
+    return currentTime + 300000; // + 5 min
 }
 
 export default useStorage;

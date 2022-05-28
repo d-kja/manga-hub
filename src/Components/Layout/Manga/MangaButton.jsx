@@ -7,17 +7,14 @@ function MangaButton({ id, chapId, title = "LOADING..." }) {
             className="
                 text-lg
                 btn 
-                btn-lg
-                sm:btn-sm 
-                md:btn-md 
+                btn-md 
                 lg:btn-lg 
                 btn-block 
                 btn-ghost
-                
                 rounded-lg
                 "
         >
-            {title}
+            <span className="">{title}</span>
         </Link>
     );
 }

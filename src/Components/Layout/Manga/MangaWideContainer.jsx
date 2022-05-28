@@ -14,6 +14,7 @@ export const MangaWideContainer = ({
     chap,
     status,
     clicks = 0,
+    customStyle,
 }) => {
     const { myStatus, checkStatus } = useCheckStatus(status);
     return (
@@ -32,7 +33,9 @@ export const MangaWideContainer = ({
                 ease: "easeIn",
             }}
         >
-            <div className="hover:text-red-700 border-b border-zinc-700 border-opacity-60 sm:flex">
+            <div
+                className={`hover:text-red-700 border-b border-zinc-700 border-opacity-60 pr-16 sm:flex ${customStyle}`}
+            >
                 <div className="relative flex flex-row justify-evenly md:grow-0 grow">
                     <Link to={`/mangas/${id}`}>
                         <img
@@ -56,12 +59,14 @@ export const MangaWideContainer = ({
                                 <StarIcon
                                     sx={{ color: "yellow", fontSize: 12 }}
                                 />
-                                {(
-                                    rating.totalRating / rating.totalUsers
-                                ).toFixed(0)}
+                                {rating.totalRating === 0
+                                    ? 0
+                                    : (
+                                          rating.totalRating / rating.totalUsers
+                                      ).toFixed(0)}
                             </div>
                         </div>
-                        <div className="absolute badge badge-ghost bottom-0 right-0">
+                        <div className="absolute badge badge-ghost bottom-0 -right-12">
                             <VisibilityOutlinedIcon className="mr-2" /> {clicks}
                         </div>
                     </div>

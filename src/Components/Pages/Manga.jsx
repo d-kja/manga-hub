@@ -224,7 +224,7 @@ function Manga() {
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                    <p className="font-light text-4xl text-center">
+                    <p className="font-bold capitalize text-4xl text-center">
                         {manga.name}
                     </p>
                     <div>
@@ -232,12 +232,12 @@ function Manga() {
                             <span className="font-bold">Synopsis: </span>
                             {manga.others.synopsis}
                         </div>
-                        <div className="mx-12 md:mx-5 mt-7 font-light text-2xl">
+                        <div className="mx-12 md:mx-5 mt-7 font-normal text-2xl">
                             <span className="font-bold">Tags: </span>
                             {manga.others.tags.map((item, idx) => {
                                 return (
                                     <div
-                                        className="badge badge-neutral ml-3 text-xl"
+                                        className="badge badge-neutral ml-3 p-1 text-xl"
                                         key={idx}
                                     >
                                         {item}
@@ -279,7 +279,7 @@ function Manga() {
             <div className="divider mx-5 mt-12 md:mt-auto md:mx-72 font-light text-2xl">
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
-            <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid grid-cols-2 gap-x-12 gap-y-7">
+            <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid md:grid-cols-2 gap-x-12 gap-y-7 auto-cols-fr">
                 {manga.chapters.map((item, idx) => (
                     <MangaButton
                         id={params.id}

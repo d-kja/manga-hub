@@ -36,14 +36,13 @@ function Composer() {
             totalRating: 0,
             totalUsers: 0,
         },
+        clicks: [],
         status: 0,
         timestamp: null,
-        clicks: 0,
     });
 
-    const { name, banner, bannerSmall, others, status, timestamp } =
-        formDataCreate;
-    const { synopsis, tags } = others;
+    const { name, banner, bannerSmall, others, status } = formDataCreate;
+    const { synopsis } = others;
 
     const handleFormCreate = async (e) => {
         e.preventDefault();
@@ -110,6 +109,7 @@ function Composer() {
 
         formDataDupe.banner = bannerUrl;
         formDataDupe.bannerSmall = bannerSmallUrl;
+        formDataDupe.status = +formDataDupe.status;
         formDataDupe.timestamp = serverTimestamp();
 
         const docRef = collection(db, "mangas");

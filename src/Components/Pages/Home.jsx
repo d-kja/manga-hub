@@ -7,6 +7,7 @@ import MangaList from "../Layout/Manga/MangaList";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { motion } from "framer-motion";
 import { PopularList } from "../Layout/Manga/PopularList";
+import { CommingSoonList } from "../Layout/Manga/CommingSoonList";
 
 function Home() {
     return (
@@ -44,18 +45,19 @@ function Home() {
                         More
                     </Link>
                 </div>
-                <div className="border-t-8 my-28 border-zinc-700 border-opacity-50 border-dashed max-w-xs"></div>
-                <div className="flex flex-col p-14 pt-0">
-                    <div className="m-auto font-light text-2xl">
-                        <div
-                            to="/list"
-                            className="btn font-bold text-2xl btn-ghost -mt-5 btn-lg m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
-                        >
-                            Comming Soon
+                <div className="flex flex-col p-14 pt-0 mt-16  rounded-xl min-w-full">
+                    <div className="bg-neutral bg-opacity-25 rounded-lg p-5 flex flex-col items-center">
+                        <div className="m-auto font-light text-2xl">
+                            <div
+                                to="/list"
+                                className="btn font-bold text-2xl btn-ghost btn-lg m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
+                            >
+                                Comming Soon
+                            </div>
                         </div>
+                        <div className="my-7 border-zinc-700 border-opacity-40"></div>
+                        <CommingSoonList />
                     </div>
-                    <div className="my-7 border-zinc-700 border-opacity-40"></div>
-                    {/* TODO - Filter tags */}
                 </div>
             </div>
         </motion.div>
