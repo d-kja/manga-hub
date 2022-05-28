@@ -34,6 +34,7 @@ export const CommingSoonList = () => {
                             chap={data.chapters}
                             status={data.status}
                             customStyle="gap-x-5"
+                            clicks={data.clicks}
                         />
                     ))
                 )}

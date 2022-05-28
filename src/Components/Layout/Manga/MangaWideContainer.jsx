@@ -67,7 +67,8 @@ export const MangaWideContainer = ({
                             </div>
                         </div>
                         <div className="absolute badge badge-ghost bottom-0 -right-12">
-                            <VisibilityOutlinedIcon className="mr-2" /> {clicks}
+                            <VisibilityOutlinedIcon className="mr-2" />{" "}
+                            {clicks.length ?? 0}
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ export const fetchBanner = async () => {
     mangasSnap.forEach((item) => {
         const temp =
             item.data().rating.totalRating / item.data().rating.totalUsers;
-        temp.toString().match(rgx) &&
+        +temp > 5 &&
             mangasData.push({
                 id: item.id,
                 data: item.data(),

@@ -15,17 +15,21 @@ export const PopularList = () => {
                 {loading ? (
                     <Spinner />
                 ) : (
-                    banners.map(({ id, data }) => (
-                        <MangaWideContainer
-                            key={id}
-                            id={id}
-                            name={data.name}
-                            rating={data.rating}
-                            img={data.bannerSmall}
-                            chap={data.chapters}
-                            status={data.status}
-                        />
-                    ))
+                    banners.map(
+                        ({ id, data }, idx) =>
+                            idx < 5 && (
+                                <MangaWideContainer
+                                    key={id}
+                                    id={id}
+                                    name={data.name}
+                                    rating={data.rating}
+                                    img={data.bannerSmall}
+                                    chap={data.chapters}
+                                    status={data.status}
+                                    clicks={data.clicks}
+                                />
+                            )
+                    )
                 )}
             </ul>
         </div>

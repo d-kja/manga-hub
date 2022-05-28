@@ -31,6 +31,7 @@ function Manga() {
         });
     const params = useParams();
     const nav = useNavigate();
+    const auth = getAuth();
 
     const { manga, loading, dispatch } = useContext(MangaContext);
     const { updateStorageItem } = useStorage({
@@ -87,7 +88,7 @@ function Manga() {
             }
         }
     };
-    // strBookmarks.map((element) => (element.myId !== params.id && element));
+
     function checkStorageObj(key, id) {
         // Checking twice cus if it isn't there it always returns both key and data
         try {
@@ -180,6 +181,13 @@ function Manga() {
             setRating(
                 mangaRef.rating.totalRating / mangaRef.rating.totalUsers / 2
             );
+            const userId = auth.currentUser.uid;
+            if (!mangaRef?.clicks.includes(userId)) {
+                const docRef = doc(db, "mangas", mangaRef.myId);
+                await updateDoc(docRef, {
+                    clicks: [...mangaRef.clicks, userId],
+                });
+            }
 
             if (mangaRef === null) {
                 toast.error("Couldn't find item", {
