@@ -33,16 +33,16 @@ export const MangaWideContainer = ({
             }}
         >
             <div className="hover:text-red-700 border-b border-zinc-700 border-opacity-60 sm:flex">
-                <div className="relative flex flex-row justify-evenly">
+                <div className="relative flex flex-row justify-evenly md:grow-0 grow">
                     <Link to={`/mangas/${id}`}>
                         <img
-                            className="object-cover h-48 m-5 rounded-lg grayscale-[75%]"
+                            className="object-cover h-48 m-5 w-36 rounded-lg grayscale-[75%]"
                             src={img}
                             alt="manga banner"
                         />
                     </Link>
 
-                    <div className="my-8 flex flex-col relative min-w-[150px]">
+                    <div className="my-8 flex flex-col relative md:grow-0 grow">
                         <h1 className="mt-4 text-xl">{name}</h1>
                         <div className="flex mt-1">
                             <span

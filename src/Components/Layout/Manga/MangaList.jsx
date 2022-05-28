@@ -65,17 +65,15 @@ function MangaList({ query, fromHome }) {
     return (
         <motion.ul
             className="manga-list pagePadding--sideways mw--165 w-full"
-            variants={{
-                hidden: { opacity: 0 },
-                show: {
-                    opacity: 1,
-                    transition: {
-                        delay: 0.2,
-                    },
-                },
+            initial={{ y: 75, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+                type: "spring",
+                stiffness: 100,
+                ease: "easeIn",
+                delay: 0.3,
             }}
-            initial="hidden"
-            animate="show"
         >
             {loading ? (
                 <Spinner />
