@@ -192,19 +192,19 @@ function Composer() {
     const handleFormUpdate = async (e) => {
         e.preventDefault();
 
-        // const bannerUrl = await upload(bannerUpdate);
-        // const bannerSmallUrl = await upload(bannerSmallUpdate);
+        const bannerUrl = await upload(bannerUpdate);
+        const bannerSmallUrl = await upload(bannerSmallUpdate);
 
         const formDataDupe = { ...formDataUpdate };
 
-        // formDataDupe.banner = bannerUrl;
-        // formDataDupe.bannerSmall = bannerSmallUrl;
+        formDataDupe.banner = bannerUrl;
+        formDataDupe.bannerSmall = bannerSmallUrl;
         formDataDupe.status = +formDataDupe.status;
         !formDataDupe.timestamp && (formDataDupe.timestamp = serverTimestamp());
         formDataDupe.lastUpdate = serverTimestamp();
 
-        // const docRef = collection(db, "mangas");
-        // const docSnap = await addDoc(docRef, formDataDupe);
+        const docRef = collection(db, "mangas");
+        const docSnap = await addDoc(docRef, formDataDupe);
         console.log(formDataDupe);
     };
 
