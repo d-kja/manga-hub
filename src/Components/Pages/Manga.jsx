@@ -260,13 +260,13 @@ function Manga() {
                                         defaultValue={+rating}
                                         name="simple-controlled"
                                         value={+rating}
-                                        className=""
+                                        className="mr-2"
                                         onChange={(e) => {
                                             handleRatingClick(e.target);
                                         }}
                                         size="large"
                                     />
-                                    {" - " + (rating * 2).toFixed(1) + "/10"}
+                                    {(rating * 2).toFixed(1) + "/10"}
                                 </div>
                                 <div className="flex justify-end mr-24  ml-4">
                                     <div

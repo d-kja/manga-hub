@@ -34,16 +34,19 @@ export const MangaWideContainer = ({
             }}
         >
             <div
-                className={`hover:text-red-700 border-b border-zinc-700 border-opacity-60 pr-16 sm:flex ${customStyle}`}
+                className={`hover:text-red-700 border-b border-zinc-700 border-opacity-60 pr-16 sm:flex min-w-[300px] ${customStyle}`}
             >
-                <div className="relative flex flex-row justify-evenly md:grow-0 grow">
-                    <Link to={`/mangas/${id}`}>
+                <Link
+                    to={`/mangas/${id}`}
+                    className="relative flex flex-row justify-evenly md:grow-0 grow"
+                >
+                    <div>
                         <img
                             className="object-cover h-48 m-5 w-36 rounded-lg grayscale-[75%]"
                             src={img}
                             alt="manga banner"
                         />
-                    </Link>
+                    </div>
 
                     <div className="my-8 flex flex-col relative md:grow-0 grow">
                         <h1 className="mt-4 text-xl">{name}</h1>
@@ -66,12 +69,12 @@ export const MangaWideContainer = ({
                                       ).toFixed(0)}
                             </div>
                         </div>
-                        <div className="absolute badge badge-ghost bottom-0 -right-12">
+                        <div className="absolute badge badge-ghost bottom-0 -right-16">
                             <VisibilityOutlinedIcon className="mr-2" />{" "}
                             {clicks.length ?? 0}
                         </div>
                     </div>
-                </div>
+                </Link>
             </div>
         </motion.li>
     );

@@ -74,10 +74,20 @@ function Strip() {
             >
                 {manga.name}
             </Link>
-
-            <div className="divider mx-5 mt-20 font-light text-2xl">
+            <div className="divider mx-5 mt-20 font-light text-2xl relative">
                 <ArrowLeftIcon /> {manga.chapters[par.chapId].title}
                 <ArrowRightIcon />
+                <div className="text-lg breadcrumbs uppercase absolute left-0 top-4">
+                    <ul>
+                        <li>
+                            <Link to={`/`}>Home</Link>
+                        </li>
+                        <li>
+                            <Link to={`/mangas/${par.id}`}>{manga.name}</Link>
+                        </li>
+                        <li>{manga.chapters[par.chapId].title}</li>
+                    </ul>
+                </div>
             </div>
             <div className="mangapage--table mt-12">
                 {manga.chapters[par.chapId].strip.map((item, idkey) => (
