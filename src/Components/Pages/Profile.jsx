@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { getAuth, updateEmail, updateProfile } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import { useUploadImage } from "../../Hooks/useUploadImage";
 
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
 import Bookmarks from "./Bookmarks";
-import { Link } from "react-router-dom";
 
 function Profile() {
     const auth = getAuth();
-
+    const { upload } = useUploadImage();
     const [changeBtn, setChangeBtn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [user, setUser] = useState({
@@ -43,12 +45,14 @@ function Profile() {
                 const docRef = doc(db, "users", auth.currentUser.uid);
 
                 if (
-                    auth.currentUser.email !== email &&
-                    auth.currentUser.name !== name
+                    auth.currentUser.email !== email ||
+                    auth.currentUser.name !== name ||
+                    auth.currentUser.photoURL !== photoURL
                 ) {
+                    console.log(photoURL);
                     await updateProfile(auth.currentUser, {
                         displayName: name,
-                        // photoURL, {TODO}
+                        photoURL,
                     });
                     await updateEmail(auth.currentUser, email);
                     await updateDoc(docRef, {
@@ -66,10 +70,19 @@ function Profile() {
 
     const handleChange = (e) => {
         const { value, id } = e.target;
-
         setUser((prev) => ({
             ...prev,
             [id]: value,
+        }));
+        console.log(photoURL);
+    };
+
+    const handleImage = async (e) => {
+        const { files, id } = e.target;
+        const url = await upload(files[0]);
+        setUser((prev) => ({
+            ...prev,
+            [id]: url,
         }));
     };
 
@@ -90,14 +103,42 @@ function Profile() {
                 transition-all ease-in-out duration-700
             "
                 >
-                    <img
-                        className="mask mask-circle hover:grayscale"
-                        src={photoURL ?? "https://i.imgur.com/7fTGOOK.jpeg"}
-                        width={125}
-                        height={125}
-                        loading="lazy"
-                        alt="user icon"
-                    />
+                    <label
+                        htmlFor="photoURL"
+                        className="relative grid place-items-center"
+                    >
+                        <input
+                            type="file"
+                            id="photoURL"
+                            onChange={handleImage}
+                            accept=".jpg,.png,.jpeg"
+                            placeholder="user photo"
+                            className="hidden"
+                            disabled={!changeBtn}
+                        />
+                        <div className="bg-neutral rounded-full">
+                            <img
+                                className={`mask mask-circle hover:grayscale opacity-100 w-[125px] h-[125px] object-cover ${
+                                    changeBtn && "opacity-25"
+                                }`}
+                                src={
+                                    photoURL ??
+                                    "https://i.imgur.com/7fTGOOK.jpeg"
+                                }
+                                width={125}
+                                height={125}
+                                loading="lazy"
+                                alt="user icon"
+                            />
+                        </div>
+                        <span
+                            className={`text-4xl font-light absolute duration-700 transition-all opacity-0 ${
+                                changeBtn && "opacity-100"
+                            }`}
+                        >
+                            CHANGE
+                        </span>
+                    </label>
                 </div>
 
                 <form onSubmit={handleSubmit} className="ml-5">

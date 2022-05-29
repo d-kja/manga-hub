@@ -1,7 +1,6 @@
 {
     "mangas": [
         {
-            "id": "",
             "name": "",
             "banner": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-banner.png",
             "bannerSmall": "https://raw.githubusercontent.com/Nyyu/TCC/main/preview/default-display.png",
@@ -11,15 +10,32 @@
                     "strip": []
                 }
             ],
+            "clicks": ["mangaId"],
             "rating": {
-                "totalRating": "",
-                "totalUsers": ""
+                "totalRating": 0,
+                "totalUsers": 0
             },
             "status": "0, 1, 2, 3",
             "others": {
-                "synopsis": "",
-                "tags": []
-            }
+                "synopsis": "...",
+                "tags": ["tagEx"]
+            },
+            "timestamp": ""
+        }
+    ],
+    "users": [
+        {
+            "admin": false,
+            "bookmarks": [],
+            "email": "",
+            "name": "",
+            "history": [
+                {
+                    "manga": "id",
+                    "timestamp": ""
+                }
+            ],
+            "timestamp": ""
         }
     ]
 }

@@ -77,7 +77,7 @@ function Strip() {
             <div className="divider mx-5 mt-20 font-light text-2xl relative">
                 <ArrowLeftIcon /> {manga.chapters[par.chapId].title}
                 <ArrowRightIcon />
-                <div className="text-lg breadcrumbs uppercase absolute left-0 top-4">
+                <div className="text-lg breadcrumbs uppercase absolute left-0 bottom-0">
                     <ul>
                         <li>
                             <Link to={`/`}>Home</Link>
@@ -89,7 +89,7 @@ function Strip() {
                     </ul>
                 </div>
             </div>
-            <div className="mangapage--table mt-12">
+            <div className="mangapage--table mt-10">
                 {manga.chapters[par.chapId].strip.map((item, idkey) => (
                     <img
                         src={item}

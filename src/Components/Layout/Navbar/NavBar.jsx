@@ -62,7 +62,7 @@ function NavBar() {
                         </label>
                         <ul
                             tabIndex={0}
-                            className="menu menu-compact dropdown-content text-2xl mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                            className="menu dropdown-content font-bold text-2xl mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                             style={{
                                 zIndex: 100,
                             }}
@@ -104,7 +104,7 @@ function NavBar() {
                         <LocalFireDepartmentIcon />
                     </Link>
                 </div>
-                <div className="navbar-center hidden px-2 py-2 text-2xl font-medium lg:flex">
+                <div className="navbar-center hidden px-2 py-2 text-2xl font-bold lg:flex">
                     <ul
                         className="menu menu-horizontal p-2"
                         style={{

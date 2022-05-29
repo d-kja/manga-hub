@@ -18,6 +18,7 @@ import {
     uploadBytesResumable,
 } from "firebase/storage";
 import { db } from "../../firebase.config";
+import { useUploadImage } from "../../Hooks/useUploadImage";
 
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
@@ -74,6 +75,7 @@ function Composer() {
     const { synopsis } = others;
     const { synopsis: synopsisUpdate } = othersUpdate;
     const { title, strip } = mangaChapter;
+    const { upload } = useUploadImage();
 
     const handleFormCreate = async (e) => {
         e.preventDefault();
@@ -190,63 +192,8 @@ function Composer() {
     const handleFormUpdate = async (e) => {
         e.preventDefault();
 
-        // Upload images
-        const uploadImages = async (file) => {
-            return new Promise((resolve, reject) => {
-                const storage = getStorage();
-                const fileName = `${file.name}-${uuid()}`;
-                const storageRef = ref(storage, "mangas/" + fileName);
-
-                const uploadTask = uploadBytesResumable(storageRef, file);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            (snapshot.bytesTransferred / snapshot.totalBytes) *
-                            100;
-                        console.log("Upload is " + progress + "% done");
-                        switch (snapshot.state) {
-                            case "paused":
-                                console.log("Upload is paused");
-                                break;
-                            case "running":
-                                console.log("Upload is running");
-                                break;
-                            default:
-                                break;
-                        }
-                    },
-                    (error) => {
-                        reject(error);
-                    },
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then(
-                            (downloadURL) => {
-                                resolve(downloadURL);
-                            }
-                        );
-                    }
-                );
-            });
-        };
-
-        // const bannerUrl = await uploadImages(bannerUpdate).catch((error) => {
-        //     toast.error("Something went wrong, unable to upload files", {
-        //         theme: "dark",
-        //     });
-        //     console.log(error);
-        //     return;
-        // });
-        // const bannerSmallUrl = await uploadImages(bannerSmallUpdate).catch(
-        //     (error) => {
-        //         toast.error("Something went wrong, unable to upload files", {
-        //             theme: "dark",
-        //         });
-        //         console.log(error);
-        //         return;
-        //     }
-        // );
+        // const bannerUrl = await upload(bannerUpdate);
+        // const bannerSmallUrl = await upload(bannerSmallUpdate);
 
         const formDataDupe = { ...formDataUpdate };
 
@@ -440,6 +387,7 @@ function Composer() {
                                 id="mangaChoice"
                                 aria-label="choose manga"
                                 onChange={handleFecthManga}
+                                defaultValue={0}
                             >
                                 <option value={0} disabled>
                                     Select manga...
@@ -535,14 +483,14 @@ function Composer() {
                             />
                         </div>
                     </div>
-                    <div class="collapse col-span-2">
+                    <div className="collapse col-span-2">
                         <input type="checkbox" />
-                        <div class="collapse-title text-xl font-medium">
+                        <div className="collapse-title text-xl font-medium">
                             Add Chapter
                         </div>
                         <div className="collapse-content">
                             <div className="flex">
-                                <div className="form-control w-full max-w-xs">
+                                <div className="form-control w-full max-w-xs mr-8">
                                     <label className="label">
                                         <span className="label-text text-lg">
                                             Title
