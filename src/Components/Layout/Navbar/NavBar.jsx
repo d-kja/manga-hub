@@ -104,9 +104,9 @@ function NavBar() {
                         <LocalFireDepartmentIcon />
                     </Link>
                 </div>
-                <div className="navbar-center hidden px-2 py-2 text-2xl lg:flex">
+                <div className="navbar-center hidden px-2 py-2 text-2xl font-medium lg:flex">
                     <ul
-                        className="menu menu-horizontal p-0"
+                        className="menu menu-horizontal p-2"
                         style={{
                             zIndex: 100,
                         }}
@@ -137,7 +137,7 @@ function NavBar() {
                             </ul>
                         </li>
                         <li>
-                            <Link className="px-2 py-2 text-2xl" to="/list">
+                            <Link className="px-2 py-2" to="/list">
                                 List
                             </Link>
                         </li>

@@ -50,10 +50,7 @@ function App() {
                 <SearchProvider>
                     <ThemeProvider theme={darkTheme}>
                         <Router>
-                            <div
-                                className="relative min-h-screen"
-                                onScroll={(e) => console.log(e)}
-                            >
+                            <div className="relative min-h-screen">
                                 <NavBar />
                                 <AnimatePresence>
                                     <Routes>

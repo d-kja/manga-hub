@@ -19,7 +19,7 @@ export const CommingSoonList = () => {
     return loading ? (
         <Spinner />
     ) : (
-        <div className="col-span-3 drop-shadow-lg rounded-lg max-w-full bg-neutral bg-opacity-25 border-zinc-700 border-opacity-40 mb-5 flex justify-center flex-row items-center">
+        <div className="col-span-3 drop-shadow-lg rounded-lg max-w-full border-zinc-700 border-opacity-40 mb-5 flex justify-center flex-row items-center">
             <ul className="list-none flex flex-wrap gap-x-16 justify-evenly">
                 {loading ? (
                     <Spinner />

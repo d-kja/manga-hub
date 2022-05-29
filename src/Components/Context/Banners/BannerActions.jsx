@@ -7,12 +7,12 @@ export const fetchBanner = async () => {
     const mangasSnap = await getDocs(mangasRef);
 
     const mangasData = [];
-    const rgx = new RegExp(`[6-9]|10`);
+    const rgx = new RegExp(`([6-9]|10)`);
 
     mangasSnap.forEach((item) => {
         const temp =
             item.data().rating.totalRating / item.data().rating.totalUsers;
-        +temp > 5 &&
+        +temp >= 6 &&
             mangasData.push({
                 id: item.id,
                 data: item.data(),
