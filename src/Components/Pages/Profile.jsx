@@ -49,10 +49,10 @@ function Profile() {
                     auth.currentUser.name !== name ||
                     auth.currentUser.photoURL !== photoURL
                 ) {
-                    console.log(photoURL);
+                    const url = await upload(photoURL, "users");
                     await updateProfile(auth.currentUser, {
                         displayName: name,
-                        photoURL,
+                        photoURL: url,
                     });
                     await updateEmail(auth.currentUser, email);
                     await updateDoc(docRef, {
@@ -79,10 +79,10 @@ function Profile() {
 
     const handleImage = async (e) => {
         const { files, id } = e.target;
-        const url = await upload(files[0]);
+
         setUser((prev) => ({
             ...prev,
-            [id]: url,
+            [id]: files[0],
         }));
     };
 

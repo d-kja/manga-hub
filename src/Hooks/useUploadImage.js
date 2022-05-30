@@ -8,11 +8,11 @@ import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 
 export const useUploadImage = () => {
-    const uploadImages = async (file) => {
+    const uploadImages = async (file, path) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage();
             const fileName = `${file.name}-${uuid()}`;
-            const storageRef = ref(storage, "users/" + fileName);
+            const storageRef = ref(storage, `${path}/` + fileName);
 
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -39,6 +39,7 @@ export const useUploadImage = () => {
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
                         (downloadURL) => {
+                            toast.success("Image uploaded", { theme: "dark" });
                             resolve(downloadURL);
                         }
                     );
@@ -47,8 +48,8 @@ export const useUploadImage = () => {
         });
     };
 
-    const upload = async (item) => {
-        const myUrl = await uploadImages(item).catch((error) => {
+    const upload = async (item, path) => {
+        const myUrl = await uploadImages(item, path).catch((error) => {
             toast.error("Something went wrong, unable to upload files", {
                 theme: "dark",
             });

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactSelect from "../Layout/ReactSelect";
 import { v4 as uuid } from "uuid";
 
-import { useCloudStorage } from "../../Hooks/useCloudStorage";
 import {
     serverTimestamp,
     doc,
@@ -11,12 +10,6 @@ import {
     addDoc,
     collection,
 } from "firebase/firestore";
-import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
-} from "firebase/storage";
 import { db } from "../../firebase.config";
 import { useUploadImage } from "../../Hooks/useUploadImage";
 
@@ -28,6 +21,7 @@ function Composer() {
         strip: [],
         title: "",
     });
+    const [mangas, setMangas] = useState([]);
     const [formDataCreate, setFormDataCreate] = useState({
         name: "",
         banner: "",
@@ -77,66 +71,39 @@ function Composer() {
     const { title, strip } = mangaChapter;
     const { upload } = useUploadImage();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const temp = [];
+                const mangasSnap = await getDocs(collection(db, "mangas"));
+
+                if (mangasSnap) {
+                    mangasSnap.forEach((item) =>
+                        temp.push({
+                            id: item.id,
+                            data: item.data(),
+                        })
+                    );
+                }
+
+                setMangas(temp);
+            } catch (error) {
+                toast.error(
+                    "Couldn't fill up 'select manga' options with firebase data, for more info use console",
+                    { theme: "dark" }
+                );
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const handleFormCreate = async (e) => {
         e.preventDefault();
 
-        // Upload images
-        const uploadImages = async (file) => {
-            return new Promise((resolve, reject) => {
-                const storage = getStorage();
-                const fileName = `${file.name}-${uuid()}`;
-                const storageRef = ref(storage, "mangas/" + fileName);
-
-                const uploadTask = uploadBytesResumable(storageRef, file);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            (snapshot.bytesTransferred / snapshot.totalBytes) *
-                            100;
-                        console.log("Upload is " + progress + "% done");
-                        switch (snapshot.state) {
-                            case "paused":
-                                console.log("Upload is paused");
-                                break;
-                            case "running":
-                                console.log("Upload is running");
-                                break;
-                            default:
-                                break;
-                        }
-                    },
-                    (error) => {
-                        reject(error);
-                    },
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then(
-                            (downloadURL) => {
-                                resolve(downloadURL);
-                            }
-                        );
-                    }
-                );
-            });
-        };
-
-        const bannerUrl = await uploadImages(banner).catch((error) => {
-            toast.error("Something went wrong, unable to upload files", {
-                theme: "dark",
-            });
-            console.log(error);
-            return;
-        });
-        const bannerSmallUrl = await uploadImages(bannerSmall).catch(
-            (error) => {
-                toast.error("Something went wrong, unable to upload files", {
-                    theme: "dark",
-                });
-                console.log(error);
-                return;
-            }
-        );
+        const bannerUrl = await upload(banner, "mangas");
+        const bannerSmallUrl = await upload(bannerSmall, "mangas");
 
         const formDataDupe = { ...formDataCreate };
 
@@ -146,8 +113,8 @@ function Composer() {
         formDataDupe.timestamp = serverTimestamp();
 
         const docRef = collection(db, "mangas");
-        const docSnap = await addDoc(docRef, formDataDupe);
-        console.log(formDataDupe, docSnap.id);
+        await addDoc(docRef, formDataDupe);
+        toast.success("Item added", { theme: "dark" });
     };
 
     const handleChangeDataCreate = (e) => {
@@ -192,23 +159,31 @@ function Composer() {
     const handleFormUpdate = async (e) => {
         e.preventDefault();
 
-        const bannerUrl = await upload(bannerUpdate);
-        const bannerSmallUrl = await upload(bannerSmallUpdate);
+        try {
+            // const bannerUrl = await upload(bannerUpdate);
 
-        const formDataDupe = { ...formDataUpdate };
+            const formDataDupe = { ...formDataUpdate };
 
-        formDataDupe.banner = bannerUrl;
-        formDataDupe.bannerSmall = bannerSmallUrl;
-        formDataDupe.status = +formDataDupe.status;
-        !formDataDupe.timestamp && (formDataDupe.timestamp = serverTimestamp());
-        formDataDupe.lastUpdate = serverTimestamp();
+            formDataDupe.status = +formDataDupe.status;
+            !formDataDupe.timestamp &&
+                (formDataDupe.timestamp = serverTimestamp());
+            formDataDupe.lastUpdate = serverTimestamp();
+            formDataDupe.chapters = [...formDataUpdate.chapters, mangaChapter];
 
-        const docRef = collection(db, "mangas");
-        const docSnap = await addDoc(docRef, formDataDupe);
-        console.log(formDataDupe);
+            const docRef = collection(db, "mangas");
+            await addDoc(docRef, formDataDupe);
+            toast.success("Item updated", { theme: "dark" });
+            console.log(formDataDupe);
+        } catch (error) {
+            toast.error("Something went wrong", { theme: "dark" });
+        }
     };
 
-    const handleFecthManga = async () => {};
+    const handleFecthManga = (e) => {
+        const { value, id } = e.target;
+        setFormDataUpdate(mangas[value].data);
+        console.log(formDataUpdate);
+    };
 
     const handleChangeDataUpdate = (e) => {
         const { id, value, files } = e.target;
@@ -216,7 +191,7 @@ function Composer() {
         if (files) {
             setFormDataUpdate((prev) => ({
                 ...prev,
-                [id]: files[0],
+                [id]: files,
             }));
         }
 
@@ -272,7 +247,7 @@ function Composer() {
             </div>
             <div className="m-5 grid grid-cols-1 lg:grid-cols-2 mt-12 divide-zinc-700 place-items-center">
                 <form
-                    className="relative p-12 grid grid-cols-1 md:grid-cols-2 gap-12 mb-16"
+                    className="relative p-12 grid grid-cols-2 gap-12 mb-16"
                     onSubmit={handleFormCreate}
                 >
                     <h2 className="absolute top-0 left-0">
@@ -387,15 +362,20 @@ function Composer() {
                                 id="mangaChoice"
                                 aria-label="choose manga"
                                 onChange={handleFecthManga}
-                                defaultValue={0}
+                                defaultValue={"nullish"}
                             >
-                                <option value={0} disabled>
+                                <option value={"nullish"} disabled>
                                     Select manga...
                                 </option>
+                                {mangas.map((item, idx) => (
+                                    <option value={idx} key={item.id}>
+                                        {item.data.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
-                    <div className="relative top-8">
+                    <div className="relative top-8 ">
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text text-lg">Name</span>
@@ -425,7 +405,18 @@ function Composer() {
                                 name="synopsis"
                             />
                         </div>
+                    </div>
+                    <div className="relative top-8 w-[180px]">
                         <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-lg">Tags</span>
+                            </label>
+                            <ReactSelect
+                                className=""
+                                setItems={handleMultipleInputUpdate}
+                            />
+                        </div>
+                        <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text text-lg">
                                     Status
@@ -444,15 +435,7 @@ function Composer() {
                                 <option value={3}>Dropped</option>
                             </select>
                         </div>
-                    </div>
-                    <div className="relative top-8">
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text text-lg">Tags</span>
-                            </label>
-                            <ReactSelect setItems={handleMultipleInputUpdate} />
-                        </div>
-                        <div className="form-control w-full max-w-xs mt-2">
+                        {/* <div className="form-control w-full max-w-xs mt-2">
                             <label className="label">
                                 <span className="label-text text-lg">
                                     Banner
@@ -481,7 +464,7 @@ function Composer() {
                                 placeholder="Banner small"
                                 className="input input-lg w-full max-w-xs pt-3"
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="collapse col-span-2">
                         <input type="checkbox" />
