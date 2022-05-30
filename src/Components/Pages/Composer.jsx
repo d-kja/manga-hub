@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactSelect from "../Layout/ReactSelect";
-import { v4 as uuid } from "uuid";
 
 import {
     serverTimestamp,
@@ -17,11 +16,12 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
 function Composer() {
+    const [mangas, setMangas] = useState([]);
+    const [currentManga, setCurrentManga] = useState(null);
     const [mangaChapter, setMangaChapter] = useState({
         strip: [],
         title: "",
     });
-    const [mangas, setMangas] = useState([]);
     const [formDataCreate, setFormDataCreate] = useState({
         name: "",
         banner: "",
@@ -68,7 +68,7 @@ function Composer() {
     } = formDataUpdate;
     const { synopsis } = others;
     const { synopsis: synopsisUpdate } = othersUpdate;
-    const { title, strip } = mangaChapter;
+    const { title } = mangaChapter;
     const { upload } = useUploadImage();
 
     useEffect(() => {
@@ -160,29 +160,38 @@ function Composer() {
         e.preventDefault();
 
         try {
-            // const bannerUrl = await upload(bannerUpdate);
+            const stripImages = await Promise.all(
+                [...mangaChapter.strip].map((item) =>
+                    upload(item, "mangaChapters")
+                )
+            ).catch((error) => console.error(error));
 
             const formDataDupe = { ...formDataUpdate };
+            setMangaChapter((prev) => ({ ...prev, strip: stripImages }));
 
             formDataDupe.status = +formDataDupe.status;
             !formDataDupe.timestamp &&
                 (formDataDupe.timestamp = serverTimestamp());
             formDataDupe.lastUpdate = serverTimestamp();
-            formDataDupe.chapters = [...formDataUpdate.chapters, mangaChapter];
-
-            const docRef = collection(db, "mangas");
-            await addDoc(docRef, formDataDupe);
-            toast.success("Item updated", { theme: "dark" });
+            formDataDupe.chapters = [
+                ...formDataUpdate.chapters,
+                { title: mangaChapter.title, strip: stripImages },
+            ];
             console.log(formDataDupe);
+
+            const docRef = doc(db, "mangas", currentManga);
+            await updateDoc(docRef, formDataDupe);
+            toast.success("Item updated", { theme: "dark" });
         } catch (error) {
             toast.error("Something went wrong", { theme: "dark" });
+            console.error(error);
         }
     };
 
     const handleFecthManga = (e) => {
-        const { value, id } = e.target;
+        const { value } = e.target;
         setFormDataUpdate(mangas[value].data);
-        console.log(formDataUpdate);
+        setCurrentManga(mangas[value].id);
     };
 
     const handleChangeDataUpdate = (e) => {
@@ -202,6 +211,11 @@ function Composer() {
             }));
         }
     };
+    const handleChangeDataUpdateNestedFiles = (e) => {
+        const { id, value, files } = e.target;
+        if (files) setMangaChapter((prev) => ({ ...prev, [id]: files }));
+        if (!files) setMangaChapter((prev) => ({ ...prev, [id]: value }));
+    };
     const handleChangeDataUpdateNested = (e) => {
         const { id, value } = e.target;
         setFormDataUpdate((prev) => ({
@@ -213,6 +227,7 @@ function Composer() {
         }));
     };
     const handleMultipleInputUpdate = (items) => {
+        if (items.length === 0 || !items) return;
         const temp = [];
         items.map((item) => temp.push(item.value));
         setFormDataUpdate((prev) => ({
@@ -259,6 +274,7 @@ function Composer() {
                                 <span className="label-text text-lg">Name</span>
                             </label>
                             <input
+                                required
                                 type="text"
                                 value={name}
                                 id={"name"}
@@ -275,6 +291,7 @@ function Composer() {
                                 </span>
                             </label>
                             <textarea
+                                required
                                 className="textarea textarea-primary"
                                 placeholder="Synopsis"
                                 onChange={handleChangeDataCreateNested}
@@ -290,6 +307,7 @@ function Composer() {
                                 </span>
                             </label>
                             <select
+                                required
                                 className="select select-bordered select-primary select-lg w-full max-w-xs"
                                 name="status"
                                 id="status"
@@ -318,6 +336,7 @@ function Composer() {
                             </label>
                             <input
                                 id="banner"
+                                required
                                 placeholder="Manga banner"
                                 onChange={handleChangeDataCreate}
                                 accept=".jpg,.png,.jpeg"
@@ -333,6 +352,7 @@ function Composer() {
                             </label>
                             <input
                                 type="file"
+                                required
                                 id="bannerSmall"
                                 onChange={handleChangeDataCreate}
                                 accept=".jpg,.png,.jpeg"
@@ -363,6 +383,7 @@ function Composer() {
                                 aria-label="choose manga"
                                 onChange={handleFecthManga}
                                 defaultValue={"nullish"}
+                                required
                             >
                                 <option value={"nullish"} disabled>
                                     Select manga...
@@ -388,6 +409,7 @@ function Composer() {
                                 onChange={handleChangeDataUpdate}
                                 placeholder="Manga name"
                                 className="input input-lg input-bordered input-primary w-full max-w-xs"
+                                required
                             />
                         </div>
                         <div className="form-control w-full max-w-xs mt-2">
@@ -403,6 +425,7 @@ function Composer() {
                                 value={synopsisUpdate}
                                 id="synopsis"
                                 name="synopsis"
+                                required
                             />
                         </div>
                     </div>
@@ -428,6 +451,7 @@ function Composer() {
                                 id="status"
                                 value={statusUpdate}
                                 onChange={handleChangeDataUpdate}
+                                required
                             >
                                 <option value={0}>Comming soon</option>
                                 <option value={1}>Ongoing</option>
@@ -484,7 +508,9 @@ function Composer() {
                                         value={title}
                                         id={"title"}
                                         name={"title"}
-                                        onChange={handleChangeDataUpdate}
+                                        onChange={
+                                            handleChangeDataUpdateNestedFiles
+                                        }
                                         placeholder="Manga title"
                                         className="input input-lg input-bordered input-primary w-full max-w-xs"
                                     />
@@ -498,7 +524,10 @@ function Composer() {
                                     <input
                                         type="file"
                                         id="strip"
-                                        onChange={handleChangeDataUpdate}
+                                        onChange={
+                                            handleChangeDataUpdateNestedFiles
+                                        }
+                                        multiple
                                         accept=".jpg,.png,.jpeg"
                                         placeholder="Strip"
                                         className="input input-lg w-full max-w-xs pt-3"
