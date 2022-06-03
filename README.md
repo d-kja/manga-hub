@@ -16,30 +16,34 @@
 
 This application is based on the idea of distributing mangas for free, unfortunately it's only (CC) content :c
 
+---
+
 ## Commands
 
-To run the current version you need to open your CLI and type:
+To run the current version you need to open your CLI and type the following:
 
--   Starts the app || # Mock JSON Backend (temporary):
-
+-   Starts the app:
 ```
  npm start
+```
+
+- Mock JSON Backend (you can set it up by changing the db.json file, it has the basic-ish structure of my current db):
+```
  npm run jserver
 ```
 
 -   if for some odd reason my css isn't compiling, use this command to compile Sass once again:
-
 ```
  npm run compile:sass
 ```
 
 ---
 
-## Preview
+## Preview 
 
 -   [Live](https://ny-manga-app.vercel.app)
 
-_Obs, it's not gonna run cus I need to set up a branch using a JSON file instead of using an JSON Backend_
+_image preview isn't updated_
 
 ### Desktop
 
