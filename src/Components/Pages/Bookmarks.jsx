@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+
 import useStorage from "../../Hooks/useStorage";
 import MangaContainer from "../Layout/Manga/MangaContainer";
-import { toast } from "react-toastify";
+
+import { db } from "../../firebase.config";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 function Bookmarks() {
     const [items, setItems] = useState([]);
@@ -10,15 +15,41 @@ function Bookmarks() {
         key: "bookmarks",
         data: [],
     });
+    const auth = getAuth();
 
     useEffect(() => {
-        if (storageItem instanceof Array) {
-            setItems([...storageItem]);
-        } else {
-            const { key, data } = storageItem;
-            setItems([...data]);
+        const fetchBookmarks = async () => {
+            const bookmarkRef = collection(db, "bookmarks");
+            const q = query(
+                bookmarkRef,
+                where("userRef", "==", auth.currentUser.uid)
+            );
+            const bookmarkSnap = await getDocs(q);
+            const temp = [];
+
+            if (bookmarkSnap) {
+                bookmarkSnap.forEach((item) =>
+                    temp.push({
+                        ...item.data(),
+                        myId: item.id,
+                    })
+                );
+                setItems(temp);
+                console.log(temp);
+            }
+        };
+
+        // fetchBookmarks();
+        if (!(items.length > 0)) {
+            if (storageItem instanceof Array) {
+                setItems([...storageItem]);
+            } else {
+                const { key, data } = storageItem;
+                setItems([...data]);
+            }
         }
-    }, [storageItem]);
+        // eslint-disable-next-line
+    }, [storageItem, auth.currentUser.uid]);
 
     return (
         <motion.ul

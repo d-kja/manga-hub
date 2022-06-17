@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 
 function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
@@ -79,12 +78,12 @@ function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
     return (
         <div className="relative">
             <React.Fragment key={"top"}>
-                <Button
+                <button
                     onClick={toggleDrawer("top", true)}
-                    className="btn btn-ghost"
+                    className="btn btn-ghost hover:text-primary"
                 >
-                    <SearchIcon className="text-white hover:text-primary" />
-                </Button>
+                    <SearchIcon className="text-white" />
+                </button>
                 <Drawer
                     anchor={"top"}
                     open={state["top"]}

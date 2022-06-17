@@ -19,7 +19,16 @@ import useStorage, {
     setExpirationDate,
 } from "../../Hooks/useStorage";
 import { getAuth } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+    addDoc,
+    arrayUnion,
+    collection,
+    doc,
+    getDocs,
+    query,
+    updateDoc,
+    where,
+} from "firebase/firestore";
 import { db } from "../../firebase.config";
 import Spinner from "../Layout/Spinner";
 
@@ -46,7 +55,7 @@ function Manga() {
     const [rating, setRating] = useState(5);
     const [alreadySet, setAlreadySet] = useState(false);
 
-    const handleBookmarkClick = () => {
+    const handleBookmarkClick = async () => {
         setBookmark((prev) => !prev);
         const ifStored = checkStorageObj(manga.myId);
         if (manga && !ifStored && bookmark !== true) {
@@ -63,6 +72,37 @@ function Manga() {
                     };
                 }
             });
+            if (auth.currentUser) {
+                // Search for the current bookmark's user id
+                const itemRef = collection(db, "bookmarks");
+                const q = query(
+                    itemRef,
+                    where("userRef", "==", auth.currentUser.uid)
+                );
+
+                const docSnap = await getDocs(q);
+                const temp = [];
+                docSnap.forEach((item) =>
+                    temp.push({
+                        id: item.id,
+                        data: item.data(),
+                    })
+                );
+
+                if (temp[0] && !temp[0].data.bookmarks.includes(params.id)) {
+                    // Update bookmarks doc
+                    const bookmarkRef = doc(db, "bookmarks", temp[0].id);
+                    await updateDoc(bookmarkRef, {
+                        bookmarks: arrayUnion(params.id),
+                    });
+                } else if (!temp[0]) {
+                    const bookmarkRef = collection(db, "bookmarks");
+                    await addDoc(bookmarkRef, {
+                        userRef: auth.currentUser.uid,
+                        bookmarks: [params.id],
+                    });
+                }
+            }
         } else {
             try {
                 let temp;
@@ -83,6 +123,35 @@ function Manga() {
                     key: "bookmarks",
                     data: result,
                 }));
+
+                const itemRef = collection(db, "bookmarks");
+                const q = query(
+                    itemRef,
+                    where("userRef", "==", auth.currentUser.uid)
+                );
+
+                const docSnap = await getDocs(q);
+                const temporary = [];
+                docSnap.forEach((item) =>
+                    temporary.push({
+                        id: item.id,
+                        data: item.data(),
+                    })
+                );
+
+                if (
+                    temporary[0] &&
+                    temporary[0].data.bookmarks.includes(params.id)
+                ) {
+                    const filteredArray = temporary[0].data.bookmarks.filter(
+                        (item) => item !== params.id
+                    );
+                    // Update bookmarks doc
+                    const bookmarkRef = doc(db, "bookmarks", temporary[0].id);
+                    await updateDoc(bookmarkRef, {
+                        bookmarks: filteredArray,
+                    });
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -181,12 +250,14 @@ function Manga() {
             setRating(
                 mangaRef.rating.totalRating / mangaRef.rating.totalUsers / 2
             );
-            const userId = auth.currentUser.uid;
-            if (!mangaRef?.clicks.includes(userId)) {
-                const docRef = doc(db, "mangas", mangaRef.myId);
-                await updateDoc(docRef, {
-                    clicks: [...mangaRef.clicks, userId],
-                });
+            if (auth.currentUser) {
+                const userId = auth.currentUser.uid;
+                if (!mangaRef?.clicks.includes(userId)) {
+                    const docRef = doc(db, "mangas", mangaRef.myId);
+                    await updateDoc(docRef, {
+                        clicks: [...mangaRef.clicks, userId],
+                    });
+                }
             }
 
             if (mangaRef === null) {
