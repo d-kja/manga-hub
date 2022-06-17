@@ -6,6 +6,7 @@ import {
     query,
     limit,
     where,
+    orderBy,
 } from "firebase/firestore";
 import { db } from "../../../firebase.config";
 
@@ -13,9 +14,9 @@ export const fetchMangas = async ({ type, q }) => {
     let mangaQ;
     const mangasRef = collection(db, "mangas");
     if (type === "limit") {
-        mangaQ = query(mangasRef, limit(q));
+        mangaQ = query(mangasRef, limit(q), orderBy("timestamp", "desc"));
     } else {
-        mangaQ = mangasRef;
+        mangaQ = query(mangasRef, orderBy("timestamp", "desc"));
     }
 
     const mangasSnap = await getDocs(mangaQ);

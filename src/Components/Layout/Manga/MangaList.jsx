@@ -41,7 +41,8 @@ function MangaList({ query, fromHome }) {
 
                 data = items;
             } else {
-                data = await fetchMangas({ tyoe: "limit", q: 10 });
+                const q = !fromHome ? {} : { type: "limit", q: 10 };
+                data = await fetchMangas(q);
                 updateStorageItem({
                     key: "mangas",
                     data: {

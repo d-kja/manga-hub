@@ -1,17 +1,53 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import MangaList from "../Layout/Manga/MangaList";
 
 import MangaContext from "../Context/Mangas/MangaContext";
-import { queryManga } from "../Context/Search/SearchActions";
+import { queryManga, queryTag } from "../Context/Search/SearchActions";
+import { fetchMangas } from "../Context/Mangas/MangaActions";
 
 function SearchManga() {
     const { dispatch } = useContext(MangaContext);
     const [searchInput, setSearchInput] = useState("");
+    const [selectInput, setSelectInput] = useState("");
     const params = useParams();
     const nav = useNavigate();
+
+    // @USE On search input update, search current value
+    useEffect(() => {
+        const instaSearchManga = async () => {
+            dispatch({ type: "SET_LOADING" });
+            const mangaRef = await queryManga(searchInput);
+            dispatch({ type: "SET_MANGAS", payload: mangaRef });
+        };
+
+        searchInput.trim().length > 0 && instaSearchManga();
+    }, [searchInput, dispatch]);
+
+    // @USE On select input update, search tag
+    useEffect(() => {
+        const searchTag = async () => {
+            dispatch({ type: "SET_LOADING" });
+            const mangaRef = await queryTag(selectInput);
+            dispatch({ type: "SET_MANGAS", payload: mangaRef });
+        };
+
+        selectInput.trim().length > 0 && selectInput !== null && searchTag();
+    }, [selectInput, dispatch]);
+
+    // @USE Reset listing based on the lack of current queries
+    useEffect(() => {
+        const resetQuery = async () => {
+            dispatch({ type: "SET_LOADING" });
+            const mangaRef = await fetchMangas({});
+            dispatch({ type: "SET_MANGAS", payload: mangaRef });
+        };
+        selectInput.trim().length === 0 &&
+            searchInput.trim().length === 0 &&
+            resetQuery();
+    }, [selectInput, searchInput, dispatch]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +55,13 @@ function SearchManga() {
         dispatch({ type: "SET_LOADING" });
         const mangaRef = await queryManga(searchInput);
         dispatch({ type: "SET_MANGAS", payload: mangaRef });
-        nav("/search");
+        nav("/search"); // Ensuring that the current location is set without post queries
+    };
+
+    const handleChange = async (e) => {
+        const { value, id } = e.target;
+        id === "searchInput" && setSearchInput(value);
+        id === "selectInput" && setSelectInput(value);
     };
 
     return (
@@ -42,9 +84,7 @@ function SearchManga() {
                             <input
                                 type="text"
                                 value={searchInput}
-                                onChange={({ target }) =>
-                                    setSearchInput(target.value)
-                                }
+                                onChange={handleChange}
                                 id="searchInput"
                                 placeholder="Search title…"
                                 className="input input-lg input-bordered"
@@ -70,13 +110,26 @@ function SearchManga() {
                             </button>
                         </div>
                     </div>
-                    <select className="select select-bordered select-lg w-full max-w-xs">
-                        <option defaultValue value={null}>
-                            Select Theme
+                    <select
+                        className="select select-bordered select-lg w-full max-w-xs"
+                        onChange={handleChange}
+                        id="selectInput"
+                    >
+                        <option defaultValue value={""}>
+                            Select tag...
                         </option>
-                        <option>Adventure</option>
-                        <option>Fantasy</option>
-                        <option>ur mom</option>
+                        <option value={"adventure"} className="capitalize">
+                            adventure
+                        </option>
+                        <option value={"fantasy"} className="capitalize">
+                            fantasy
+                        </option>
+                        <option value={"action"} className="capitalize">
+                            action
+                        </option>
+                        <option value={"isekai"} className="capitalize">
+                            isekai
+                        </option>
                     </select>
                 </form>
                 <div className="divider"></div>
