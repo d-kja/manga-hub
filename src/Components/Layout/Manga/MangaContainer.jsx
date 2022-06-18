@@ -50,7 +50,7 @@ function MangaContainer({ img, name, id, rating, chap }) {
                         </>
                     )}
                 </div>
-                <p className="mt-5 manga-list__item__title">{name}</p>
+                <p className="manga-list__item__title">{name}</p>
             </div>
         </motion.li>
     );

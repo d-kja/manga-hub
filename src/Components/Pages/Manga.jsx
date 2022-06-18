@@ -18,6 +18,8 @@ import useStorage, {
     getFromStorage,
     setExpirationDate,
 } from "../../Hooks/useStorage";
+import { useCheckStatus } from "../../Hooks/useCheckStatus";
+
 import { getAuth } from "firebase/auth";
 import {
     addDoc,
@@ -30,9 +32,11 @@ import {
     where,
 } from "firebase/firestore";
 import { db } from "../../firebase.config";
+
 import Spinner from "../Layout/Spinner";
 
 function Manga() {
+    const { checkStatus, myStatus } = useCheckStatus();
     const { storageItem: strBookmarks, updateStorageItem: updateStrBookmarks } =
         useStorage({
             key: "bookmarks",
@@ -268,7 +272,8 @@ function Manga() {
             }
         };
         fetchData(params.id);
-
+        manga.myId !== "" && checkStatus(manga.status);
+        console.log(manga);
         // eslint-disable-next-line
     }, []);
     return loading ? (
@@ -287,7 +292,7 @@ function Manga() {
             className="lg:max-w-screen-2xl relative mx-auto"
         >
             <div className="flex md:flex-row flex-col lg:max-w-[1100px] mx-auto">
-                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7">
+                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7 ">
                     <div className="flex items-center justify-center m-5">
                         <div className="outline outline-transparent hover:outline-primary outline-offset-4 rounded-3xl transition-all ease-in-out duration-200">
                             <img
@@ -297,17 +302,26 @@ function Manga() {
                                     height: "100%",
                                     filter: `grayscale(${65}%)`,
                                 }}
-                                className="rounded-3xl md:max-w-sm max-w-lg"
+                                className="rounded-3xl md:max-w-sm max-w-md"
                             />
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                    <p className="font-bold uppercase text-4xl text-center">
+                    <p className="relative font-bold uppercase text-4xl text-center">
                         {manga.name}
+                        {manga.status && (
+                            <span
+                                className={`absolute left-24 top-[.65rem] badge badge-outline badge-${checkStatus(
+                                    manga.status
+                                )}`}
+                            >
+                                {myStatus.current}
+                            </span>
+                        )}
                     </p>
                     <div>
-                        <div className="mx-12 md:mx-5 md:mt-12 mt-20 font-light text-2xl">
+                        <div className="mx-12 md:mx-5 md:mt-12 mt-20 font-light text-2xl overflow-auto">
                             <span className="font-bold">Synopsis: </span>
                             {manga.others.synopsis}
                         </div>
@@ -365,7 +379,7 @@ function Manga() {
             <div className="divider mx-5 mt-12 md:mt-auto md:mx-72 font-light text-2xl">
                 <ArrowLeftIcon /> Chapters <ArrowRightIcon />
             </div>
-            <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid md:grid-cols-2 gap-x-12 gap-y-7 auto-cols-fr">
+            <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid md:grid-cols-none grid-cols-1 md:grid-flow-col-dense gap-x-12 gap-y-7 auto-cols-fr">
                 {manga.chapters.map((item, idx) => (
                     <MangaButton
                         id={params.id}

@@ -50,8 +50,8 @@ export const SelectChapter = ({ id, chapId }) => {
                         to={`/mangas/${id}/chapter/${+chapId - 1}`}
                         className={
                             chapId == 0
-                                ? "btn btn-ghost btn-lg mr-4 btn-disabled"
-                                : "btn btn-ghost btn-lg mr-4"
+                                ? "btn-lg mr-4 text-zinc-600 bg-transparent btn-disabled"
+                                : "btn border-zinc-700 btn-primary btn-outline btn-lg mr-4"
                         }
                     >
                         Prev
@@ -66,8 +66,8 @@ export const SelectChapter = ({ id, chapId }) => {
                         className={
                             manga.chapters.length > 1 &&
                             chapId != manga.chapters.length - 1
-                                ? "btn btn-ghost btn-lg mr-4"
-                                : "btn btn-ghost btn-lg mr-4 btn-disabled"
+                                ? "btn border-zinc-700 btn-primary btn-outline btn-lg mr-4"
+                                : "btn-lg mr-4 text-zinc-600 bg-transparent btn-disabled"
                         }
                     >
                         Next

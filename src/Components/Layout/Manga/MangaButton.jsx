@@ -7,10 +7,11 @@ function MangaButton({ id, chapId, title = "LOADING..." }) {
             className="
                 text-lg
                 btn 
-                btn-md 
-                lg:btn-lg 
-                btn-block 
-                btn-ghost
+                btn-lg
+                border-zinc-700
+                btn-block
+                btn-primary
+                btn-outline
                 rounded-lg
                 "
         >

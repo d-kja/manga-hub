@@ -46,7 +46,7 @@ function Home() {
                     </Link>
                 </div>
                 <div className="flex flex-col p-14 pt-0 mt-16 items-center  rounded-xl min-w-full">
-                    <div className="bg-neutral bg-opacity-25 rounded-lg p-5 flex flex-col items-center max-w-screen-2xl">
+                    <div className=" rounded-lg p-5 flex flex-col items-center max-w-screen-2xl">
                         <div className="m-auto font-light text-2xl">
                             <div
                                 to="/list"

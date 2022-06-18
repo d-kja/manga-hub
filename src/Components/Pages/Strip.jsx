@@ -77,7 +77,7 @@ function Strip() {
             <div className="divider mx-5 mt-20 font-light text-2xl relative">
                 <ArrowLeftIcon /> {manga.chapters[par.chapId].title}
                 <ArrowRightIcon />
-                <div className="text-lg breadcrumbs uppercase absolute left-0 bottom-0">
+                <div className="text-lg breadcrumbs uppercase absolute left-0 bottom-2">
                     <ul>
                         <li>
                             <Link to={`/`}>Home</Link>
