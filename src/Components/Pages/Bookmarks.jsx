@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { toast } from "react-toastify";
 
 import useStorage from "../../Hooks/useStorage";
 import MangaContainer from "../Layout/Manga/MangaContainer";
@@ -8,6 +7,7 @@ import MangaContainer from "../Layout/Manga/MangaContainer";
 import { db } from "../../firebase.config";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { fetchMangas } from "../Context/Mangas/MangaActions";
 
 function Bookmarks() {
     const [items, setItems] = useState([]);
@@ -25,31 +25,40 @@ function Bookmarks() {
                 where("userRef", "==", auth.currentUser.uid)
             );
             const bookmarkSnap = await getDocs(q);
-            const temp = [];
+            let temp = {};
 
             if (bookmarkSnap) {
-                bookmarkSnap.forEach((item) =>
-                    temp.push({
-                        ...item.data(),
-                        myId: item.id,
-                    })
+                bookmarkSnap.forEach(
+                    (item) =>
+                        (temp = {
+                            ...item.data(),
+                            itemId: item.id,
+                        })
                 );
-                setItems(temp);
-                console.log(temp);
+                // setItems(temp);
+                const mangas = await fetchMangas({});
+                const filteredItems = mangas.filter((item) =>
+                    temp?.bookmarks.includes(item.id)
+                );
+                const mangasArray = [];
+                filteredItems.forEach((item) => {
+                    mangasArray.push({ ...item.data, myId: item.id });
+                });
+                mangasArray.length !== 0 && setItems(mangasArray);
             }
         };
 
-        // fetchBookmarks();
-        if (!(items.length > 0)) {
+        auth.currentUser && fetchBookmarks();
+        if (!(items.length > 0) && !auth.currentUser) {
             if (storageItem instanceof Array) {
                 setItems([...storageItem]);
             } else {
-                const { key, data } = storageItem;
+                const { data } = storageItem;
                 setItems([...data]);
             }
         }
         // eslint-disable-next-line
-    }, [storageItem, auth.currentUser.uid]);
+    }, [storageItem]);
 
     return (
         <motion.ul

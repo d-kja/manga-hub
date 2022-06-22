@@ -13,7 +13,7 @@ import { db } from "../../../firebase.config";
 export const fetchMangas = async ({ type, q }) => {
     let mangaQ;
     const mangasRef = collection(db, "mangas");
-    if (type === "limit") {
+    if (type && type === "limit") {
         mangaQ = query(mangasRef, limit(q), orderBy("timestamp", "desc"));
     } else {
         mangaQ = query(mangasRef, orderBy("timestamp", "desc"));

@@ -58,14 +58,8 @@ function App() {
                                         <Route
                                             exact
                                             path="/bookmarks"
-                                            element={<PrivateRoute />}
-                                        >
-                                            <Route
-                                                exact
-                                                path="/bookmarks"
-                                                element={<Bookmarks />}
-                                            />
-                                        </Route>
+                                            element={<Bookmarks />}
+                                        />
                                         <Route
                                             exact
                                             path="/options"
