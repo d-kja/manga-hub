@@ -106,6 +106,11 @@ function Manga() {
                         bookmarks: [params.id],
                     });
                 }
+            } else {
+                toast.info(
+                    "Bookmarks updated, currently you aren't logged in so it's only updated locally",
+                    { theme: "dark" }
+                );
             }
         } else {
             try {
@@ -157,7 +162,10 @@ function Manga() {
                     });
                 }
             } catch (error) {
-                console.error(error);
+                toast.info(
+                    "Bookmarks updated, currently you aren't logged in so it's only updated locally",
+                    { theme: "dark" }
+                );
             }
         }
     };
@@ -195,7 +203,6 @@ function Manga() {
             );
             return;
         }
-        console.log(totalRating, totalUsers);
 
         try {
             const docRef = doc(db, "mangas", manga.myId);
@@ -273,7 +280,6 @@ function Manga() {
         };
         fetchData(params.id);
         manga.myId !== "" && checkStatus(manga.status);
-        console.log(manga);
         // eslint-disable-next-line
     }, []);
     return loading ? (

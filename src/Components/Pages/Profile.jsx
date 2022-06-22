@@ -160,7 +160,10 @@ function Profile() {
                             value={name}
                             id="name"
                             onChange={handleChange}
-                            className="input input-bordered input-lg input-ghost w-full max-w-xs"
+                            className={`input input-bordered input-lg input-primary w-full max-w-xs ${
+                                !changeBtn &&
+                                "input-disabled force-bg-transparency"
+                            }`}
                             disabled={!changeBtn}
                         />
                     </div>
@@ -176,7 +179,10 @@ function Profile() {
                             id="email"
                             onChange={handleChange}
                             disabled={!changeBtn}
-                            className="input input-bordered input-lg input-ghost w-full max-w-xs"
+                            className={`input input-bordered input-lg input-primary w-full max-w-xs ${
+                                !changeBtn &&
+                                "input-disabled force-bg-transparency"
+                            }`}
                         />
                     </div>
                 </form>

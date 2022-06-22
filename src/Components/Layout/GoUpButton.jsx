@@ -24,7 +24,7 @@ function GoUpButton({ windowRef, screenOffsetRef }) {
     return (
         <div
             className={`fixed right-7 bottom-24 z-50 animate-bounce delay-150 duration-700 ease-in-out transition-all ${
-                !isVisible ? "opacity-0" : "opacity-100"
+                !isVisible ? "opacity-0 invisible" : "opacity-100"
             }`}
         >
             <button
