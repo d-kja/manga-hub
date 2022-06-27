@@ -1,42 +1,44 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useCurrentAuth } from "../../../Hooks/useCurrentAuth";
+import React, { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useCurrentAuth } from "../../../Hooks/useCurrentAuth"
 
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import { CircularProgress } from "@mui/material";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment"
+import { CircularProgress } from "@mui/material"
 
-import UserIcon from "./UserIcon";
-import SearchContext from "../../Context/Search/SearchContext";
-import SearchBtn from "./SearchBtn/SearchBtn";
+import UserIcon from "./UserIcon"
+import SearchContext from "../../Context/Search/SearchContext"
+import SearchBtn from "./SearchBtn/SearchBtn"
 
 function NavBar() {
-    const { dispatch, queryResult, loading } = useContext(SearchContext);
-    const [data, setData] = useState([]);
-    const { isLoading, isLogged } = useCurrentAuth();
+    // dispatch, queryResult
+    const { loading } = useContext(SearchContext)
+    // data
+    const [, setData] = useState([])
+    const { isLoading, isLogged } = useCurrentAuth()
 
-    const nav = useNavigate();
+    const nav = useNavigate()
 
-    const handleSearchBarSubmit = async (e, searchInput) => {
-        e.preventDefault();
-        nav(`/search/${searchInput}`);
-    };
+    const handleSearchBarSubmit = async (e: Event, searchInput: any) => {
+        e.preventDefault()
+        nav(`/search/${searchInput}`)
+    }
 
-    const handleSearchBarChange = async (e, searchInput) => {
-        // dispatch({ type: "SET_LOADING" });
-        // const searchBarQueryResults = await queryManga(searchInput);
+    const handleSearchBarChange = async (e: Event, searchInput: any) => {
+        // dispatch({ type: "SET_LOADING" })
+        // const searchBarQueryResults = await queryManga(searchInput)
         // await dispatch({
         //     type: "QUERY_MANGA",
         //     payload: searchBarQueryResults,
-        // });
-        setData(searchInput);
-    };
+        // })
+        setData(searchInput)
+    }
 
-    if (isLoading) {
+    if (isLoading || loading) {
         return (
             <div className="navbar bg-neutral text-white">
                 <CircularProgress color="inherit" size={12} />
             </div>
-        );
+        )
     }
 
     return (
@@ -194,7 +196,7 @@ function NavBar() {
             </ul> 
             */}
         </>
-    );
+    )
 }
 
-export default NavBar;
+export default NavBar

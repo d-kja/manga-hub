@@ -1,25 +1,30 @@
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useScroll } from "../../Hooks/useScroll";
-import { useEffect, useState } from "react";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import { useScroll } from "../../Hooks/useScroll"
+import { useEffect, useState } from "react"
+import React from "react"
 
-function GoUpButton({ windowRef, screenOffsetRef }) {
-    const scrollOffSetCurrentValue = useScroll();
-    const [oldValue, setOldValue] = useState(scrollOffSetCurrentValue);
-    const [isVisible, setIsVisible] = useState(false);
+interface GoUpButtonProps {
+    windowRef: Window
+}
+
+function GoUpButton({ windowRef }: GoUpButtonProps) {
+    const scrollOffSetCurrentValue = useScroll()
+    const [oldValue, setOldValue] = useState(scrollOffSetCurrentValue)
+    const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
         if (
             oldValue > scrollOffSetCurrentValue &&
             scrollOffSetCurrentValue > 500
         ) {
-            setIsVisible(true);
+            setIsVisible(true)
         } else {
-            setIsVisible(false);
+            setIsVisible(false)
         }
-        setOldValue(scrollOffSetCurrentValue);
+        setOldValue(scrollOffSetCurrentValue)
 
         //eslint-disable-next-line
-    }, [scrollOffSetCurrentValue]);
+    }, [scrollOffSetCurrentValue])
 
     return (
         <div
@@ -39,7 +44,7 @@ function GoUpButton({ windowRef, screenOffsetRef }) {
                 <KeyboardArrowUpIcon sx={{ height: 25, width: 25 }} />
             </button>
         </div>
-    );
+    )
 }
 
-export default GoUpButton;
+export default GoUpButton

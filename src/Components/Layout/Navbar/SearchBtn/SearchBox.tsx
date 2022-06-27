@@ -1,7 +1,14 @@
-// import React, { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 
-function SearchBox({ options }) {
+import React from "react"
+
+interface SearchBoxProps {
+    // @Temporary
+    options: any
+}
+
+function SearchBox({ options }: SearchBoxProps) {
     // const [items, setItems] = useState([]);
     // useEffect(() => {
     //     setItems(options);
@@ -13,19 +20,19 @@ function SearchBox({ options }) {
         <li key={options.id}>
             <div className="card card-side bg-base-100 shadow-xl">
                 <img
-                    src={options.data.bannerSmall}
+                    src={options.data?.bannerSmall}
                     className="max-h-40 mt-3 ml-3 rounded-lg"
                     alt="card banner"
                 />
                 <div className="card-body my-auto">
-                    <h2 className="card-title">{options.data.name}</h2>
+                    <h2 className="card-title">{options.data?.name}</h2>
                     <p className="w-72 whitespace-nowrap overflow-hidden text-ellipsis">
-                        {options.data.others.synopsis}
+                        {options.data?.others.synopsis}
                     </p>
                 </div>
             </div>
         </li>
-    );
+    )
 }
 
-export default SearchBox;
+export default SearchBox

@@ -1,16 +1,24 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react"
+import React, { Fragment } from "react"
 // import Avatar from "@mui/material/Avatar";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
+import MoreVertIcon from "@mui/icons-material/MoreVert"
+import { Link } from "react-router-dom"
 
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { getAuth } from "firebase/auth";
+import PersonIcon from "@mui/icons-material/Person"
+import SettingsIcon from "@mui/icons-material/Settings"
+import LogoutIcon from "@mui/icons-material/Logout"
+import { getAuth } from "firebase/auth"
 
-export default function UserIcon({ isLogged }) {
-    const auth = getAuth();
+interface UserIconProps {
+    isLogged: boolean
+}
+
+type TMenuProps = {
+    active: any
+}
+
+export default function UserIcon({ isLogged }: UserIconProps) {
+    const auth = getAuth()
     return (
         <div className="top-16 text-right">
             <Menu as="div" className="relative inline-block text-left">
@@ -33,7 +41,7 @@ export default function UserIcon({ isLogged }) {
                         {isLogged && auth.currentUser != null ? (
                             <div className="px-1 py-1">
                                 <Menu.Item>
-                                    {({ active }) => (
+                                    {({ active }: TMenuProps) => (
                                         <Link
                                             to="/options"
                                             className={`${
@@ -70,7 +78,7 @@ export default function UserIcon({ isLogged }) {
                                     )}
                                 </Menu.Item>
                                 <Menu.Item>
-                                    {({ active }) => (
+                                    {({ active }: TMenuProps) => (
                                         <Link
                                             to="/logOut"
                                             className={`${
@@ -110,7 +118,7 @@ export default function UserIcon({ isLogged }) {
                         ) : (
                             <div className="px-1 py-1 ">
                                 <Menu.Item>
-                                    {({ active }) => (
+                                    {({ active }: TMenuProps) => (
                                         <Link
                                             to="/signIn"
                                             className={`${
@@ -143,5 +151,5 @@ export default function UserIcon({ isLogged }) {
                 </Transition>
             </Menu>
         </div>
-    );
+    )
 }

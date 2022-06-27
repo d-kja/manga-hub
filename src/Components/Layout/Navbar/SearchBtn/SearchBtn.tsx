@@ -1,32 +1,41 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import SearchIcon from "@mui/icons-material/Search";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
+import SearchIcon from "@mui/icons-material/Search"
+import Box from "@mui/material/Box"
+import Drawer from "@mui/material/Drawer"
+import List from "@mui/material/List"
 
-function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
-    const [searchInput, setSearchInput] = useState("");
+interface SearchBtnProps {
+    handleSearchBarSubmit: Function
+    handleSearchBarChange: Function
+}
+
+function SearchBtn({
+    handleSearchBarSubmit,
+    handleSearchBarChange,
+}: SearchBtnProps) {
+    const [searchInput, setSearchInput] = useState("")
     const [state, setState] = React.useState({
         top: false,
-    });
+    })
 
-    const onChangeInput = (e) => {
-        setSearchInput(e.target.value);
-        handleSearchBarChange(e, e.target.value);
-    };
+    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const target = e.target as HTMLInputElement
+        setSearchInput(target?.value)
+        handleSearchBarChange(e, target?.value)
+    }
 
-    const toggleDrawer = (anchor, open) => (event) => {
+    const toggleDrawer = (anchor: any, open: any) => (event: any) => {
         if (
             event.type === "keydown" &&
             (event.key === "Tab" || event.key === "Shift")
         ) {
-            return;
+            return
         }
 
-        setState({ ...state, [anchor]: open });
-    };
-    const list = (anchor) => (
+        setState({ ...state, [anchor]: open })
+    }
+    const list = (anchor: any) => (
         <>
             <Box
                 sx={{
@@ -73,7 +82,7 @@ function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
                 </List>
             </Box>
         </>
-    );
+    )
 
     return (
         <div className="relative">
@@ -93,7 +102,7 @@ function SearchBtn({ handleSearchBarSubmit, handleSearchBarChange }) {
                 </Drawer>
             </React.Fragment>
         </div>
-    );
+    )
 }
 
-export default SearchBtn;
+export default SearchBtn

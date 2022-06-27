@@ -1,22 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import React from "react"
+import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 
-import StarIcon from "@mui/icons-material/Star";
-import { useCheckStatus } from "../../../Hooks/useCheckStatus";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import StarIcon from "@mui/icons-material/Star"
+import { useCheckStatus } from "../../../Hooks/useCheckStatus"
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 
 export const MangaWideContainer = ({
     img,
     name,
     id,
-    rating = 0,
+    rating,
     chap,
     status,
-    clicks = 0,
+    clicks,
     customStyle,
+}: {
+    img: any
+    name: any
+    id: any
+    rating: any
+    chap: any
+    status: any
+    clicks: any
+    customStyle?: any
 }) => {
-    const { myStatus, checkStatus } = useCheckStatus(status);
+    const { myStatus, checkStatus } = useCheckStatus(status)
     return (
         <motion.li
             className="overflow-hidden"
@@ -28,8 +37,11 @@ export const MangaWideContainer = ({
                 scale: 1.025,
             }}
             transition={{
+                // @ts-ignore
                 type: "spring",
+                // @ts-ignore
                 stiffness: 100,
+                // @ts-ignore
                 ease: "easeIn",
             }}
         >
@@ -71,11 +83,11 @@ export const MangaWideContainer = ({
                         </div>
                         <div className="absolute badge badge-ghost bottom-0 -right-16">
                             <VisibilityOutlinedIcon className="mr-2" />{" "}
-                            {clicks.length ?? 0}
+                            {clicks?.length ?? 0}
                         </div>
                     </div>
                 </Link>
             </div>
         </motion.li>
-    );
-};
+    )
+}

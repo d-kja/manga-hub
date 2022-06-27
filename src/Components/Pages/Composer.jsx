@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
-import ReactSelect from "../Layout/ReactSelect";
+import React, { useEffect, useState } from "react"
+import ReactSelect from "../Layout/ReactSelect"
 
 import {
     serverTimestamp,
-    doc,
     updateDoc,
     getDocs,
     addDoc,
     collection,
-} from "firebase/firestore";
-import { db } from "../../firebase.config";
-import { useUploadImage } from "../../Hooks/useUploadImage";
+    query,
+    where,
+    writeBatch,
+    doc,
+} from "firebase/firestore"
+import { db } from "../../firebase.config"
+import { useUploadImage } from "../../Hooks/useUploadImage"
 
-import { motion } from "framer-motion";
-import { toast } from "react-toastify";
+import { motion } from "framer-motion"
+import { toast } from "react-toastify"
 
 function Composer() {
-    const [mangas, setMangas] = useState([]);
-    const [currentManga, setCurrentManga] = useState(null);
+    const [mangas, setMangas] = useState([])
+    const [currentManga, setCurrentManga] = useState(null)
     const [mangaChapter, setMangaChapter] = useState({
         strip: [],
         title: "",
-    });
+    })
     const [formDataCreate, setFormDataCreate] = useState({
         name: "",
         banner: "",
@@ -38,7 +41,7 @@ function Composer() {
         clicks: [],
         status: 0,
         timestamp: null,
-    });
+    })
     const [formDataUpdate, setFormDataUpdate] = useState({
         name: "",
         banner: "",
@@ -56,26 +59,26 @@ function Composer() {
         status: 0,
         timestamp: null,
         lastUpdate: null,
-    });
+    })
 
-    const { name, banner, bannerSmall, others, status } = formDataCreate;
+    const { name, banner, bannerSmall, others, status } = formDataCreate
     const {
         name: nameUpdate,
-        banner: bannerUpdate,
-        bannerSmall: bannerSmallUpdate,
+        // banner: bannerUpdate,
+        // bannerSmall: bannerSmallUpdate,
         others: othersUpdate,
         status: statusUpdate,
-    } = formDataUpdate;
-    const { synopsis } = others;
-    const { synopsis: synopsisUpdate } = othersUpdate;
-    const { title } = mangaChapter;
-    const { upload } = useUploadImage();
+    } = formDataUpdate
+    const { synopsis } = others
+    const { synopsis: synopsisUpdate } = othersUpdate
+    const { title } = mangaChapter
+    const { upload } = useUploadImage()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const temp = [];
-                const mangasSnap = await getDocs(collection(db, "mangas"));
+                const temp = []
+                const mangasSnap = await getDocs(collection(db, "mangas"))
 
                 if (mangasSnap) {
                     mangasSnap.forEach((item) =>
@@ -83,161 +86,211 @@ function Composer() {
                             id: item.id,
                             data: item.data(),
                         })
-                    );
+                    )
                 }
 
-                setMangas(temp);
+                setMangas(temp)
             } catch (error) {
                 toast.error(
                     "Couldn't fill up 'select manga' options with firebase data, for more info use console",
                     { theme: "dark" }
-                );
-                console.error(error);
+                )
+                console.error(error)
             }
-        };
+        }
 
-        fetchData();
-    }, []);
+        fetchData()
+    }, [])
 
     const handleFormCreate = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const bannerUrl = await upload(banner, "mangas");
-        const bannerSmallUrl = await upload(bannerSmall, "mangas");
+        const bannerUrl = await upload(banner, "mangas")
+        const bannerSmallUrl = await upload(bannerSmall, "mangas")
 
-        const formDataDupe = { ...formDataCreate };
+        const formDataDupe = { ...formDataCreate }
 
-        formDataDupe.banner = bannerUrl;
-        formDataDupe.bannerSmall = bannerSmallUrl;
-        formDataDupe.status = +formDataDupe.status;
-        formDataDupe.timestamp = serverTimestamp();
+        formDataDupe.banner = bannerUrl
+        formDataDupe.bannerSmall = bannerSmallUrl
+        formDataDupe.status = +formDataDupe.status
+        formDataDupe.timestamp = serverTimestamp()
 
-        const docRef = collection(db, "mangas");
-        await addDoc(docRef, formDataDupe);
-        toast.success("Item added", { theme: "dark" });
-    };
+        const docRef = collection(db, "mangas")
+        await addDoc(docRef, formDataDupe)
+        toast.success("Item added", { theme: "dark" })
+    }
 
     const handleChangeDataCreate = (e) => {
-        const { id, value, files } = e.target;
+        const { id, value, files } = e.target
 
         if (files) {
             setFormDataCreate((prev) => ({
                 ...prev,
                 [id]: files[0],
-            }));
+            }))
         }
 
         if (!files) {
             setFormDataCreate((prev) => ({
                 ...prev,
                 [id]: value,
-            }));
+            }))
         }
-    };
+    }
     const handleChangeDataCreateNested = (e) => {
-        const { id, value } = e.target;
+        const { id, value } = e.target
         setFormDataCreate((prev) => ({
             ...prev,
             others: {
                 ...prev.others,
                 [id]: value,
             },
-        }));
-    };
+        }))
+    }
     const handleMultipleInput = (items) => {
-        const temp = [];
-        items.map((item) => temp.push(item.value));
+        const temp = []
+        items.map((item) => temp.push(item.value))
         setFormDataCreate((prev) => ({
             ...prev,
             others: {
                 ...prev.others,
                 tags: temp,
             },
-        }));
-    };
+        }))
+    }
 
     const handleFormUpdate = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         try {
             const stripImages = await Promise.all(
                 [...mangaChapter.strip].map((item) =>
                     upload(item, "mangaChapters")
                 )
-            ).catch((error) => console.error(error));
+            ).catch((error) => console.error(error))
 
-            const formDataDupe = { ...formDataUpdate };
-            setMangaChapter((prev) => ({ ...prev, strip: stripImages }));
+            const formDataDupe = { ...formDataUpdate }
+            setMangaChapter((prev) => ({ ...prev, strip: stripImages }))
 
-            formDataDupe.status = +formDataDupe.status;
+            formDataDupe.status = +formDataDupe.status
             !formDataDupe.timestamp &&
-                (formDataDupe.timestamp = serverTimestamp());
-            formDataDupe.lastUpdate = serverTimestamp();
+                (formDataDupe.timestamp = serverTimestamp())
+            formDataDupe.lastUpdate = serverTimestamp()
             formDataDupe.chapters = [
                 ...formDataUpdate.chapters,
                 { title: mangaChapter.title, strip: stripImages },
-            ];
-            console.log(formDataDupe);
+            ]
 
-            const docRef = doc(db, "mangas", currentManga);
-            await updateDoc(docRef, formDataDupe);
-            toast.success("Item updated", { theme: "dark" });
+            const docRef = doc(db, "mangas", currentManga)
+            await updateDoc(docRef, formDataDupe)
+            toast.success("Item updated", { theme: "dark" })
+            notifyUpdateToUsers(currentManga)
         } catch (error) {
-            toast.error("Something went wrong", { theme: "dark" });
-            console.error(error);
+            toast.error("Something went wrong", { theme: "dark" })
+            console.error(error)
         }
-    };
+    }
+
+    const notifyUpdateToUsers = async (mangaId) => {
+        try {
+            // Create batch to perform multiple operations
+            const batch = writeBatch(db)
+
+            // Sets collection and queries for the manga id
+            const docRef = collection(db, "bookmarks")
+            const q = query(
+                docRef,
+                where("bookmarks", "array-contains", mangaId)
+            )
+
+            const docSnap = await getDocs(q)
+
+            // if found, creates an updates list for each id and commit the batch
+            if (docSnap) {
+                docSnap.forEach((item) => {
+                    const ref = doc(db, "bookmarks", item?.id)
+                    const data = item.data()?.updates
+                        ? [
+                              ...item.data().updates,
+                              {
+                                  id: mangaId,
+                                  name: formDataUpdate.name,
+                                  imgUrl: formDataUpdate.bannerSmall,
+                              },
+                          ]
+                        : [
+                              {
+                                  id: mangaId,
+                                  name: formDataUpdate.name,
+                                  imgUrl: formDataUpdate.bannerSmall,
+                              },
+                          ]
+
+                    batch.update(ref, {
+                        updates: data,
+                    })
+                })
+
+                await batch.commit()
+            }
+        } catch (error) {
+            toast.error("unable to notify users, error occurred", {
+                theme: "dark",
+            })
+            console.log(error)
+        }
+    }
 
     const handleFecthManga = (e) => {
-        const { value } = e.target;
-        setFormDataUpdate(mangas[value].data);
-        setCurrentManga(mangas[value].id);
-    };
+        const { value } = e.target
+        setFormDataUpdate(mangas[value].data)
+        setCurrentManga(mangas[value].id)
+    }
 
     const handleChangeDataUpdate = (e) => {
-        const { id, value, files } = e.target;
+        const { id, value, files } = e.target
 
         if (files) {
             setFormDataUpdate((prev) => ({
                 ...prev,
                 [id]: files,
-            }));
+            }))
         }
 
         if (!files) {
             setFormDataUpdate((prev) => ({
                 ...prev,
                 [id]: value,
-            }));
+            }))
         }
-    };
+    }
     const handleChangeDataUpdateNestedFiles = (e) => {
-        const { id, value, files } = e.target;
-        if (files) setMangaChapter((prev) => ({ ...prev, [id]: files }));
-        if (!files) setMangaChapter((prev) => ({ ...prev, [id]: value }));
-    };
+        const { id, value, files } = e.target
+        if (files) setMangaChapter((prev) => ({ ...prev, [id]: files }))
+        if (!files) setMangaChapter((prev) => ({ ...prev, [id]: value }))
+    }
     const handleChangeDataUpdateNested = (e) => {
-        const { id, value } = e.target;
+        const { id, value } = e.target
         setFormDataUpdate((prev) => ({
             ...prev,
             others: {
                 ...prev.others,
                 [id]: value,
             },
-        }));
-    };
+        }))
+    }
     const handleMultipleInputUpdate = (items) => {
-        if (items.length === 0 || !items) return;
-        const temp = [];
-        items.map((item) => temp.push(item.value));
+        if (items.length === 0 || !items) return
+        const temp = []
+        items.map((item) => temp.push(item.value))
         setFormDataUpdate((prev) => ({
             ...prev,
             others: {
                 ...prev.others,
                 tags: temp,
             },
-        }));
-    };
+        }))
+    }
 
     return (
         <motion.div
@@ -545,7 +598,7 @@ function Composer() {
                 </form>
             </div>
         </motion.div>
-    );
+    )
 }
 
-export default Composer;
+export default Composer

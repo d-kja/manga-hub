@@ -1,27 +1,40 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react"
 
-import Slider from "react-slick";
-import Spinner from "../Spinner";
+import Slider from "react-slick"
+import Spinner from "../Spinner"
 
-import CarouselItem from "./CarouselItem";
+import CarouselItem from "./CarouselItem"
 
-import BannerContext from "../../Context/Banners/BannerContext";
-import { fetchBanner } from "../../Context/Banners/BannerActions";
+import BannerContext from "../../Context/Banners/BannerContext"
+import { fetchBanner } from "../../Context/Banners/BannerActions"
 import useStorage, {
     checkExpiredStorageItem,
     setExpirationDate,
     getFromStorage,
-} from "../../../Hooks/useStorage";
+} from "../../../Hooks/useStorage"
+
+type manga = {
+    id: number | string
+    data: {
+        name: string
+        banner: string
+        rating: {
+            totalUsers: number | string
+            totalRating: number | string
+        }
+        status: number | string
+    }
+}
 
 function CenterMode() {
-    const { banners, loading, dispatch } = useContext(BannerContext);
-    const { storageItem, updateStorageItem } = useStorage({
+    const { banners, loading, dispatch } = useContext(BannerContext)
+    const { updateStorageItem } = useStorage({
         key: "banners",
         data: {
             items: banners,
             expire: setExpirationDate(new Date().getTime()),
         },
-    });
+    })
 
     const settings = {
         className: "center",
@@ -60,13 +73,13 @@ function CenterMode() {
                 },
             },
         ],
-    };
+    }
 
     useEffect(() => {
         const fetchBanners = async () => {
-            dispatch({ type: "SET_LOADING" });
-            let bannersData;
-            const fetchStorage = getFromStorage("banners");
+            dispatch({ type: "SET_LOADING" })
+            let bannersData
+            const fetchStorage = getFromStorage("banners")
 
             if (
                 getFromStorage("banners") &&
@@ -74,28 +87,28 @@ function CenterMode() {
             ) {
                 const { items } = fetchStorage.data
                     ? fetchStorage.data
-                    : fetchStorage;
+                    : fetchStorage
 
-                bannersData = items;
+                bannersData = items
             } else {
-                bannersData = await fetchBanner();
+                bannersData = await fetchBanner()
                 updateStorageItem({
                     key: "banners",
                     data: {
                         items: bannersData,
                         expire: setExpirationDate(new Date().getTime()),
                     },
-                });
+                })
             }
             dispatch({
                 type: "FETCH_BANNERS",
                 payload: bannersData,
-            });
-        };
+            })
+        }
 
-        fetchBanners();
+        fetchBanners()
         //eslint-disable-next-line
-    }, [dispatch]);
+    }, [dispatch])
 
     return (
         <div>
@@ -111,29 +124,29 @@ function CenterMode() {
                 >
                     <Slider
                         {...settings}
+                        // @ts-ignore
                         style={{
-                            // Temp fix for override issue w tailwind
                             width: "100%",
                         }}
                     >
-                        {banners.map(({ id, data }) => (
+                        {banners.map(({ id, data }: manga) => (
                             <CarouselItem
                                 key={id}
                                 id={id}
                                 name={data.name}
                                 img={data.banner}
                                 rating={(
-                                    data.rating.totalRating /
-                                    data.rating.totalUsers
+                                    Number(data.rating.totalRating) /
+                                    Number(data.rating.totalUsers)
                                 ).toFixed(1)}
-                                status={data.status}
+                                status={Number(data.status)}
                             />
                         ))}
                     </Slider>
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default CenterMode;
+export default CenterMode

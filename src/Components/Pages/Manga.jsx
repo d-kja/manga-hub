@@ -1,26 +1,26 @@
-import React, { useEffect, useContext, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import MangaContext from "../Context/Mangas/MangaContext";
-import { fetchManga } from "../Context/Mangas/MangaActions";
+import React, { useEffect, useContext, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import MangaContext from "../Context/Mangas/MangaContext"
+import { fetchManga } from "../Context/Mangas/MangaActions"
 
-import { motion } from "framer-motion";
-import { toast } from "react-toastify";
+import { motion } from "framer-motion"
+import { toast } from "react-toastify"
 
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { Rating } from "@mui/material";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
+import ArrowRightIcon from "@mui/icons-material/ArrowRight"
+import { Rating } from "@mui/material"
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd"
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded"
 
-import MangaButton from "../Layout/Manga/MangaButton";
+import MangaButton from "../Layout/Manga/MangaButton"
 import useStorage, {
     checkExpiredStorageItem,
     getFromStorage,
     setExpirationDate,
-} from "../../Hooks/useStorage";
-import { useCheckStatus } from "../../Hooks/useCheckStatus";
+} from "../../Hooks/useStorage"
+import { useCheckStatus } from "../../Hooks/useCheckStatus"
 
-import { getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth"
 import {
     addDoc,
     arrayUnion,
@@ -30,123 +30,123 @@ import {
     query,
     updateDoc,
     where,
-} from "firebase/firestore";
-import { db } from "../../firebase.config";
+} from "firebase/firestore"
+import { db } from "../../firebase.config"
 
-import Spinner from "../Layout/Spinner";
+import Spinner from "../Layout/Spinner"
 
 function Manga() {
-    const { checkStatus, myStatus } = useCheckStatus();
+    const { checkStatus, myStatus } = useCheckStatus()
     const { storageItem: strBookmarks, updateStorageItem: updateStrBookmarks } =
         useStorage({
             key: "bookmarks",
             data: [],
-        });
-    const params = useParams();
-    const nav = useNavigate();
-    const auth = getAuth();
+        })
+    const params = useParams()
+    const nav = useNavigate()
+    const auth = getAuth()
 
-    const { manga, loading, dispatch } = useContext(MangaContext);
+    const { manga, loading, dispatch } = useContext(MangaContext)
     const { updateStorageItem } = useStorage({
         key: "manga",
         data: {
             items: manga,
             expire: setExpirationDate(new Date().getTime()),
         },
-    });
+    })
 
-    const [bookmark, setBookmark] = useState(checkStorageObj(manga.myId));
-    const [rating, setRating] = useState(5);
-    const [alreadySet, setAlreadySet] = useState(false);
+    const [bookmark, setBookmark] = useState(checkStorageObj(manga.myId))
+    const [rating, setRating] = useState(5)
+    const [alreadySet, setAlreadySet] = useState(false)
 
     const handleBookmarkClick = async () => {
-        setBookmark((prev) => !prev);
-        const ifStored = checkStorageObj(manga.myId);
+        setBookmark((prev) => !prev)
+        const ifStored = checkStorageObj(manga.myId)
         if (manga && !ifStored && bookmark !== true) {
             updateStrBookmarks((prev) => {
                 if (strBookmarks instanceof Array) {
                     return {
                         key: "bookmarks",
                         data: [...prev, manga],
-                    };
+                    }
                 } else {
                     return {
                         key: "bookmarks",
                         data: [...prev.data, manga],
-                    };
+                    }
                 }
-            });
+            })
             if (auth.currentUser) {
                 // Search for the current bookmark's user id
-                const itemRef = collection(db, "bookmarks");
+                const itemRef = collection(db, "bookmarks")
                 const q = query(
                     itemRef,
                     where("userRef", "==", auth.currentUser.uid)
-                );
+                )
 
-                const docSnap = await getDocs(q);
-                const temp = [];
+                const docSnap = await getDocs(q)
+                const temp = []
                 docSnap.forEach((item) =>
                     temp.push({
                         id: item.id,
                         data: item.data(),
                     })
-                );
+                )
 
                 if (temp[0] && !temp[0].data.bookmarks.includes(params.id)) {
                     // Update bookmarks doc
-                    const bookmarkRef = doc(db, "bookmarks", temp[0].id);
+                    const bookmarkRef = doc(db, "bookmarks", temp[0].id)
                     await updateDoc(bookmarkRef, {
                         bookmarks: arrayUnion(params.id),
-                    });
+                    })
                 } else if (!temp[0]) {
-                    const bookmarkRef = collection(db, "bookmarks");
+                    const bookmarkRef = collection(db, "bookmarks")
                     await addDoc(bookmarkRef, {
                         userRef: auth.currentUser.uid,
                         bookmarks: [params.id],
-                    });
+                    })
                 }
             } else {
                 toast.info(
                     "Bookmarks updated, currently you aren't logged in so it's only updated locally",
                     { theme: "dark" }
-                );
+                )
             }
         } else {
             try {
-                let temp;
-                let result = [];
+                let temp
+                let result = []
                 if (strBookmarks instanceof Array) {
-                    temp = [...strBookmarks];
+                    temp = [...strBookmarks]
                     temp.forEach((element, idx) => {
-                        if (element.myId !== params.id) result.push(element);
-                    });
+                        if (element.myId !== params.id) result.push(element)
+                    })
                 } else {
-                    const { data: itemData } = strBookmarks;
-                    temp = [...itemData];
+                    const { data: itemData } = strBookmarks
+                    temp = [...itemData]
                     temp.forEach((element, idx) => {
-                        if (element.myId !== params.id) result.push(element);
-                    });
+                        if (element.myId !== params.id) result.push(element)
+                    })
                 }
                 updateStrBookmarks((prev) => ({
                     key: "bookmarks",
                     data: result,
-                }));
+                }))
 
-                const itemRef = collection(db, "bookmarks");
+                const itemRef = collection(db, "bookmarks")
                 const q = query(
                     itemRef,
                     where("userRef", "==", auth.currentUser.uid)
-                );
+                )
 
-                const docSnap = await getDocs(q);
-                const temporary = [];
+                const docSnap = await getDocs(q)
+                const temporary = []
                 docSnap.forEach((item) =>
                     temporary.push({
                         id: item.id,
                         data: item.data(),
                     })
-                );
+                )
 
                 if (
                     temporary[0] &&
@@ -154,134 +154,134 @@ function Manga() {
                 ) {
                     const filteredArray = temporary[0].data.bookmarks.filter(
                         (item) => item !== params.id
-                    );
+                    )
                     // Update bookmarks doc
-                    const bookmarkRef = doc(db, "bookmarks", temporary[0].id);
+                    const bookmarkRef = doc(db, "bookmarks", temporary[0].id)
                     await updateDoc(bookmarkRef, {
                         bookmarks: filteredArray,
-                    });
+                    })
                 }
             } catch (error) {
                 toast.info(
                     "Bookmarks updated, currently you aren't logged in so it's only updated locally",
                     { theme: "dark" }
-                );
+                )
             }
         }
-    };
+    }
 
     function checkStorageObj(key, id) {
         // Checking twice cus if it isn't there it always returns both key and data
         try {
-            let temp = false;
+            let temp = false
             if (strBookmarks instanceof Array) {
                 strBookmarks.forEach((element) => {
-                    if (element.myId === params.id) temp = true;
-                });
+                    if (element.myId === params.id) temp = true
+                })
             } else {
-                const { data: itemData } = strBookmarks;
+                const { data: itemData } = strBookmarks
                 itemData.forEach((element) => {
-                    if (element.myId === params.id) temp = true;
-                });
+                    if (element.myId === params.id) temp = true
+                })
             }
 
-            return temp;
+            return temp
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     }
 
     const handleRatingClick = async ({ value }) => {
-        setRating(value);
-        const updatedRating = +value * 2;
-        const totalRating = +manga.rating.totalRating + updatedRating;
-        const totalUsers = +manga.rating.totalUsers + 1;
+        setRating(value)
+        const updatedRating = +value * 2
+        const totalRating = +manga.rating.totalRating + updatedRating
+        const totalUsers = +manga.rating.totalUsers + 1
         if (alreadySet) {
             toast.info(
                 "It's one vote per user, refrain from repeating this action",
                 { theme: "dark" }
-            );
-            return;
+            )
+            return
         }
 
         try {
-            const docRef = doc(db, "mangas", manga.myId);
+            const docRef = doc(db, "mangas", manga.myId)
             await updateDoc(docRef, {
                 rating: {
                     totalRating,
                     totalUsers,
                 },
-            });
+            })
 
-            setAlreadySet(true);
+            setAlreadySet(true)
         } catch (error) {
             if (getAuth().currentUser) {
                 toast.error("Something went wrong, try again later", {
                     theme: "dark",
-                });
+                })
             } else {
                 toast.error("To complete this action, login is required", {
                     theme: "dark",
-                });
+                })
             }
-            console.log(error);
+            console.log(error)
         }
-    };
+    }
 
     useEffect(() => {
         const fetchData = async (id) => {
-            dispatch({ type: "SET_LOADING" });
-            let mangaRef;
-            const fetchStorage = getFromStorage("manga");
+            dispatch({ type: "SET_LOADING" })
+            let mangaRef
+            const fetchStorage = getFromStorage("manga")
 
             if (
                 fetchStorage &&
                 !checkExpiredStorageItem("manga") &&
                 fetchStorage.myId === params.id
             ) {
-                const { items } = fetchStorage;
-                mangaRef = items;
+                const { items } = fetchStorage
+                mangaRef = items
             } else {
-                const { id: mangaId, data: mangaData } = await fetchManga(id);
-                mangaData.myId = mangaId;
-                mangaRef = mangaData;
+                const { id: mangaId, data: mangaData } = await fetchManga(id)
+                mangaData.myId = mangaId
+                mangaRef = mangaData
                 updateStorageItem({
                     key: "manga",
                     data: {
                         items: mangaData,
                         expire: setExpirationDate(new Date().getTime()),
                     },
-                });
+                })
             }
             dispatch({
                 type: "SET_MANGA",
                 payload: mangaRef,
-            });
+            })
 
             setRating(
                 mangaRef.rating.totalRating / mangaRef.rating.totalUsers / 2
-            );
+            )
             if (auth.currentUser) {
-                const userId = auth.currentUser.uid;
+                const userId = auth.currentUser.uid
                 if (!mangaRef?.clicks.includes(userId)) {
-                    const docRef = doc(db, "mangas", mangaRef.myId);
+                    const docRef = doc(db, "mangas", mangaRef.myId)
                     await updateDoc(docRef, {
                         clicks: [...mangaRef.clicks, userId],
-                    });
+                    })
                 }
             }
 
             if (mangaRef === null) {
                 toast.error("Couldn't find item", {
                     theme: "dark",
-                });
-                nav("/notfound");
+                })
+                nav("/notfound")
             }
-        };
-        fetchData(params.id);
-        manga.myId !== "" && checkStatus(manga.status);
+        }
+        fetchData(params.id)
+        manga.myId !== "" && checkStatus(manga.status)
         // eslint-disable-next-line
-    }, []);
+    }, [])
     return loading ? (
         <Spinner />
     ) : (
@@ -318,7 +318,7 @@ function Manga() {
                         {manga.name}
                         {manga.status && (
                             <span
-                                className={`absolute left-24 top-[.65rem] badge badge-outline badge-${checkStatus(
+                                className={`absolute ml-3 top-[.65rem] badge badge-outline badge-${checkStatus(
                                     manga.status
                                 )}`}
                             >
@@ -342,7 +342,7 @@ function Manga() {
                                         >
                                             {item}
                                         </div>
-                                    );
+                                    )
                                 })}
                             </div>
                             <div className="flex items-center">
@@ -353,7 +353,7 @@ function Manga() {
                                         value={+rating}
                                         className="mr-2"
                                         onChange={(e) => {
-                                            handleRatingClick(e.target);
+                                            handleRatingClick(e.target)
                                         }}
                                         size="large"
                                     />
@@ -396,7 +396,7 @@ function Manga() {
                 ))}
             </div>
         </motion.div>
-    );
+    )
 }
 
-export default Manga;
+export default Manga

@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
-import StarIcon from "@mui/icons-material/Star";
-import { useCheckStatus } from "../../../Hooks/useCheckStatus";
+import StarIcon from "@mui/icons-material/Star"
+import { useCheckStatus } from "../../../Hooks/useCheckStatus"
 
-function CarouselItem({ id, name, img, rating, status }) {
-    const { checkStatus, myStatus } = useCheckStatus(status);
+interface CarouselItemProps {
+    id: string | number
+    name: string
+    img: string
+    rating: string | number
+    status: number
+}
+
+function CarouselItem({ id, name, img, rating, status }: CarouselItemProps) {
+    const { checkStatus, myStatus } = useCheckStatus()
 
     return (
         <div className="block">
@@ -49,7 +58,7 @@ function CarouselItem({ id, name, img, rating, status }) {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default CarouselItem;
+export default CarouselItem

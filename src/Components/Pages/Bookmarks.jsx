@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
-import useStorage from "../../Hooks/useStorage";
-import MangaContainer from "../Layout/Manga/MangaContainer";
+import useStorage from "../../Hooks/useStorage"
+import MangaContainer from "../Layout/Manga/MangaContainer"
 
-import { db } from "../../firebase.config";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { fetchMangas } from "../Context/Mangas/MangaActions";
+import { db } from "../../firebase.config"
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { getAuth } from "firebase/auth"
+import { fetchMangas } from "../Context/Mangas/MangaActions"
 
 function Bookmarks() {
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState([])
     const { storageItem } = useStorage({
         key: "bookmarks",
         data: [],
-    });
-    const auth = getAuth();
+    })
+    const auth = getAuth()
 
     useEffect(() => {
         const fetchBookmarks = async () => {
-            const bookmarkRef = collection(db, "bookmarks");
+            const bookmarkRef = collection(db, "bookmarks")
             const q = query(
                 bookmarkRef,
                 where("userRef", "==", auth.currentUser.uid)
-            );
-            const bookmarkSnap = await getDocs(q);
-            let temp = {};
+            )
+            const bookmarkSnap = await getDocs(q)
+            let temp = {}
 
             if (bookmarkSnap) {
                 bookmarkSnap.forEach(
@@ -34,31 +34,31 @@ function Bookmarks() {
                             ...item.data(),
                             itemId: item.id,
                         })
-                );
+                )
                 // setItems(temp);
-                const mangas = await fetchMangas({});
+                const mangas = await fetchMangas({})
                 const filteredItems = mangas.filter((item) =>
                     temp?.bookmarks.includes(item.id)
-                );
-                const mangasArray = [];
+                )
+                const mangasArray = []
                 filteredItems.forEach((item) => {
-                    mangasArray.push({ ...item.data, myId: item.id });
-                });
-                mangasArray.length !== 0 && setItems(mangasArray);
+                    mangasArray.push({ ...item.data, myId: item.id })
+                })
+                mangasArray.length !== 0 && setItems(mangasArray)
             }
-        };
+        }
 
-        auth.currentUser && fetchBookmarks();
+        auth.currentUser && fetchBookmarks()
         if (!(items.length > 0) && !auth.currentUser) {
             if (storageItem instanceof Array) {
-                setItems([...storageItem]);
+                setItems([...storageItem])
             } else {
-                const { data } = storageItem;
-                setItems([...data]);
+                const { data } = storageItem
+                setItems([...data])
             }
         }
         // eslint-disable-next-line
-    }, [storageItem]);
+    }, [storageItem])
 
     return (
         <motion.ul
@@ -85,12 +85,12 @@ function Bookmarks() {
                                   img={item.bannerSmall}
                                   chap={item.chapters}
                               />
-                          );
+                          )
                       })
                     : "No bookmarks found"}
             </div>
         </motion.ul>
-    );
+    )
 }
 
-export default Bookmarks;
+export default Bookmarks
