@@ -1,211 +1,233 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
-import { getAuth, updateEmail, updateProfile } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase.config";
-import { useUploadImage } from "../../Hooks/useUploadImage";
+import {
+  getAuth,
+  updateEmail,
+  updateProfile,
+} from "firebase/auth"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { db } from "../../firebase.config"
+import { useUploadImage } from "../../Hooks/useUploadImage"
 
-import { toast } from "react-toastify";
-import { motion } from "framer-motion";
+import { toast } from "react-toastify"
+import { motion } from "framer-motion"
 
-import Bookmarks from "./Bookmarks";
+import Bookmarks from "./Bookmarks"
 
 function Profile() {
-    const auth = getAuth();
-    const { upload } = useUploadImage();
-    const [changeBtn, setChangeBtn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [user, setUser] = useState({
-        email: auth.currentUser.email,
-        name: auth.currentUser.displayName,
-        photoURL: auth.currentUser.photoURL,
-    });
+  const auth = getAuth()
+  const { upload } = useUploadImage()
+  const [changeBtn, setChangeBtn] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [user, setUser] = useState({
+    email: auth.currentUser.email,
+    name: auth.currentUser.displayName,
+    photoURL: auth.currentUser.photoURL,
+  })
 
-    const { email, name, photoURL } = user;
+  const { email, name, photoURL } = user
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const docRef = doc(db, "users", auth.currentUser.uid);
-            const docSnap = await getDoc(docRef);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const docRef = doc(db, "users", auth.currentUser.uid)
+      const docSnap = await getDoc(docRef)
 
-            if (docSnap.exists() && docSnap.data().admin) {
-                setIsAdmin(true);
-            }
-        };
-        fetchUser();
-        return () => {};
-    }, []);
+      if (docSnap.exists() && docSnap.data().admin) {
+        setIsAdmin(true)
+      }
+    }
+    fetchUser()
+    return () => {}
+  }, [])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-        try {
-            if (!changeBtn) {
-                const docRef = doc(db, "users", auth.currentUser.uid);
+    try {
+      if (!changeBtn) {
+        toast.info(
+          "Wait just a second, we are uploading your profile image",
+          { theme: "dark", position: "bottom-center" }
+        )
 
-                if (
-                    auth.currentUser.email !== email ||
-                    auth.currentUser.name !== name ||
-                    auth.currentUser.photoURL !== photoURL
-                ) {
-                    const url = await upload(photoURL, "users");
-                    await updateProfile(auth.currentUser, {
-                        displayName: name,
-                        photoURL: url,
-                    });
-                    await updateEmail(auth.currentUser, email);
-                    await updateDoc(docRef, {
-                        email,
-                        name,
-                    });
-                }
+        const docRef = doc(
+          db,
+          "users",
+          auth.currentUser.uid
+        )
 
-                toast.success("User updated!", { theme: "dark" });
-            }
-        } catch (error) {
-            toast.error("Couldn't update user information", { theme: "dark" });
+        if (
+          auth.currentUser.email !== email ||
+          auth.currentUser.name !== name ||
+          auth.currentUser.photoURL !== photoURL
+        ) {
+          const url = await upload(photoURL, "users")
+          await updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: url,
+          })
+          await updateEmail(auth.currentUser, email)
+          await updateDoc(docRef, {
+            email,
+            name,
+          })
         }
-    };
 
-    const handleChange = (e) => {
-        const { value, id } = e.target;
-        setUser((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
-        console.log(photoURL);
-    };
+        toast.success(
+          "User updated, reload the page to see the alterations",
+          { theme: "dark" }
+        )
+      }
+    } catch (error) {
+      toast.error("Couldn't update user information", {
+        theme: "dark",
+      })
+    }
+  }
 
-    const handleImage = async (e) => {
-        const { files, id } = e.target;
+  const handleChange = (e) => {
+    const { value, id } = e.target
+    setUser((prev) => ({
+      ...prev,
+      [id]: value,
+    }))
+    console.log(photoURL)
+  }
 
-        setUser((prev) => ({
-            ...prev,
-            [id]: files[0],
-        }));
-    };
+  const handleImage = async (e) => {
+    const { files, id } = e.target
 
-    return (
-        <motion.div
-            initial={{ y: 75, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-                type: "spring",
-                stiffness: 100,
-                ease: "easeIn",
-            }}
-            className="lg:max-w-screen-lg md:max-w-full w-full mx-auto"
-        >
-            <div className="py-12 px-7 flex flex-row gap-6 relative">
-                <div
-                    className="relative top-7 w-fit h-fit outline outline-primary hover:outline-purple-700 outline-offset-2 outline-2 rounded-full
+    setUser((prev) => ({
+      ...prev,
+      [id]: files[0],
+    }))
+  }
+
+  return (
+    <motion.div
+      initial={{ y: 75, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        ease: "easeIn",
+      }}
+      className="lg:max-w-screen-lg md:max-w-full w-full mx-auto"
+    >
+      <div className="py-12 px-7 flex flex-col items-center gap-12 md:flex-row md:gap-6 relative">
+        <div
+          className="relative top-7 w-fit h-fit outline outline-primary hover:outline-purple-700 outline-offset-2 outline-2 rounded-full
                 transition-all ease-in-out duration-700
             "
-                >
-                    <label
-                        htmlFor="photoURL"
-                        className="relative grid place-items-center"
-                    >
-                        <input
-                            type="file"
-                            id="photoURL"
-                            onChange={handleImage}
-                            accept=".jpg,.png,.jpeg"
-                            placeholder="user photo"
-                            className="hidden"
-                            disabled={!changeBtn}
-                        />
-                        <div className="bg-neutral rounded-full">
-                            <img
-                                className={`mask mask-circle hover:grayscale opacity-100 w-[125px] h-[125px] object-cover ${
-                                    changeBtn && "opacity-25"
-                                }`}
-                                src={
-                                    photoURL ??
-                                    "https://i.imgur.com/7fTGOOK.jpeg"
-                                }
-                                width={125}
-                                height={125}
-                                loading="lazy"
-                                alt="user icon"
-                            />
-                        </div>
-                        <span
-                            className={`text-4xl font-light absolute duration-700 transition-all opacity-0 ${
-                                changeBtn && "opacity-100"
-                            }`}
-                        >
-                            CHANGE
-                        </span>
-                    </label>
-                </div>
+        >
+          <label
+            htmlFor="photoURL"
+            className="relative grid place-items-center"
+          >
+            <input
+              type="file"
+              id="photoURL"
+              onChange={handleImage}
+              accept=".jpg,.png,.jpeg"
+              placeholder="user photo"
+              className="hidden"
+              disabled={!changeBtn}
+            />
+            <div className="bg-neutral rounded-full hover:grayscale">
+              <img
+                className={`mask mask-circle opacity-100 w-40 h-40 object-cover ${
+                  changeBtn && "opacity-25"
+                }`}
+                src={
+                  photoURL ??
+                  "https://i.imgur.com/7fTGOOK.jpeg"
+                }
+                width={125}
+                height={125}
+                loading="lazy"
+                alt="user icon"
+              />
+            </div>
+            <span
+              className={`text-md font-light absolute top-1/2 -translate-y-1/2 duration-700 transition-all z-50 pointer-events-none ${
+                changeBtn ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              CHANGE
+            </span>
+          </label>
+        </div>
 
-                <form onSubmit={handleSubmit} className="ml-5">
-                    <button
-                        className="btn btn-ghost hover:outline hover:outline-primary hover:outline-offset-2 hover:outline-1 absolute right-10 top-10 font-bold text-lg"
-                        onClick={() => setChangeBtn((prev) => !prev)}
-                        type="submit"
-                    >
-                        {!changeBtn ? "Change" : "Done"}
-                    </button>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text text-lg">Name</span>
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Name"
-                            name="name"
-                            value={name}
-                            id="name"
-                            onChange={handleChange}
-                            className={`input input-bordered input-lg input-primary w-full max-w-xs ${
-                                !changeBtn &&
-                                "input-disabled force-bg-transparency"
-                            }`}
-                            disabled={!changeBtn}
-                        />
-                    </div>
-                    <div className="form-control w-full max-w-xs mt-5">
-                        <label className="label">
-                            <span className="label-text text-lg">Email</span>
-                        </label>
-                        <input
-                            type="Email"
-                            placeholder="Email"
-                            name="email"
-                            value={email}
-                            id="email"
-                            onChange={handleChange}
-                            disabled={!changeBtn}
-                            className={`input input-bordered input-lg input-primary w-full max-w-xs ${
-                                !changeBtn &&
-                                "input-disabled force-bg-transparency"
-                            }`}
-                        />
-                    </div>
-                </form>
-            </div>
-            <div className="divider mt-12 font-light text-2xl relative">
-                {isAdmin && (
-                    <Link
-                        to="/compose"
-                        className="btn font-bold text-lg btn-ghost  m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 absolute -top-16 right-10"
-                    >
-                        Compose
-                    </Link>
-                )}
-                <Link
-                    to="/list"
-                    className="btn font-bold text-lg btn-ghost -mt-3 m-auto btn-wide hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
-                >
-                    Mangas
-                </Link>
-            </div>
-            <Bookmarks />
-        </motion.div>
-    );
+        <form onSubmit={handleSubmit} className="ml-5">
+          <button
+            className="btn btn-ghost hover:outline hover:outline-primary hover:outline-offset-2 hover:outline-1 absolute right-10 top-10"
+            onClick={() => setChangeBtn((prev) => !prev)}
+            type="submit"
+          >
+            {!changeBtn ? "Change" : "Done"}
+          </button>
+          <div className="form-control w-full md:max-w-xs">
+            <label className="label">
+              <span className="label-text text-md">
+                Name
+              </span>
+            </label>
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              value={name}
+              id="name"
+              onChange={handleChange}
+              className={`input input-bordered input-primary w-full ${
+                !changeBtn &&
+                "input-disabled force-bg-transparency"
+              }`}
+              disabled={!changeBtn}
+            />
+          </div>
+          <div className="form-control w-full md:max-w-xs mt-5">
+            <label className="label">
+              <span className="label-text text-md">
+                Email
+              </span>
+            </label>
+            <input
+              type="Email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              id="email"
+              onChange={handleChange}
+              disabled={!changeBtn}
+              className={`input input-bordered input-primary w-full ${
+                !changeBtn &&
+                "input-disabled force-bg-transparency"
+              }`}
+            />
+          </div>
+        </form>
+      </div>
+      <div className="divider mt-12 font-light relative max-w-screen-xl mx-auto">
+        {isAdmin && (
+          <Link
+            to="/compose"
+            className="btn btn-ghost m-auto hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1 absolute -top-16 right-10"
+          >
+            Compose
+          </Link>
+        )}
+        <Link
+          to="/list"
+          className="btn btn-ghost -mt-3 my-auto px-12 hover:outline hover:outline-primary-focus hover:outline-offset-2 hover:outline-1"
+        >
+          Mangas
+        </Link>
+      </div>
+      <Bookmarks />
+    </motion.div>
+  )
 }
 
-export default Profile;
+export default Profile

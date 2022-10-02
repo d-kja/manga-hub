@@ -3,7 +3,11 @@ import "./App.css"
 import "react-toastify/dist/ReactToastify.css"
 
 // Imports
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom"
 import { AnimatePresence } from "framer-motion"
 import { ToastContainer } from "react-toastify"
 
@@ -35,112 +39,117 @@ import { MangaProvider } from "./Components/Context/Mangas/MangaContext"
 import { BannerProvider } from "./Components/Context/Banners/BannerContext"
 import { SearchProvider } from "./Components/Context/Search/SearchContext"
 
-import { ThemeProvider, createTheme } from "@mui/material/styles"
+import {
+  ThemeProvider,
+  createTheme,
+} from "@mui/material/styles"
 import React from "react"
 import UpdatesNotification from "./Components/Layout/UpdatesNotification"
-
-// // Firebase
-// import { getAuth } from 'firebase/auth'
+import LoadingLayout from "./Components/Layout/LoadingLayout"
+import { LoadingProvider } from "./Components/Context/LoadingContext"
 
 const darkTheme = createTheme({
-    palette: {
-        mode: "dark",
-    },
+  palette: {
+    mode: "dark",
+  },
 })
 
 function App() {
-    return (
-        <BannerProvider>
-            <MangaProvider>
-                <SearchProvider>
-                    <ThemeProvider theme={darkTheme}>
-                        <Router>
-                            <div className="relative min-h-screen">
-                                <NavBar />
-                                <AnimatePresence>
-                                    <Routes>
-                                        <Route path="/" element={<Home />} />
-                                        <Route
-                                            path="/bookmarks"
-                                            element={<Bookmarks />}
-                                        />
-                                        <Route
-                                            path="/options"
-                                            element={<PrivateRoute />}
-                                        >
-                                            <Route
-                                                path="/options"
-                                                element={<Profile />}
-                                            />
-                                        </Route>
-                                        <Route
-                                            path="/signIn"
-                                            element={<SignIn />}
-                                        />
-                                        <Route
-                                            path="/signUp"
-                                            element={<SignUp />}
-                                        />
-                                        <Route
-                                            path="/forgotPassword"
-                                            element={<ForgotPassword />}
-                                        />
-                                        <Route
-                                            path="/logOut"
-                                            element={<SignOut />}
-                                        />
-                                        <Route
-                                            path="/search"
-                                            element={<SearchManga />}
-                                        />
-                                        <Route
-                                            path="/search/:query"
-                                            element={<SearchManga />}
-                                        />
-                                        <Route
-                                            path="/list"
-                                            element={<MangaList />}
-                                        />
-                                        <Route
-                                            path="/about"
-                                            element={<About />}
-                                        />
-                                        <Route
-                                            path="/*"
-                                            element={<NotFound />}
-                                        />
+  return (
+    <BannerProvider>
+      <MangaProvider>
+        <SearchProvider>
+          <ThemeProvider theme={darkTheme}>
+            <Router>
+              <LoadingProvider>
+                <div className="relative min-h-screen">
+                  <NavBar />
+                  <AnimatePresence>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route
+                        path="/bookmarks"
+                        element={<Bookmarks />}
+                      />
+                      <Route
+                        path="/options"
+                        element={<PrivateRoute />}
+                      >
+                        <Route
+                          path="/options"
+                          element={<Profile />}
+                        />
+                      </Route>
+                      <Route
+                        path="/signIn"
+                        element={<SignIn />}
+                      />
+                      <Route
+                        path="/signUp"
+                        element={<SignUp />}
+                      />
+                      <Route
+                        path="/forgotPassword"
+                        element={<ForgotPassword />}
+                      />
+                      <Route
+                        path="/logOut"
+                        element={<SignOut />}
+                      />
+                      <Route
+                        path="/search"
+                        element={<SearchManga />}
+                      />
+                      <Route
+                        path="/search/:query"
+                        element={<SearchManga />}
+                      />
+                      <Route
+                        path="/list"
+                        element={<MangaList />}
+                      />
+                      <Route
+                        path="/about"
+                        element={<About />}
+                      />
+                      <Route
+                        path="/*"
+                        element={<NotFound />}
+                      />
 
-                                        <Route
-                                            path="/mangas/:id"
-                                            element={<Manga />}
-                                        />
-                                        <Route
-                                            path="/mangas/:id/chapter/:chapId"
-                                            element={<Strip />}
-                                        />
-                                        <Route
-                                            path="/compose"
-                                            element={<AdminOnly />}
-                                        >
-                                            <Route
-                                                path="/compose"
-                                                element={<Composer />}
-                                            />
-                                        </Route>
-                                    </Routes>
-                                </AnimatePresence>
-                                <div className="inline-block mx-20 mb-56 font-light text-2xl" />
-                                <Footer />
-                            </div>
-                            <GoUpButton windowRef={window} />
-                            (<UpdatesNotification />)
-                        </Router>
-                    </ThemeProvider>
-                    <ToastContainer />
-                </SearchProvider>
-            </MangaProvider>
-        </BannerProvider>
-    )
+                      <Route
+                        path="/mangas/:id"
+                        element={<Manga />}
+                      />
+                      <Route
+                        path="/mangas/:id/chapter/:chapId"
+                        element={<Strip />}
+                      />
+                      <Route
+                        path="/compose"
+                        element={<AdminOnly />}
+                      >
+                        <Route
+                          path="/compose"
+                          element={<Composer />}
+                        />
+                      </Route>
+                    </Routes>
+                  </AnimatePresence>
+                  <div className="inline-block mx-20 mb-56 font-light text-2xl" />
+                  <Footer />
+                </div>
+                <GoUpButton windowRef={window} />
+                <LoadingLayout />
+                {/* (<UpdatesNotification />) */}
+              </LoadingProvider>
+            </Router>
+          </ThemeProvider>
+          <ToastContainer />
+        </SearchProvider>
+      </MangaProvider>
+    </BannerProvider>
+  )
 }
 
 export default App

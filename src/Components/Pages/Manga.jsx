@@ -1,4 +1,8 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, {
+  useEffect,
+  useContext,
+  useState,
+} from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import MangaContext from "../Context/Mangas/MangaContext"
 import { fetchManga } from "../Context/Mangas/MangaActions"
@@ -14,389 +18,418 @@ import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded"
 
 import MangaButton from "../Layout/Manga/MangaButton"
 import useStorage, {
-    checkExpiredStorageItem,
-    getFromStorage,
-    setExpirationDate,
+  checkExpiredStorageItem,
+  getFromStorage,
+  setExpirationDate,
 } from "../../Hooks/useStorage"
 import { useCheckStatus } from "../../Hooks/useCheckStatus"
 
 import { getAuth } from "firebase/auth"
 import {
-    addDoc,
-    arrayUnion,
-    collection,
-    doc,
-    getDocs,
-    query,
-    updateDoc,
-    where,
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
 } from "firebase/firestore"
 import { db } from "../../firebase.config"
 
 import Spinner from "../Layout/Spinner"
 
 function Manga() {
-    const { checkStatus, myStatus } = useCheckStatus()
-    const { storageItem: strBookmarks, updateStorageItem: updateStrBookmarks } =
-        useStorage({
+  const { checkStatus, myStatus } = useCheckStatus()
+  const {
+    storageItem: strBookmarks,
+    updateStorageItem: updateStrBookmarks,
+  } = useStorage({
+    key: "bookmarks",
+    data: [],
+  })
+  const params = useParams()
+  const nav = useNavigate()
+  const auth = getAuth()
+
+  const { manga, loading, dispatch } =
+    useContext(MangaContext)
+  const { updateStorageItem } = useStorage({
+    key: "manga",
+    data: {
+      items: manga,
+      expire: setExpirationDate(new Date().getTime()),
+    },
+  })
+
+  const [bookmark, setBookmark] = useState(
+    checkStorageObj(manga.myId)
+  )
+  const [rating, setRating] = useState(5)
+  const [alreadySet, setAlreadySet] = useState(false)
+
+  const handleBookmarkClick = async () => {
+    setBookmark((prev) => !prev)
+    const ifStored = checkStorageObj(manga.myId)
+    if (manga && !ifStored && bookmark !== true) {
+      updateStrBookmarks((prev) => {
+        if (strBookmarks instanceof Array) {
+          return {
             key: "bookmarks",
-            data: [],
-        })
-    const params = useParams()
-    const nav = useNavigate()
-    const auth = getAuth()
-
-    const { manga, loading, dispatch } = useContext(MangaContext)
-    const { updateStorageItem } = useStorage({
-        key: "manga",
-        data: {
-            items: manga,
-            expire: setExpirationDate(new Date().getTime()),
-        },
-    })
-
-    const [bookmark, setBookmark] = useState(checkStorageObj(manga.myId))
-    const [rating, setRating] = useState(5)
-    const [alreadySet, setAlreadySet] = useState(false)
-
-    const handleBookmarkClick = async () => {
-        setBookmark((prev) => !prev)
-        const ifStored = checkStorageObj(manga.myId)
-        if (manga && !ifStored && bookmark !== true) {
-            updateStrBookmarks((prev) => {
-                if (strBookmarks instanceof Array) {
-                    return {
-                        key: "bookmarks",
-                        data: [...prev, manga],
-                    }
-                } else {
-                    return {
-                        key: "bookmarks",
-                        data: [...prev.data, manga],
-                    }
-                }
-            })
-            if (auth.currentUser) {
-                // Search for the current bookmark's user id
-                const itemRef = collection(db, "bookmarks")
-                const q = query(
-                    itemRef,
-                    where("userRef", "==", auth.currentUser.uid)
-                )
-
-                const docSnap = await getDocs(q)
-                const temp = []
-                docSnap.forEach((item) =>
-                    temp.push({
-                        id: item.id,
-                        data: item.data(),
-                    })
-                )
-
-                if (temp[0] && !temp[0].data.bookmarks.includes(params.id)) {
-                    // Update bookmarks doc
-                    const bookmarkRef = doc(db, "bookmarks", temp[0].id)
-                    await updateDoc(bookmarkRef, {
-                        bookmarks: arrayUnion(params.id),
-                    })
-                } else if (!temp[0]) {
-                    const bookmarkRef = collection(db, "bookmarks")
-                    await addDoc(bookmarkRef, {
-                        userRef: auth.currentUser.uid,
-                        bookmarks: [params.id],
-                    })
-                }
-            } else {
-                toast.info(
-                    "Bookmarks updated, currently you aren't logged in so it's only updated locally",
-                    { theme: "dark" }
-                )
-            }
+            data: [...prev, manga],
+          }
         } else {
-            try {
-                let temp
-                let result = []
-                if (strBookmarks instanceof Array) {
-                    temp = [...strBookmarks]
-                    temp.forEach((element, idx) => {
-                        if (element.myId !== params.id) result.push(element)
-                    })
-                } else {
-                    const { data: itemData } = strBookmarks
-                    temp = [...itemData]
-                    temp.forEach((element, idx) => {
-                        if (element.myId !== params.id) result.push(element)
-                    })
-                }
-                updateStrBookmarks((prev) => ({
-                    key: "bookmarks",
-                    data: result,
-                }))
-
-                const itemRef = collection(db, "bookmarks")
-                const q = query(
-                    itemRef,
-                    where("userRef", "==", auth.currentUser.uid)
-                )
-
-                const docSnap = await getDocs(q)
-                const temporary = []
-                docSnap.forEach((item) =>
-                    temporary.push({
-                        id: item.id,
-                        data: item.data(),
-                    })
-                )
-
-                if (
-                    temporary[0] &&
-                    temporary[0].data.bookmarks.includes(params.id)
-                ) {
-                    const filteredArray = temporary[0].data.bookmarks.filter(
-                        (item) => item !== params.id
-                    )
-                    // Update bookmarks doc
-                    const bookmarkRef = doc(db, "bookmarks", temporary[0].id)
-                    await updateDoc(bookmarkRef, {
-                        bookmarks: filteredArray,
-                    })
-                }
-            } catch (error) {
-                toast.info(
-                    "Bookmarks updated, currently you aren't logged in so it's only updated locally",
-                    { theme: "dark" }
-                )
-            }
+          return {
+            key: "bookmarks",
+            data: [...prev.data, manga],
+          }
         }
-    }
+      })
+      if (auth.currentUser) {
+        // Search for the current bookmark's user id
+        const itemRef = collection(db, "bookmarks")
+        const q = query(
+          itemRef,
+          where("userRef", "==", auth.currentUser.uid)
+        )
 
-    function checkStorageObj(key, id) {
-        // Checking twice cus if it isn't there it always returns both key and data
-        try {
-            let temp = false
-            if (strBookmarks instanceof Array) {
-                strBookmarks.forEach((element) => {
-                    if (element.myId === params.id) temp = true
-                })
-            } else {
-                const { data: itemData } = strBookmarks
-                itemData.forEach((element) => {
-                    if (element.myId === params.id) temp = true
-                })
-            }
+        const docSnap = await getDocs(q)
+        const temp = []
+        docSnap.forEach((item) =>
+          temp.push({
+            id: item.id,
+            data: item.data(),
+          })
+        )
 
-            return temp
-        } catch (error) {
-            console.error(error)
+        if (
+          temp[0] &&
+          !temp[0].data.bookmarks.includes(params.id)
+        ) {
+          // Update bookmarks doc
+          const bookmarkRef = doc(
+            db,
+            "bookmarks",
+            temp[0].id
+          )
+          await updateDoc(bookmarkRef, {
+            bookmarks: arrayUnion(params.id),
+          })
+        } else if (!temp[0]) {
+          const bookmarkRef = collection(db, "bookmarks")
+          await addDoc(bookmarkRef, {
+            userRef: auth.currentUser.uid,
+            bookmarks: [params.id],
+          })
         }
-    }
+      } else {
+        toast.info(
+          "Bookmarks updated, currently you aren't logged in so it's only updated locally",
+          { theme: "dark" }
+        )
+      }
+    } else {
+      try {
+        let temp
+        let result = []
+        if (strBookmarks instanceof Array) {
+          temp = [...strBookmarks]
+          temp.forEach((element, idx) => {
+            if (element.myId !== params.id)
+              result.push(element)
+          })
+        } else {
+          const { data: itemData } = strBookmarks
+          temp = [...itemData]
+          temp.forEach((element, idx) => {
+            if (element.myId !== params.id)
+              result.push(element)
+          })
+        }
+        updateStrBookmarks((prev) => ({
+          key: "bookmarks",
+          data: result,
+        }))
 
-    const handleRatingClick = async ({ value }) => {
-        setRating(value)
-        const updatedRating = +value * 2
-        const totalRating = +manga.rating.totalRating + updatedRating
-        const totalUsers = +manga.rating.totalUsers + 1
-        if (alreadySet) {
-            toast.info(
-                "It's one vote per user, refrain from repeating this action",
-                { theme: "dark" }
+        const itemRef = collection(db, "bookmarks")
+        const q = query(
+          itemRef,
+          where("userRef", "==", auth.currentUser.uid)
+        )
+
+        const docSnap = await getDocs(q)
+        const temporary = []
+        docSnap.forEach((item) =>
+          temporary.push({
+            id: item.id,
+            data: item.data(),
+          })
+        )
+
+        if (
+          temporary[0] &&
+          temporary[0].data.bookmarks.includes(params.id)
+        ) {
+          const filteredArray =
+            temporary[0].data.bookmarks.filter(
+              (item) => item !== params.id
             )
-            return
+          // Update bookmarks doc
+          const bookmarkRef = doc(
+            db,
+            "bookmarks",
+            temporary[0].id
+          )
+          await updateDoc(bookmarkRef, {
+            bookmarks: filteredArray,
+          })
         }
+      } catch (error) {
+        toast.info(
+          "Bookmarks updated, currently you aren't logged in so it's only updated locally",
+          { theme: "dark" }
+        )
+      }
+    }
+  }
 
-        try {
-            const docRef = doc(db, "mangas", manga.myId)
-            await updateDoc(docRef, {
-                rating: {
-                    totalRating,
-                    totalUsers,
-                },
-            })
+  function checkStorageObj(key, id) {
+    // Checking twice cus if it isn't there it always returns both key and data
+    try {
+      let temp = false
+      if (strBookmarks instanceof Array) {
+        strBookmarks.forEach((element) => {
+          if (element.myId === params.id) temp = true
+        })
+      } else {
+        const { data: itemData } = strBookmarks
+        itemData.forEach((element) => {
+          if (element.myId === params.id) temp = true
+        })
+      }
 
-            setAlreadySet(true)
-        } catch (error) {
-            if (getAuth().currentUser) {
-                toast.error("Something went wrong, try again later", {
-                    theme: "dark",
-                })
-            } else {
-                toast.error("To complete this action, login is required", {
-                    theme: "dark",
-                })
-            }
-            console.log(error)
-        }
+      return temp
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleRatingClick = async ({ value }) => {
+    setRating(value)
+    const updatedRating = +value * 2
+    const totalRating =
+      +manga.rating.totalRating + updatedRating
+    const totalUsers = +manga.rating.totalUsers + 1
+    if (alreadySet) {
+      toast.info(
+        "It's one vote per user, refrain from repeating this action",
+        { theme: "dark" }
+      )
+      return
     }
 
-    useEffect(() => {
-        const fetchData = async (id) => {
-            dispatch({ type: "SET_LOADING" })
-            let mangaRef
-            const fetchStorage = getFromStorage("manga")
+    try {
+      const docRef = doc(db, "mangas", manga.myId)
+      await updateDoc(docRef, {
+        rating: {
+          totalRating,
+          totalUsers,
+        },
+      })
 
-            if (
-                fetchStorage &&
-                !checkExpiredStorageItem("manga") &&
-                fetchStorage.myId === params.id
-            ) {
-                const { items } = fetchStorage
-                mangaRef = items
-            } else {
-                const { id: mangaId, data: mangaData } = await fetchManga(id)
-                mangaData.myId = mangaId
-                mangaRef = mangaData
-                updateStorageItem({
-                    key: "manga",
-                    data: {
-                        items: mangaData,
-                        expire: setExpirationDate(new Date().getTime()),
-                    },
-                })
-            }
-            dispatch({
-                type: "SET_MANGA",
-                payload: mangaRef,
-            })
+      setAlreadySet(true)
+    } catch (error) {
+      if (getAuth().currentUser) {
+        toast.error(
+          "Something went wrong, try again later",
+          {
+            theme: "dark",
+          }
+        )
+      } else {
+        toast.error(
+          "To complete this action, login is required",
+          {
+            theme: "dark",
+          }
+        )
+      }
+      console.log(error)
+    }
+  }
 
-            setRating(
-                mangaRef.rating.totalRating / mangaRef.rating.totalUsers / 2
-            )
-            if (auth.currentUser) {
-                const userId = auth.currentUser.uid
-                if (!mangaRef?.clicks.includes(userId)) {
-                    const docRef = doc(db, "mangas", mangaRef.myId)
-                    await updateDoc(docRef, {
-                        clicks: [...mangaRef.clicks, userId],
-                    })
-                }
-            }
+  useEffect(() => {
+    const fetchData = async (id) => {
+      dispatch({ type: "SET_LOADING" })
+      let mangaRef
+      const fetchStorage = getFromStorage("manga")
 
-            if (mangaRef === null) {
-                toast.error("Couldn't find item", {
-                    theme: "dark",
-                })
-                nav("/notfound")
-            }
+      if (
+        fetchStorage &&
+        !checkExpiredStorageItem("manga") &&
+        fetchStorage.myId === params.id
+      ) {
+        const { items } = fetchStorage
+        mangaRef = items
+      } else {
+        const { id: mangaId, data: mangaData } =
+          await fetchManga(id)
+        mangaData.myId = mangaId
+        mangaRef = mangaData
+        updateStorageItem({
+          key: "manga",
+          data: {
+            items: mangaData,
+            expire: setExpirationDate(new Date().getTime()),
+          },
+        })
+      }
+      dispatch({
+        type: "SET_MANGA",
+        payload: mangaRef,
+      })
+
+      setRating(
+        mangaRef.rating.totalRating /
+          mangaRef.rating.totalUsers /
+          2
+      )
+      if (auth.currentUser) {
+        const userId = auth.currentUser.uid
+        if (!mangaRef?.clicks.includes(userId)) {
+          const docRef = doc(db, "mangas", mangaRef.myId)
+          await updateDoc(docRef, {
+            clicks: [...mangaRef.clicks, userId],
+          })
         }
-        fetchData(params.id)
-        manga.myId !== "" && checkStatus(manga.status)
-        // eslint-disable-next-line
-    }, [])
-    return loading ? (
-        <Spinner />
-    ) : (
-        <motion.div
-            initial={{ y: 75, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-                type: "spring",
-                stiffness: 100,
-                ease: "easeIn",
-                delay: 0.3,
-            }}
-            className="lg:max-w-screen-2xl relative mx-auto"
-        >
-            <div className="flex md:flex-row flex-col lg:max-w-[1100px] mx-auto">
-                <div className="mangapage--banner flex-shrink-0 md:mt-12 md:mb-5 md:mx-7 ">
-                    <div className="flex items-center justify-center m-5">
-                        <div className="outline outline-transparent hover:outline-primary outline-offset-4 rounded-3xl transition-all ease-in-out duration-200">
-                            <img
-                                src={manga.bannerSmall}
-                                alt="temp banner"
-                                style={{
-                                    height: "100%",
-                                    filter: `grayscale(${65}%)`,
-                                }}
-                                className="rounded-3xl md:max-w-sm max-w-md"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col justify-center items-center">
-                    <p className="relative font-bold uppercase text-4xl text-center">
-                        {manga.name}
-                        {manga.status && (
-                            <span
-                                className={`absolute ml-3 top-[.65rem] badge badge-outline badge-${checkStatus(
-                                    manga.status
-                                )}`}
-                            >
-                                {myStatus.current}
-                            </span>
-                        )}
-                    </p>
-                    <div>
-                        <div className="mx-12 md:mx-5 md:mt-12 mt-20 font-light text-2xl overflow-auto">
-                            <span className="font-bold">Synopsis: </span>
-                            {manga.others.synopsis}
-                        </div>
-                        <div className="flex items-center justify-between mt-7 ml-8">
-                            <div className="mx-12 md:mx-5  font-normal text-2xl">
-                                <span className="font-bold">Tags: </span>
-                                {manga.others.tags.map((item, idx) => {
-                                    return (
-                                        <div
-                                            className="badge badge-neutral badge-lg ml-3 p-1 text-xl"
-                                            key={idx}
-                                        >
-                                            {item}
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="flex items-center">
-                                <div className="flex  badge badge-neutral badge-lg">
-                                    <Rating
-                                        defaultValue={+rating}
-                                        name="simple-controlled"
-                                        value={+rating}
-                                        className="mr-2"
-                                        onChange={(e) => {
-                                            handleRatingClick(e.target)
-                                        }}
-                                        size="large"
-                                    />
-                                    {(rating * 2).toFixed(1) + "/10"}
-                                </div>
-                                <div className="flex justify-end mr-24  ml-4">
-                                    <div
-                                        className="btn btn-ghost hover:text-primary"
-                                        onClick={handleBookmarkClick}
-                                    >
-                                        {bookmark ? (
-                                            <BookmarkAddedIcon
-                                                sx={{ fontSize: 25 }}
-                                                className="text-primary-focus"
-                                            />
-                                        ) : (
-                                            <BookmarkAddIcon
-                                                sx={{ fontSize: 25 }}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      }
 
-            <div className="divider mx-5 mt-12 md:mt-auto md:mx-72 font-light text-2xl">
-                <ArrowLeftIcon /> Chapters <ArrowRightIcon />
+      if (mangaRef === null) {
+        toast.error("Couldn't find item", {
+          theme: "dark",
+        })
+        nav("/notfound")
+      }
+    }
+    fetchData(params.id)
+    manga.myId !== "" && checkStatus(manga.status)
+    // eslint-disable-next-line
+  }, [])
+  return loading ? (
+    <Spinner />
+  ) : (
+    <motion.div
+      initial={{ y: 75, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        ease: "easeIn",
+        delay: 0.3,
+      }}
+      className="lg:max-w-screen-2xl relative mx-auto"
+    >
+      <div className="flex md:flex-row md:justify-center flex-col lg:max-w-[1100px] mx-auto">
+        <div className="flex-shrink-0 md:mx-7 ">
+          <div className="flex items-center justify-center m-5">
+            <div className="outline outline-transparent hover:outline-primary outline-offset-4 rounded-lg transition-all ease-in-out duration-200">
+              <img
+                src={manga.bannerSmall}
+                alt="temp banner"
+                style={{
+                  height: "100%",
+                  filter: `grayscale(${65}%)`,
+                }}
+                className="rounded-lg w-52"
+              />
             </div>
-            <div className="mangapage--table mx-5 lg:mx-72 md:mx-72 mt-12 grid md:grid-cols-none grid-cols-1 md:grid-flow-col-dense gap-x-12 gap-y-7 auto-cols-fr">
-                {manga.chapters.map((item, idx) => (
-                    <MangaButton
-                        id={params.id}
-                        key={idx}
-                        chapId={idx}
-                        title={item.title}
-                    />
-                ))}
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <span className="font-bold uppercase text-2xl text-center flex items-center gap-2">
+            {manga.name}
+            {manga.status && (
+              <span
+                className={`badge badge-outline badge-${checkStatus(
+                  manga.status
+                )}`}
+              >
+                {myStatus.current}
+              </span>
+            )}
+          </span>
+          <div>
+            <div className="mx-12 md:mx-5 font-light text-md overflow-auto">
+              <span className="font-bold">Synopsis: </span>
+              {manga.others.synopsis}
             </div>
-        </motion.div>
-    )
+            <div className="flex items-center justify-between mx-4 md:mx-0 lg:ml-8">
+              <div className="mx-12 md:mx-5  font-normal text-sm">
+                <span className="font-bold">Tags: </span>
+                {manga.others.tags.map((item, idx) => {
+                  return (
+                    <div
+                      className="badge badge-neutral badge-sm ml-3 p-1 text-sm"
+                      key={idx}
+                    >
+                      {item}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="flex items-center lg:mr-20 gap-2">
+                <div className="flex font-normal badge badge-neutral badge-sm">
+                  <Rating
+                    defaultValue={+rating}
+                    name="simple-controlled"
+                    value={+rating}
+                    className="mr-2"
+                    onChange={(e) => {
+                      handleRatingClick(e.target)
+                    }}
+                    size="small"
+                  />
+                  {(rating * 2).toFixed(1) + "/10"}
+                </div>
+                <div className="flex justify-end">
+                  <div
+                    className="btn btn-ghost hover:text-primary"
+                    onClick={handleBookmarkClick}
+                  >
+                    {bookmark ? (
+                      <BookmarkAddedIcon
+                        sx={{ fontSize: 25 }}
+                        className="text-primary-focus"
+                      />
+                    ) : (
+                      <BookmarkAddIcon
+                        sx={{ fontSize: 25 }}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider mx-4 lg:mx-64 font-light text-lg">
+        <ArrowLeftIcon /> Chapters <ArrowRightIcon />
+      </div>
+      <div className="mx-5 lg:mx-72 mt-10 grid md:grid-cols-none grid-cols-1 md:grid-flow-col-dense gap-x-6 gap-y-4 auto-cols-fr">
+        {manga.chapters.map((item, idx) => (
+          <MangaButton
+            id={params.id}
+            key={idx}
+            chapId={idx}
+            title={item.title}
+          />
+        ))}
+      </div>
+    </motion.div>
+  )
 }
 
 export default Manga
