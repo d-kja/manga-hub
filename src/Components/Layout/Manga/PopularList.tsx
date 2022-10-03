@@ -33,7 +33,7 @@ export const PopularList = () => {
         Popular
       </div>
 
-      <div className="px-4 flex flex-col gap-1">
+      <div className="px-4 flex flex-col gap-2">
         {loading ? (
           <Spinner />
         ) : (

@@ -234,7 +234,7 @@ function NavBar() {
                   {...register("search")}
                   onChange={searchItemOnChange}
                 />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 max-h-72 overflow-auto">
                   {searchedMangas.map(
                     ({
                       id,

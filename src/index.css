@@ -21,6 +21,8 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
 }
 
 code {
@@ -41,7 +43,8 @@ img {
 }
 
 ul {
-  list-style: none;
+  list-style: none !important;
+  list-style-type: none !important;
 }
 
 ::-webkit-scrollbar {

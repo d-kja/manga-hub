@@ -27,7 +27,7 @@ export const MangaWideContainer = ({
   const { myStatus, checkStatus } = useCheckStatus(status)
   return (
     <motion.li
-      className="overflow-hidden w-full shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md transition-shadow"
+      className="overflow-hidden w-full shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md transition-shadow list-none"
       variants={{
         hidden: { opacity: 0, y: 75 },
         show: { opacity: 1, y: 0 },
@@ -45,7 +45,7 @@ export const MangaWideContainer = ({
       }}
     >
       <div
-        className={`card w-full border border-base-300/50`}
+        className={`card w-full border border-base-300/70 bg-base-300/25`}
       >
         <Link
           to={`/mangas/${id}`}
