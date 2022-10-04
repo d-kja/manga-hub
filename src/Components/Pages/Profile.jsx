@@ -117,7 +117,7 @@ function Profile() {
     >
       <div className="py-12 px-7 flex flex-col items-center gap-12 md:flex-row md:gap-6 relative">
         <div
-          className="relative top-7 w-fit h-fit outline outline-primary hover:outline-purple-700 outline-offset-2 outline-2 rounded-full
+          className="relative top-7 w-fit h-fit outline outline-primary hover:text-purple-700 hover:outline-purple-700 outline-offset-2 outline-2 rounded-full
                 transition-all ease-in-out duration-700
             "
         >
@@ -150,11 +150,14 @@ function Profile() {
               />
             </div>
             <span
-              className={`text-md font-light absolute top-1/2 -translate-y-1/2 duration-700 transition-all z-50 pointer-events-none ${
+              className={`absolute font-semibold top-1/2 -translate-y-1/2 duration-700 transition-all z-50 pointer-events-none flex flex-col items-center justify-center leading-tight ${
                 changeBtn ? "opacity-100" : "opacity-0"
               }`}
             >
-              CHANGE
+              <span className="text-sm font-normal text-secondary uppercase">
+                click to
+              </span>
+              <span className="text-2xl -mt-1">ALTER</span>
             </span>
           </label>
         </div>
@@ -209,7 +212,7 @@ function Profile() {
           </div>
         </form>
       </div>
-      <div className="divider mt-12 font-light relative max-w-screen-xl mx-auto">
+      <div className="divider divide-x-8 mt-12 font-light relative max-w-screen-xl mx-auto">
         {isAdmin && (
           <Link
             to="/compose"

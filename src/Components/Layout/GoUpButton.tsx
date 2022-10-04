@@ -1,7 +1,7 @@
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import { useScroll } from "../../Hooks/useScroll"
 import { useEffect, useState } from "react"
 import React from "react"
+import { CaretUp } from "phosphor-react"
 
 interface GoUpButtonProps {
   windowRef: Window
@@ -35,7 +35,7 @@ function GoUpButton({ windowRef }: GoUpButtonProps) {
       }`}
     >
       <button
-        className="btn btn-secondary btn-circle btn-outline rounded-full h-12 w-12 p-0 m-auto"
+        className="btn btn-sm btn-primary btn-outline rounded-full p-0 w-10 h-10 flex items-center justify-center"
         onClick={() =>
           windowRef.scrollTo({
             top: 0,
@@ -43,7 +43,7 @@ function GoUpButton({ windowRef }: GoUpButtonProps) {
           })
         }
       >
-        <KeyboardArrowUpIcon className="m-0 p-0 w-[40px] h-[40px] font-bold" />
+        <CaretUp size={20} weight="bold" />
       </button>
     </div>
   )

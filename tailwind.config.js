@@ -17,6 +17,13 @@ module.exports = {
 
   daisyui: {
     themes: [
+      "light",
+      "dark",
+      "corporate",
+      "retro",
+      "cyberpunk",
+      "halloween",
+      "forest",
       {
         primary: {
           primary: "#DA0037",

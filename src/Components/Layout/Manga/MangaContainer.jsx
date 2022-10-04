@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 function MangaContainer({ img, name, id, rating, chap }) {
   return (
     <motion.li
-      className="uppercase relative h-72 w-48 rounded-lg transition-shadow shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md bg-base-300 hover:text-red-700"
+      className="uppercase relative h-72 w-48 rounded-lg transition-shadow shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md bg-base-300 hover:text-primary my-2 mx-auto"
       variants={{
         hidden: { opacity: 0, y: 75 },
         show: { opacity: 1, y: 0 },
@@ -34,7 +34,7 @@ function MangaContainer({ img, name, id, rating, chap }) {
               to={`/mangas/${id}/chapter/${
                 chap.length - 1
               }`}
-              className={`rounded-lg btn btn-sm bg-base-300 absolute left-4 ${
+              className={`rounded-lg btn btn-sm bg-base-300 absolute left-4 text-base-content ${
                 chap.length > 1 ? "bottom-14" : "bottom-4"
               } font-light`}
             >
@@ -46,7 +46,7 @@ function MangaContainer({ img, name, id, rating, chap }) {
                   chap.length - 2
                 }`}
                 className={
-                  "rounded-lg btn btn-sm bg-base-300 absolute left-4 bottom-4 font-light"
+                  "text-base-content rounded-lg btn btn-sm bg-base-300 absolute left-4 bottom-4 font-light"
                 }
               >
                 {chap[chap.length - 2].title}

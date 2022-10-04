@@ -314,7 +314,8 @@ function Manga() {
     fetchData(params.id)
     manga.myId !== "" && checkStatus(manga.status)
     // eslint-disable-next-line
-  }, [])
+  }, [params.id])
+
   return loading ? (
     <Spinner />
   ) : (
@@ -328,7 +329,7 @@ function Manga() {
         ease: "easeIn",
         delay: 0.3,
       }}
-      className="lg:max-w-screen-2xl relative mx-auto"
+      className="lg:max-w-screen-2xl relative mx-auto py-8"
     >
       <div className="flex md:flex-row md:justify-center flex-col lg:max-w-[1100px] mx-auto">
         <div className="flex-shrink-0 md:mx-7 ">
@@ -415,10 +416,10 @@ function Manga() {
         </div>
       </div>
 
-      <div className="divider mx-4 lg:mx-64 font-light text-lg">
+      <div className="divider md:max-w-[75%] mx-4 md:mx-auto font-light text-lg">
         <ArrowLeftIcon /> Chapters <ArrowRightIcon />
       </div>
-      <div className="mx-5 lg:mx-72 mt-10 grid md:grid-cols-none grid-cols-1 md:grid-flow-col-dense gap-x-6 gap-y-4 auto-cols-fr">
+      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-x-6 gap-y-4 auto-cols-fr mx-6 md:max-w-[70%] md:mx-auto">
         {manga.chapters.map((item, idx) => (
           <MangaButton
             id={params.id}

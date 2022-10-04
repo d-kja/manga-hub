@@ -1,6 +1,8 @@
 import React, {
   ChangeEvent,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react"
 import { Link, useNavigate } from "react-router-dom"
@@ -12,13 +14,19 @@ import { CircularProgress } from "@mui/material"
 import UserIcon from "./UserIcon"
 import SearchContext from "../../Context/Search/SearchContext"
 import * as Dialog from "@radix-ui/react-dialog"
-import { MagnifyingGlass } from "phosphor-react"
+import { Gear, MagnifyingGlass, X } from "phosphor-react"
 import DialogBody from "./DialogBody"
 import { queryManga } from "../../Context/Search/SearchActions"
 import { useForm } from "react-hook-form"
 import { v4 as uuid } from "uuid"
+import useStorage from "../../../Hooks/useStorage"
 
 function NavBar() {
+  const htmlTag = useRef(document.querySelector("html"))
+  const { storageItem } = useStorage({
+    key: "user-theme",
+    data: "primary",
+  })
   // dispatch, queryResult
   const { loading } = useContext(SearchContext)
   // data
@@ -30,6 +38,23 @@ function NavBar() {
   const { register, handleSubmit } = useForm()
 
   const nav = useNavigate()
+
+  useEffect(() => {
+    if (storageItem) setTheme(storageItem.data)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const setTheme = (theme: string) => {
+    htmlTag.current?.setAttribute("data-theme", theme)
+    localStorage.setItem(
+      "user-theme",
+      JSON.stringify({
+        key: "user-theme",
+        data: theme,
+      })
+    )
+  }
 
   const handleSearchBarSubmit = async (
     e: Event,
@@ -151,7 +176,7 @@ function NavBar() {
           </div>
           <Link
             to="/"
-            className="btn btn-ghost normal-case text-md hover:text-primary transition-colors"
+            className="btn hover:bg-opacity-0 btn-ghost normal-case text-md hover:text-primary transition-colors"
           >
             <MdLocalFireDepartment size={20} />
           </Link>
@@ -192,7 +217,10 @@ function NavBar() {
                 </li>
                 <li>
                   <Link className="rounded-lg" to="/search">
-                    Search
+                    Search{" "}
+                    <span className="text-primary italic font-light">
+                      with filter
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -212,9 +240,9 @@ function NavBar() {
         >
           <Dialog.Root>
             <Dialog.Trigger>
-              <span className="btn btn-ghost capitalize font-semibold text-base hover:bg-transparent flex items-center gap-2">
+              <span className="btn btn-ghost capitalize font-semibold text-base hover:bg-transparent flex items-center gap-2 hover:text-primary transition-colors">
                 <MagnifyingGlass
-                  size={18}
+                  className="w-4 h-4"
                   weight={"bold"}
                 />
                 <span className="hidden md:block">
@@ -244,11 +272,13 @@ function NavBar() {
                       data: any
                     }) => {
                       return (
-                        <Link
-                          to={`/mangas/${id}`}
+                        <Dialog.Close
+                          onClick={() => {
+                            nav(`/mangas/${id}`)
+                          }}
                           key={uuid()}
                         >
-                          <button className="card w-96 bg-base-100 shadow-xl">
+                          <div className="card w-96 bg-base-100 shadow-xl">
                             <div className="card-body px-6 py-4 flex flex-row gap-4">
                               <img
                                 src={manga.bannerSmall}
@@ -268,8 +298,8 @@ function NavBar() {
                                 </p>
                               </div>
                             </div>
-                          </button>
-                        </Link>
+                          </div>
+                        </Dialog.Close>
                       )
                     }
                   )}
@@ -277,6 +307,64 @@ function NavBar() {
               </form>
             </DialogBody>
           </Dialog.Root>
+
+          <Dialog.Root>
+            <Dialog.Trigger>
+              <span className="btn btn-ghost px-0 capitalize font-semibold text-base hover:bg-transparent flex items-center gap-2 hover:text-primary transition-colors">
+                <Gear className="w-5 h-5" weight={"bold"} />
+              </span>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="bg-black/60 inset-0 fixed" />
+              <Dialog.Content className="fixed bg-base-300 py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg shadow-black/40 min-w-[460px] max-h-[85%] overflow-auto">
+                <Dialog.Title className="text-xl font-black border-b-2 border-primary text-primary">
+                  Change theme
+                </Dialog.Title>
+                <div className="my-4 text-secondary font-normal grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <button
+                    className="flex items-center gap-4 btn-ghost btn"
+                    onClick={() => setTheme("primary")}
+                  >
+                    Primary{" "}
+                    <span className="btn bg-red-700 btn-circle rounded-full btn-xs" />
+                  </button>
+                  <button
+                    className="flex items-center gap-4 btn-ghost btn"
+                    onClick={() => setTheme("halloween")}
+                  >
+                    Halloween{" "}
+                    <span className="btn bg-yellow-400 btn-circle rounded-full btn-xs" />
+                  </button>
+                  <button
+                    className="flex items-center gap-4 btn-ghost btn"
+                    onClick={() => setTheme("light")}
+                  >
+                    Light{" "}
+                    <span className="btn bg-zinc-100 btn-circle rounded-full btn-xs" />
+                  </button>
+                  <button
+                    className="flex items-center gap-4 btn-ghost btn"
+                    onClick={() => setTheme("dark")}
+                  >
+                    Dark{" "}
+                    <span className="btn bg-zinc-700 btn-circle rounded-full btn-xs" />
+                  </button>
+                  <button
+                    className="flex items-center gap-4 btn-ghost btn"
+                    onClick={() => setTheme("cyberpunk")}
+                  >
+                    Cyberpunk{" "}
+                    <span className="btn bg-yellow-600 btn-circle rounded-full btn-xs" />
+                  </button>
+                </div>
+
+                <Dialog.Close className="btn btn-xs opacity-50 btn-square absolute top-5 right-5">
+                  <X weight="bold" />
+                </Dialog.Close>
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
+
           <UserIcon isLogged={isLogged} />
         </div>
       </div>

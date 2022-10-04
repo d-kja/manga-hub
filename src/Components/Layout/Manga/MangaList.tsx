@@ -12,8 +12,7 @@ import useStorage, {
   getFromStorage,
   setExpirationDate,
 } from "../../../Hooks/useStorage"
-
-// https://tailwindui.com/preview#component-db11f83176d113e39bf2559da9344b1c
+import { Masonry } from "masonic"
 
 function MangaList({ query, fromHome }: any) {
   const { dispatch, loading, mangas } =
@@ -66,7 +65,7 @@ function MangaList({ query, fromHome }: any) {
 
   return (
     <motion.ul
-      className="px-4 py-6 flex gap-4 flex-wrap justify-center"
+      className="px-4 py-6 flex gap-4 flex-wrap justify-center max-w-screen-xl mx-auto"
       initial={{ y: 75, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -84,35 +83,76 @@ function MangaList({ query, fromHome }: any) {
         <Spinner />
       ) : (
         <>
-          {query
-            ? mangas.map(({ id, data }: any) => {
-                const rgx = new RegExp(query.toLowerCase())
-                return (
-                  data.name.toLowerCase().match(rgx) && (
-                    <MangaContainer
-                      key={id}
-                      id={id}
-                      name={data.name}
-                      rating={data.rating}
-                      img={data.bannerSmall}
-                      chap={data.chapters}
-                    />
-                  )
+          {query ? (
+            mangas.map(({ id, data }: any) => {
+              const rgx = new RegExp(query.toLowerCase())
+              return (
+                data.name.toLowerCase().match(rgx) && (
+                  <MangaContainer
+                    key={id}
+                    id={id}
+                    name={data.name}
+                    rating={data.rating}
+                    img={data.bannerSmall}
+                    chap={data.chapters}
+                  />
                 )
-              })
-            : mangas.map(({ id, data }: any) => (
-                <MangaContainer
-                  key={id}
-                  id={id}
-                  name={data.name}
-                  rating={data.rating}
-                  img={data.bannerSmall}
-                  chap={data.chapters}
-                />
-              ))}
+              )
+            })
+          ) : (
+            <MangaVirtualized mangas={mangas} />
+          )}
         </>
       )}
     </motion.ul>
+  )
+}
+
+const MangaVirtualized = ({ mangas }: any) => (
+  <Masonry
+    items={mangas}
+    columnGutter={4}
+    overscanBy={1}
+    render={MangaCard}
+  />
+)
+
+const MangaVirtualizedWithFilter = ({ mangas }: any) => (
+  <Masonry
+    items={mangas}
+    columnGutter={4}
+    overscanBy={1}
+    render={MangaCardWithFilter}
+  />
+)
+
+const MangaCard = ({ data }: any) => {
+  const { id, data: dataManga } = data
+
+  return (
+    <MangaContainer
+      key={id}
+      id={id}
+      name={dataManga.name}
+      rating={dataManga.rating}
+      img={dataManga.bannerSmall}
+      chap={dataManga.chapters}
+    />
+  )
+}
+
+const MangaCardWithFilter = ({ data }: any) => {
+  const { id, data: dataManga } = data
+
+  return (
+    <MangaContainer
+      key={id}
+      id={id}
+      name={dataManga.name}
+      rating={dataManga.rating}
+      img={dataManga.bannerSmall}
+      chap={dataManga.chapters}
+    />
   )
 }
 
