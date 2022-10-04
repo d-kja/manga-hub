@@ -2,10 +2,19 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
-function MangaContainer({ img, name, id, rating, chap }) {
+function MangaContainer({
+  img,
+  name,
+  id,
+  rating,
+  chap,
+  noSpacing,
+}) {
   return (
     <motion.li
-      className="uppercase relative h-72 w-48 rounded-lg transition-shadow shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md bg-base-300 hover:text-primary my-2 mx-auto"
+      className={`uppercase relative h-72 w-48 rounded-lg transition-shadow shadow-lg drop-shadow-lg hover:shadow-md hover:drop-shadow-md bg-base-300 hover:text-primary my-2 ${
+        !noSpacing && "mx-auto"
+      }`}
       variants={{
         hidden: { opacity: 0, y: 75 },
         show: { opacity: 1, y: 0 },
