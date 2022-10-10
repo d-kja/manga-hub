@@ -115,3 +115,19 @@ ul {
 .slick-arrow {
   display: hidden !important;
 }
+
+.mantine-MultiSelect-input {
+  background-color: transparent;
+  border: none;
+}
+.mantine-MultiSelect-input:focus {
+  outline: none;
+}
+.mantine-MultiSelect-root:focus {
+  outline: none;
+}
+.mantine-MultiSelect-searchInput:focus {
+  outline: none;
+}
+.mantine-MultiSelect-dropdown {
+}

@@ -67,18 +67,18 @@ function Bookmarks() {
 
   return (
     <motion.ul
-      initial={{ y: 50, opacity: 0 }}
+      initial={{ y: 75, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
-        delay: 0.3,
+        delay: 1.3,
       }}
+      exit={{ opacity: 0 }}
       className="lg:max-w-screen-2xl relative mx-auto list-none"
     >
-      <div className="my-12 mx-5 flex flex-wrap items-center justify-center gap-2">
+      <div className="my-12 mx-5 flex flex-wrap items-center justify-center gap-6">
         {items.length > 0
           ? items.map((item) => {
               return (

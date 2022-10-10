@@ -1,5 +1,6 @@
 import React from "react"
 
+// Components
 import Manga from "../Layout/Manga/MangaList"
 
 // Home is supposed to have a limit (todo), this one just shows everything.

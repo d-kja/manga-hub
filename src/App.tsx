@@ -24,6 +24,7 @@ import SearchManga from "./Components/Pages/SearchManga"
 import Profile from "./Components/Pages/Profile"
 import Bookmarks from "./Components/Pages/Bookmarks"
 import Composer from "./Components/Pages/Composer"
+import OldComposer from "./Components/Pages/Composer/OldComposer"
 import About from "./Components/Pages/About"
 //
 import SignIn from "./Components/Pages/SignIn"
@@ -38,6 +39,7 @@ import NotFound from "./Components/Pages/NotFound"
 import { MangaProvider } from "./Components/Context/Mangas/MangaContext"
 import { BannerProvider } from "./Components/Context/Banners/BannerContext"
 import { SearchProvider } from "./Components/Context/Search/SearchContext"
+import { MantineProvider } from "@mantine/core"
 
 import {
   ThemeProvider,
@@ -56,99 +58,114 @@ const darkTheme = createTheme({
 
 function App() {
   return (
-    <BannerProvider>
-      <MangaProvider>
-        <SearchProvider>
-          <ThemeProvider theme={darkTheme}>
-            <Router>
-              <LoadingProvider>
-                <div className="relative min-h-screen">
-                  <NavBar />
-                  <AnimatePresence>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route
-                        path="/bookmarks"
-                        element={<Bookmarks />}
-                      />
-                      <Route
-                        path="/options"
-                        element={<PrivateRoute />}
-                      >
+    <MantineProvider>
+      <BannerProvider>
+        <MangaProvider>
+          <SearchProvider>
+            <ThemeProvider theme={darkTheme}>
+              <Router>
+                <LoadingProvider>
+                  <div className="relative min-h-screen">
+                    <NavBar />
+                    <AnimatePresence>
+                      <Routes>
+                        <Route
+                          path="/"
+                          element={<Home />}
+                        />
+                        <Route
+                          path="/bookmarks"
+                          element={<Bookmarks />}
+                        />
                         <Route
                           path="/options"
-                          element={<Profile />}
+                          element={<PrivateRoute />}
+                        >
+                          <Route
+                            path="/options"
+                            element={<Profile />}
+                          />
+                        </Route>
+                        <Route
+                          path="/signIn"
+                          element={<SignIn />}
                         />
-                      </Route>
-                      <Route
-                        path="/signIn"
-                        element={<SignIn />}
-                      />
-                      <Route
-                        path="/signUp"
-                        element={<SignUp />}
-                      />
-                      <Route
-                        path="/forgotPassword"
-                        element={<ForgotPassword />}
-                      />
-                      <Route
-                        path="/logOut"
-                        element={<SignOut />}
-                      />
-                      <Route
-                        path="/search"
-                        element={<SearchManga />}
-                      />
-                      <Route
-                        path="/search/:query"
-                        element={<SearchManga />}
-                      />
-                      <Route
-                        path="/list"
-                        element={<MangaList />}
-                      />
-                      <Route
-                        path="/about"
-                        element={<About />}
-                      />
-                      <Route
-                        path="/*"
-                        element={<NotFound />}
-                      />
+                        <Route
+                          path="/signUp"
+                          element={<SignUp />}
+                        />
+                        <Route
+                          path="/forgotPassword"
+                          element={<ForgotPassword />}
+                        />
+                        <Route
+                          path="/logOut"
+                          element={<SignOut />}
+                        />
+                        <Route
+                          path="/search"
+                          element={<SearchManga />}
+                        />
+                        <Route
+                          path="/search/:query"
+                          element={<SearchManga />}
+                        />
+                        <Route
+                          path="/list"
+                          element={<MangaList />}
+                        />
+                        <Route
+                          path="/about"
+                          element={<About />}
+                        />
+                        <Route
+                          path="/*"
+                          element={<NotFound />}
+                        />
 
-                      <Route
-                        path="/mangas/:id"
-                        element={<Manga />}
-                      />
-                      <Route
-                        path="/mangas/:id/chapter/:chapId"
-                        element={<Strip />}
-                      />
-                      <Route
-                        path="/compose"
-                        element={<AdminOnly />}
-                      >
+                        <Route
+                          path="/mangas/:id"
+                          element={<Manga />}
+                        />
+                        <Route
+                          path="/mangas/:id/chapter/:chapId"
+                          element={<Strip />}
+                        />
                         <Route
                           path="/compose"
-                          element={<Composer />}
-                        />
-                      </Route>
-                    </Routes>
-                  </AnimatePresence>
-                  <div className="inline-block mx-20 mb-56 font-light text-2xl" />
-                  <Footer />
-                </div>
-                <GoUpButton windowRef={window} />
-                <LoadingLayout />
-                {/* (<UpdatesNotification />) */}
-              </LoadingProvider>
-            </Router>
-          </ThemeProvider>
-          <ToastContainer />
-        </SearchProvider>
-      </MangaProvider>
-    </BannerProvider>
+                          element={<AdminOnly />}
+                        >
+                          <Route
+                            path="/compose"
+                            element={<Composer />}
+                          />
+                        </Route>
+
+                        <Route
+                          path="/old-composer"
+                          element={<AdminOnly />}
+                        >
+                          <Route
+                            path="/old-composer"
+                            element={<OldComposer />}
+                          />
+                        </Route>
+                      </Routes>
+                    </AnimatePresence>
+                    <div className="inline-block mx-20 mb-56 font-light text-2xl" />
+                    <Footer />
+                  </div>
+                  <GoUpButton windowRef={window} />
+                  <LoadingLayout />
+                  {/* (<UpdatesNotification />) */}
+                </LoadingProvider>
+              </Router>
+            </ThemeProvider>
+            <ToastContainer />
+          </SearchProvider>
+        </MangaProvider>
+      </BannerProvider>
+    </MantineProvider>
   )
 }
 

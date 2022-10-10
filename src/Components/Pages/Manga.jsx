@@ -62,6 +62,8 @@ function Manga() {
     },
   })
 
+  console.log(manga)
+
   const [bookmark, setBookmark] = useState(
     checkStorageObj(manga.myId)
   )
@@ -322,12 +324,11 @@ function Manga() {
     <motion.div
       initial={{ y: 75, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
-        delay: 0.3,
+        delay: 1.3,
       }}
       className="lg:max-w-screen-2xl relative mx-auto py-8"
     >
@@ -350,7 +351,8 @@ function Manga() {
         <div className="flex flex-col justify-center items-center gap-4">
           <span className="font-bold uppercase text-2xl text-center flex items-center gap-2">
             {manga.name}
-            {manga.status && (
+            {(manga.status !== null ||
+              manga.status !== undefined) && (
               <span
                 className={`badge badge-outline badge-${checkStatus(
                   manga.status

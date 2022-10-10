@@ -65,7 +65,7 @@ function MangaList({ query, fromHome }: any) {
 
   return (
     <motion.ul
-      className="px-4 py-6 flex gap-4 flex-wrap justify-center max-w-screen-xl mx-auto"
+      className="px-4 py-6 flex gap-6 flex-wrap justify-center max-w-screen-xl mx-auto"
       initial={{ y: 75, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -89,6 +89,7 @@ function MangaList({ query, fromHome }: any) {
               return (
                 data.name.toLowerCase().match(rgx) && (
                   <MangaContainer
+                    noSpacing={false}
                     key={id}
                     id={id}
                     name={data.name}
@@ -131,6 +132,7 @@ const MangaCard = ({ data }: any) => {
 
   return (
     <MangaContainer
+      noSpacing={false}
       key={id}
       id={id}
       name={dataManga.name}
@@ -146,6 +148,7 @@ const MangaCardWithFilter = ({ data }: any) => {
 
   return (
     <MangaContainer
+      noSpacing={false}
       key={id}
       id={id}
       name={dataManga.name}

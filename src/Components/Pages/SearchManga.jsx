@@ -81,6 +81,7 @@ function SearchManga() {
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
+        delay: 1.3,
       }}
     >
       <div>

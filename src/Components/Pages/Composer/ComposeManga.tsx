@@ -1,11 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 
 import {
   FieldErrorsImpl,
   FieldValues,
   UseFormHandleSubmit,
   UseFormRegister,
+  UseFormSetValue,
 } from "react-hook-form"
+
+// Components
+import { MultiSelect } from "@mantine/core"
 
 // Utils
 import {
@@ -21,11 +25,14 @@ import {
 } from "firebase/firestore"
 import { db } from "../../../firebase.config"
 import { useUploadImage } from "../../../Hooks/useUploadImage"
+
+// Styling
 import { toast } from "react-toastify"
 
 // Types
 interface ComposeMangaProps {
   handleSubmit: UseFormHandleSubmit<FieldValues>
+  handleChange: UseFormSetValue<FieldValues>
   register: UseFormRegister<FieldValues>
   errors: FieldErrorsImpl<{
     [x: string]: any
@@ -33,39 +40,50 @@ interface ComposeMangaProps {
 }
 
 type TForm = {
-  banner: File
-  bannerSmall: File
+  banner: FileList
+  bannerSmall: FileList
 }
 
 export default function ComposeManga({
   errors,
   handleSubmit,
+  handleChange,
   register,
 }: ComposeMangaProps) {
   const { upload } = useUploadImage()
+  const [tags, setTags] = useState<any[]>([])
 
   const handleFormCreate = async (data: any) => {
     const { banner, bannerSmall } = data as TForm
+    console.log(data, tags)
 
-    console.log(data)
-    return null
-
-    // eslint-disable-next-line no-unreachable
     try {
       const bannerUrl = (await upload(
-        banner,
+        banner[0],
         "mangas"
       )) as string
       const bannerSmallUrl = (await upload(
-        bannerSmall,
+        bannerSmall[0],
         "mangas"
       )) as string
 
-      const formDataDupe: any = { ...data }
+      const formDataDupe: any = {
+        name: data.name,
+        status: +data.status,
+        chapters: [],
+        clicks: [],
+        rating: {
+          totalRating: 0,
+          totalUsers: 0,
+        },
+        others: {
+          tags,
+          synopsis: data.synopsis,
+        },
+      }
 
       formDataDupe.banner = bannerUrl
       formDataDupe.bannerSmall = bannerSmallUrl
-      formDataDupe.status = +formDataDupe.status
       formDataDupe.timestamp = serverTimestamp()
 
       const docRef = collection(db, "mangas")
@@ -139,7 +157,19 @@ export default function ComposeManga({
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Synopsis</span>
+            <span className="label-text">Synopsis</span>{" "}
+            <button
+              className="btn btn-xs btn-ghost"
+              type="button"
+              onClick={() => {
+                handleChange(
+                  "synopsis",
+                  "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim quaerat rerum veritatis minus repudiandae reiciendis esse, iusto obcaecati exercitationem culpa maiores suscipit quia dolores molestiae a nesciunt aliquid illum recusandae."
+                )
+              }}
+            >
+              Generate lorem
+            </button>
           </label>
           <textarea
             className="placeholder:opacity-50 text-normal font-normal form-control px-4 py-2 input input-primary transition ease-in-out m-0"
@@ -159,11 +189,98 @@ export default function ComposeManga({
             </label>
           )}
         </div>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Tags</span>
+          </label>
+          <MultiSelect
+            className="select select-primary bg-transparent appearance-none placeholder:opacity-50 text-normal font-normal form-control p-1 transition ease-in-out m-0"
+            data={[
+              {
+                label: "Adventure",
+                value: "adventure",
+              },
+              {
+                label: "Slice of life",
+                value: "slife of life",
+              },
+              {
+                label: "Isekai",
+                value: "isekai",
+              },
+              {
+                label: "Fantasy",
+                value: "fantasy",
+              },
+              {
+                label: "Action",
+                value: "action",
+              },
+            ]}
+            value={tags}
+            onChange={setTags}
+            placeholder="Select da tags mah brotha"
+            clearable
+            required
+          />
+        </div>
+      </div>
+
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Banner</span>
+        </label>
+        <input
+          type="file"
+          className="placeholder:opacity-50 text-normal font-normal form-control px-4 py-2 input input-primary transition ease-in-out m-0"
+          placeholder="A bit of a hint, it's title... you dumb f."
+          accept=".jpg,.png,.jpeg"
+          {...register("banner", {
+            required: "Required field",
+          })}
+        />
+        {errors.banner && (
+          <label className="label">
+            <span className="label-text-alt text-warning">
+              {typeof errors?.banner?.message === "string"
+                ? errors?.banner?.message
+                : "Required field"}
+            </span>
+          </label>
+        )}
+      </div>
+
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">
+            Banner (Small version)
+          </span>
+        </label>
+        <input
+          type="file"
+          className="placeholder:opacity-50 text-normal font-normal form-control px-4 py-2 input input-primary transition ease-in-out m-0"
+          placeholder="A bit of a hint, it's title... you dumb f."
+          accept=".jpg,.png,.jpeg"
+          {...register("bannerSmall", {
+            required: "Required field",
+          })}
+        />
+        {errors.bannerSmall && (
+          <label className="label">
+            <span className="label-text-alt text-warning">
+              {typeof errors?.bannerSmall?.message ===
+              "string"
+                ? errors?.bannerSmall?.message
+                : "Required field"}
+            </span>
+          </label>
+        )}
       </div>
 
       <button
         type="submit"
-        className="btn btn-primary font-bold"
+        className="btn btn-primary font-bold mt-2"
       >
         Create
       </button>

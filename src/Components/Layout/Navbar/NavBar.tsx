@@ -258,7 +258,7 @@ function NavBar() {
                 <input
                   type="text"
                   placeholder="e.g. Overflow ;)"
-                  className="input w-full"
+                  className="input input-ghost w-full"
                   {...register("search")}
                   onChange={searchItemOnChange}
                 />

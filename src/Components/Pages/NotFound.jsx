@@ -13,6 +13,7 @@ function NotFound() {
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
+        delay: 1.3,
       }}
       className="hero"
       style={{

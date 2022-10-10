@@ -37,10 +37,10 @@ function CarouselItem({
                   to={`/mangas/${id}`}
                   className="flex flex-col items-center"
                 >
-                  <h1 className="text-xl md:text-2xl lg:text-4xl mx-auto mb-2 drop-shadow-lg">
+                  <h1 className="text-xl md:text-2xl lg:text-4xl mx-auto mb-2 drop-shadow-lg text-zinc-100">
                     {name}
                   </h1>
-                  <p className="text-lg md:text-xl lg:text-2xl font-normal">
+                  <div className="text-lg md:text-xl lg:text-2xl font-normal">
                     <span className="badge badge-ghost rounded-lg ml-2 text-lg">
                       <div className="text-sm">
                         {rating}
@@ -60,7 +60,7 @@ function CarouselItem({
                         {myStatus.current}
                       </div>
                     </span>
-                  </p>
+                  </div>
                 </Link>
               </div>
             </div>

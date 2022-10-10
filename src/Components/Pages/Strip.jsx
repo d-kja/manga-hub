@@ -64,6 +64,7 @@ function Strip() {
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
+        delay: 1.3,
       }}
       className="lg:max-w-screen-lg md:max-w-full w-full mx-auto"
     >

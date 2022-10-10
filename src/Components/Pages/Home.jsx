@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import Carousel from "../Layout/Carousel/Carousel"
 import MangaList from "../Layout/Manga/MangaList"
 
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment"
 import { motion } from "framer-motion"
 import { PopularList } from "../Layout/Manga/PopularList"
 import { CommingSoonList } from "../Layout/Manga/CommingSoonList"
@@ -19,6 +18,7 @@ function Home() {
         type: "spring",
         stiffness: 100,
         ease: "easeIn",
+        delay: 1.3,
       }}
       className="min-h-screen mb-12 mt-2"
     >

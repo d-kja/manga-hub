@@ -13,6 +13,8 @@ export default function Composer() {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm()
 
   return (
@@ -45,6 +47,7 @@ export default function Composer() {
           <ComposeManga
             errors={errors}
             handleSubmit={handleSubmit}
+            handleChange={setValue}
             register={register}
           />
         </Tabs.Content>
@@ -52,6 +55,7 @@ export default function Composer() {
           <UpdateManga
             errors={errors}
             handleSubmit={handleSubmit}
+            handleChange={setValue}
             register={register}
           />
         </Tabs.Content>
