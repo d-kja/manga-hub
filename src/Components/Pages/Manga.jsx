@@ -266,53 +266,66 @@ function Manga() {
       let mangaRef
       const fetchStorage = getFromStorage("manga")
 
-      if (
-        fetchStorage &&
-        !checkExpiredStorageItem("manga") &&
-        fetchStorage.myId === params.id
-      ) {
-        const { items } = fetchStorage
-        mangaRef = items
-      } else {
-        const { id: mangaId, data: mangaData } =
-          await fetchManga(id)
-        mangaData.myId = mangaId
-        mangaRef = mangaData
-        updateStorageItem({
-          key: "manga",
-          data: {
-            items: mangaData,
-            expire: setExpirationDate(new Date().getTime()),
-          },
-        })
-      }
-      dispatch({
-        type: "SET_MANGA",
-        payload: mangaRef,
-      })
-
-      setRating(
-        mangaRef.rating.totalRating /
-          mangaRef.rating.totalUsers /
-          2
-      )
-      if (auth.currentUser) {
-        const userId = auth.currentUser.uid
-        if (!mangaRef?.clicks.includes(userId)) {
-          const docRef = doc(db, "mangas", mangaRef.myId)
-          await updateDoc(docRef, {
-            clicks: [...mangaRef.clicks, userId],
+      try {
+        if (
+          fetchStorage &&
+          !checkExpiredStorageItem("manga") &&
+          fetchStorage.myId === params.id
+        ) {
+          const { items } = fetchStorage
+          mangaRef = items
+        } else {
+          const { id: mangaId, data: mangaData } =
+            await fetchManga(id)
+          mangaData.myId = mangaId
+          mangaRef = mangaData
+          updateStorageItem({
+            key: "manga",
+            data: {
+              items: mangaData,
+              expire: setExpirationDate(
+                new Date().getTime()
+              ),
+            },
           })
         }
-      }
+        dispatch({
+          type: "SET_MANGA",
+          payload: mangaRef,
+        })
 
-      if (mangaRef === null) {
-        toast.error("Couldn't find item", {
+        setRating(
+          mangaRef.rating.totalRating /
+            mangaRef.rating.totalUsers /
+            2
+        )
+        if (auth.currentUser) {
+          const userId = auth.currentUser.uid
+          if (!mangaRef?.clicks.includes(userId)) {
+            const docRef = doc(db, "mangas", mangaRef.myId)
+            await updateDoc(docRef, {
+              clicks: [...mangaRef.clicks, userId],
+            })
+          }
+        }
+
+        if (mangaRef === null) {
+          toast.error("Couldn't find item", {
+            theme: "dark",
+          })
+          nav("/notfound")
+        }
+      } catch (error) {
+        // fallback if this guy got deleted or sth
+        console.error("Something went wrong", error)
+        toast.error("Something went wrong", {
           theme: "dark",
         })
+        dispatch({ type: "RESET_LOADING" })
         nav("/notfound")
       }
     }
+
     fetchData(params.id)
     manga.myId !== "" && checkStatus(manga.status)
     // eslint-disable-next-line

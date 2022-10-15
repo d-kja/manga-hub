@@ -7,6 +7,7 @@ import UpdateManga from "./UpdateManga"
 
 // Utils
 import { useForm } from "react-hook-form"
+import DropManga from "./DropManga"
 
 export default function Composer() {
   const {
@@ -16,6 +17,13 @@ export default function Composer() {
     setValue,
     watch,
   } = useForm()
+  const {
+    handleSubmit: handleSubmitUpdate,
+    register: registerUpdate,
+    formState: { errors: errorsUpdate },
+    setValue: setValueUpdate,
+    watch: watchUpdate,
+  } = useForm()
 
   return (
     <div className="w-full px-8 py-6 max-w-screen-xl mx-auto">
@@ -24,12 +32,12 @@ export default function Composer() {
       </h1>
 
       <Tabs.Root defaultValue="compose">
-        <Tabs.List className="flex justify-center">
+        <Tabs.List className="flex justify-center md:flex-row flex-col">
           <Tabs.Trigger
             value="compose"
             className="w-full group select-btn"
           >
-            <div className="btn btn-ghost w-full rounded-r-none">
+            <div className="btn btn-ghost w-full md:rounded-r-none">
               Compose manga
             </div>
           </Tabs.Trigger>
@@ -37,8 +45,16 @@ export default function Composer() {
             value="update"
             className="w-full group select-btn"
           >
-            <div className="btn btn-ghost w-full rounded-l-none">
+            <div className="btn btn-ghost w-full md:rounded-none">
               Update manga
+            </div>
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            value="delete"
+            className="w-full group select-btn"
+          >
+            <div className="btn btn-ghost w-full md:rounded-l-none">
+              Drop manga
             </div>
           </Tabs.Trigger>
         </Tabs.List>
@@ -53,10 +69,18 @@ export default function Composer() {
         </Tabs.Content>
         <Tabs.Content value="update">
           <UpdateManga
-            errors={errors}
-            handleSubmit={handleSubmit}
-            handleChange={setValue}
-            register={register}
+            errors={errorsUpdate}
+            handleSubmit={handleSubmitUpdate}
+            handleChange={setValueUpdate}
+            register={registerUpdate}
+          />
+        </Tabs.Content>
+        <Tabs.Content value="delete">
+          <DropManga
+            errors={errorsUpdate}
+            handleSubmit={handleSubmitUpdate}
+            handleChange={setValueUpdate}
+            register={registerUpdate}
           />
         </Tabs.Content>
       </Tabs.Root>
