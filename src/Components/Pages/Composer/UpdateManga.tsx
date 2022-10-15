@@ -28,6 +28,7 @@ import {
 // Styling
 import { toast } from "react-toastify"
 import { MultiSelect } from "@mantine/core"
+import { CircleNotch, Spinner } from "phosphor-react"
 
 interface UpdateMangaProps {
   handleSubmit: UseFormHandleSubmit<FieldValues>
@@ -49,6 +50,8 @@ export default function UpdateManga({
   const [mangas, setMangas] = useState<any[]>([])
   const [manga, setManga] = useState<any>({})
   const [tags, setTags] = useState<any[]>([])
+  const [btnLoading, setBtnLoading] =
+    useState<boolean>(false)
   const [addChapter, setAddChapter] =
     useState<boolean>(false)
   const [formDataUpdate, setFormDataUpdate] = useState({
@@ -132,6 +135,7 @@ export default function UpdateManga({
     })
 
     try {
+      setBtnLoading(true)
       if (addChapter) {
         if (strips.length < 0) {
           toast.error("No images selected", {
@@ -191,6 +195,7 @@ export default function UpdateManga({
       toast.error("Something went wrong", { theme: "dark" })
       console.error(error)
     }
+    setBtnLoading(false)
   }
 
   const notifyUpdateToUsers = async (mangaId: any) => {
@@ -478,8 +483,17 @@ export default function UpdateManga({
       <button
         type="submit"
         className="btn btn-primary font-bold mt-2"
+        disabled={btnLoading}
       >
-        Update
+        {btnLoading ? (
+          <Spinner
+            size={24}
+            weight="bold"
+            className="animate-spin"
+          />
+        ) : (
+          "Update"
+        )}
       </button>
     </form>
   )

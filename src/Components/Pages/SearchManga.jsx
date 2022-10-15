@@ -69,8 +69,13 @@ function SearchManga() {
 
   const handleChange = async (e) => {
     const { value, id } = e.target
-    id === "searchInput" && setSearchInput(value)
-    id === "selectInput" && setSelectInput(value)
+    if (id === "searchInput") {
+      setSearchInput(value)
+      setSelectInput("")
+    } else if (id === "selectInput") {
+      setSelectInput(value)
+      setSearchInput("")
+    }
   }
 
   return (
@@ -123,6 +128,7 @@ function SearchManga() {
           <select
             className="select select-bordered w-full max-w-xs"
             onChange={handleChange}
+            value={selectInput}
             id="selectInput"
           >
             <option defaultValue value={""}>

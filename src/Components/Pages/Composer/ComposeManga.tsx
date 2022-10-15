@@ -28,6 +28,7 @@ import { useUploadImage } from "../../../Hooks/useUploadImage"
 
 // Styling
 import { toast } from "react-toastify"
+import { Spinner } from "phosphor-react"
 
 // Types
 interface ComposeMangaProps {
@@ -52,12 +53,16 @@ export default function ComposeManga({
 }: ComposeMangaProps) {
   const { upload } = useUploadImage()
   const [tags, setTags] = useState<any[]>([])
+  const [btnLoading, setBtnLoading] =
+    useState<boolean>(false)
 
   const handleFormCreate = async (data: any) => {
     const { banner, bannerSmall } = data as TForm
     console.log(data, tags)
 
     try {
+      setBtnLoading(true)
+
       const bannerUrl = (await upload(
         banner[0],
         "mangas"
@@ -96,6 +101,7 @@ export default function ComposeManga({
         theme: "dark",
       })
     }
+    setBtnLoading(false)
   }
 
   return (
@@ -281,8 +287,17 @@ export default function ComposeManga({
       <button
         type="submit"
         className="btn btn-primary font-bold mt-2"
+        disabled={btnLoading}
       >
-        Create
+        {btnLoading ? (
+          <Spinner
+            size={24}
+            weight="bold"
+            className="animate-spin"
+          />
+        ) : (
+          "Create"
+        )}
       </button>
     </form>
   )
