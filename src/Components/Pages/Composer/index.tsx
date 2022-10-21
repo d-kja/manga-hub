@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 // Components
 import * as Tabs from "@radix-ui/react-tabs"
@@ -8,6 +8,8 @@ import UpdateManga from "./UpdateManga"
 // Utils
 import { useForm } from "react-hook-form"
 import DropManga from "./DropManga"
+import { getAuth } from "firebase/auth"
+import { useNavigate } from "react-router-dom"
 
 export default function Composer() {
   const {

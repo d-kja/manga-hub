@@ -8,6 +8,8 @@ module.exports = {
       backgroundImage: {
         "carousel-after":
           "linear-gradient(to right bottom, rgba(23, 23, 23, 0.95), rgba(68, 68, 68, 0.25))",
+        triangular:
+          "clip-path: polygon(50% 0%, 0% 100%, 100% 100%)",
       },
       container: {
         center: true,

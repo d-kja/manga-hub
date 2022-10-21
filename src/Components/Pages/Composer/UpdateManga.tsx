@@ -29,6 +29,8 @@ import {
 import { toast } from "react-toastify"
 import { MultiSelect } from "@mantine/core"
 import { CircleNotch, Spinner } from "phosphor-react"
+import { getAuth } from "firebase/auth"
+import { useNavigate } from "react-router-dom"
 
 interface UpdateMangaProps {
   handleSubmit: UseFormHandleSubmit<FieldValues>
@@ -221,15 +223,15 @@ export default function UpdateManga({
                 ...item.data().updates,
                 {
                   id: mangaId,
-                  name: formDataUpdate.name,
-                  imgUrl: formDataUpdate.bannerSmall,
+                  name: manga.data.name,
+                  imgUrl: manga.data.bannerSmall,
                 },
               ]
             : [
                 {
                   id: mangaId,
-                  name: formDataUpdate.name,
-                  imgUrl: formDataUpdate.bannerSmall,
+                  name: manga.name,
+                  imgUrl: manga.bannerSmall,
                 },
               ]
 
@@ -239,6 +241,7 @@ export default function UpdateManga({
         })
 
         await batch.commit()
+        toast.success("Notified users", { theme: "dark" })
       }
     } catch (error) {
       toast.error(

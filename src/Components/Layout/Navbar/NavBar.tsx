@@ -7,6 +7,7 @@ import React, {
 } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCurrentAuth } from "../../../Hooks/useCurrentAuth"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 
 import { MdLocalFireDepartment } from "react-icons/md"
 import { CircularProgress } from "@mui/material"
@@ -14,12 +15,19 @@ import { CircularProgress } from "@mui/material"
 import UserIcon from "./UserIcon"
 import SearchContext from "../../Context/Search/SearchContext"
 import * as Dialog from "@radix-ui/react-dialog"
-import { Gear, MagnifyingGlass, X } from "phosphor-react"
+import {
+  Bell,
+  Gear,
+  MagnifyingGlass,
+  X,
+} from "phosphor-react"
 import DialogBody from "./DialogBody"
 import { queryManga } from "../../Context/Search/SearchActions"
 import { useForm } from "react-hook-form"
 import { v4 as uuid } from "uuid"
 import useStorage from "../../../Hooks/useStorage"
+import UpdatesNotification from "../UpdatesNotification"
+import { getAuth } from "firebase/auth"
 
 function NavBar() {
   const htmlTag = useRef(document.querySelector("html"))
@@ -36,6 +44,7 @@ function NavBar() {
   >([])
   const { isLoading, isLogged } = useCurrentAuth()
   const { register, handleSubmit } = useForm()
+  const auth = getAuth()
 
   const nav = useNavigate()
 
@@ -54,27 +63,6 @@ function NavBar() {
         data: theme,
       })
     )
-  }
-
-  const handleSearchBarSubmit = async (
-    e: Event,
-    searchInput: any
-  ) => {
-    e.preventDefault()
-    nav(`/search/${searchInput}`)
-  }
-
-  const handleSearchBarChange = async (
-    e: Event,
-    searchInput: any
-  ) => {
-    // dispatch({ type: "SET_LOADING" })
-    // const searchBarQueryResults = await queryManga(searchInput)
-    // await dispatch({
-    //     type: "QUERY_MANGA",
-    //     payload: searchBarQueryResults,
-    // })
-    setData(searchInput)
   }
 
   const searchItemOnSubmit = async ({ search }: any) => {
@@ -364,6 +352,30 @@ function NavBar() {
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
+
+          {isLogged && auth.currentUser != null && (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className="btn bg-transparent px-0 ml-2 mx-0 hover:bg-transparent hover:text-primary transition-colors border-none outline-none ring-0 focus-visible:outline-none focos:border-none">
+                <Bell className="w-5 h-5" weight="bold" />
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  side="bottom"
+                  className="bg-base-200 fixed top-2 -right-3 rounded after:w-5 after:h-3 after:bg-base-200 after:fixed after:top-0 after:-right-3 bg-triangle-clip w-[calc(100vw-7rem)] md:w-96"
+                >
+                  <UpdatesNotification />
+                  <DropdownMenu.Item className="flex flex-col gap-2 outline-none p-4">
+                    <Link
+                      to="/updates"
+                      className="btn btn-primary"
+                    >
+                      See more updates
+                    </Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+          )}
 
           <UserIcon isLogged={isLogged} />
         </div>

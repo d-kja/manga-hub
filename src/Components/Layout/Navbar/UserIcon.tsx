@@ -29,16 +29,11 @@ export default function UserIcon({
 }: UserIconProps) {
   const auth = getAuth()
   return (
-    <div className="top-16 text-right">
-      <Menu
-        as="div"
-        className="relative inline-block text-left"
-      >
-        <div>
-          <Menu.Button className="inline-flex transition-colors w-full justify-center rounded-md px-4 py-2 text-base font-medium hover:bg-opacity-0 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 btn btn-ghost">
-            <UserCircle weight="light" size={28} />
-          </Menu.Button>
-        </div>
+    <div className="top-16">
+      <Menu as="div" className="relative inline-block">
+        <Menu.Button className="btn btn-square bg-transparent hover:text-primary transition-colors hover:bg-transparent border-none">
+          <UserCircle weight="light" size={28} />
+        </Menu.Button>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"

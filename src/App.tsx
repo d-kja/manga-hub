@@ -49,6 +49,7 @@ import React from "react"
 import UpdatesNotification from "./Components/Layout/UpdatesNotification"
 import LoadingLayout from "./Components/Layout/LoadingLayout"
 import { LoadingProvider } from "./Components/Context/LoadingContext"
+import Tests from "./Components/Pages/Tests"
 
 const darkTheme = createTheme({
   palette: {
@@ -150,6 +151,10 @@ function App() {
                             element={<OldComposer />}
                           />
                         </Route>
+                        <Route
+                          path="/tests"
+                          element={<Tests />}
+                        />
                       </Routes>
                     </AnimatePresence>
                     <div className="inline-block mx-20 mb-56 font-light text-2xl" />
@@ -157,7 +162,6 @@ function App() {
                   </div>
                   <GoUpButton windowRef={window} />
                   <LoadingLayout />
-                  {/* (<UpdatesNotification />) */}
                 </LoadingProvider>
               </Router>
             </ThemeProvider>

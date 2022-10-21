@@ -1,5 +1,9 @@
 import React from "react"
-import { Outlet, Navigate } from "react-router-dom"
+import {
+  Outlet,
+  Navigate,
+  useNavigate,
+} from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 
 import Spinner from "../Layout/Spinner"
@@ -11,39 +15,49 @@ import { getDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase.config"
 
 function AdminOnly() {
-    const { isLoading: loadingAuth, isLogged } = useCurrentAuth()
-    const [loading, setLoading] = useState(true)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const isMounted = useRef(true)
+  const { isLoading: loadingAuth, isLogged } =
+    useCurrentAuth()
+  const [loading, setLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const isMounted = useRef(true)
+  const nav = useNavigate()
 
-    useEffect(() => {
-        if (isMounted) {
-            const auth = getAuth()
+  useEffect(() => {
+    if (isMounted) {
+      const auth = getAuth()
 
-            const fetchUser = async () => {
-                if (isLogged) {
-                    // Probably a bad idea to force uid here, but can't be helped
-                    const docRef = doc(db, "users", auth.currentUser?.uid!)
-                    const docSnap = await getDoc(docRef)
+      const fetchUser = async () => {
+        if (isLogged) {
+          // Probably a bad idea to force uid here, but can't be helped
+          const docRef = doc(
+            db,
+            "users",
+            auth.currentUser?.uid!
+          )
+          const docSnap = await getDoc(docRef)
 
-                    if (docSnap.exists() && docSnap.data().admin) {
-                        setIsAdmin(true)
-                    }
-                    setLoading(false)
-                }
-            }
-
-            fetchUser()
+          if (docSnap.exists() && docSnap.data().admin) {
+            setIsAdmin(true)
+          }
+          setLoading(false)
         }
+      }
 
-        return () => {
-            isMounted.current = false
-        }
-    }, [isLogged])
+      fetchUser()
+    }
 
-    if (loadingAuth || loading) return <Spinner />
+    return () => {
+      isMounted.current = false
+    }
+  }, [isLogged])
 
-    return isLogged && isAdmin ? <Outlet /> : <Navigate to="/" />
+  if (loadingAuth || loading) return <Spinner />
+
+  return isLogged && isAdmin ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" />
+  )
 }
 
 export default AdminOnly

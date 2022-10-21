@@ -107,7 +107,7 @@ export default function ComposeManga({
   return (
     <form
       onSubmit={handleSubmit(handleFormCreate)}
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-4 my-4"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
         <div className="form-control">
