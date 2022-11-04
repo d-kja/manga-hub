@@ -124,7 +124,7 @@ export default function DropManga({
 
                     <AlertDialog.Portal>
                       <AlertDialog.Overlay className="fixed inset-0 bg-black/25" />
-                      <AlertDialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 bg-base-100 px-6 py-4 rounded-lg">
+                      <AlertDialog.Content className="fixed max-w-lg w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 bg-base-100 px-6 py-4 rounded-lg">
                         <AlertDialog.Title className="font-extrabold text-lg flex items-center">
                           Confirm action
                           <span className="font-extralight text-xs ml-auto">
@@ -138,15 +138,15 @@ export default function DropManga({
                           </span>
                           ?
                         </div>
-                        <div className="flex gap-2">
-                          <AlertDialog.Cancel className="btn btn-ghost btn-wide">
+                        <div className="flex flex-col md:flex-row gap-2">
+                          <AlertDialog.Cancel className="btn btn-ghost flex-1">
                             Cancel
                           </AlertDialog.Cancel>
                           <AlertDialog.Action
                             onClick={() => {
                               handleFormDrop(item.id)
                             }}
-                            className="btn btn-primary btn-wide"
+                            className="btn btn-primary flex-1"
                           >
                             Confirm
                           </AlertDialog.Action>

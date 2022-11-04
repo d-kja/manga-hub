@@ -50,6 +50,7 @@ import UpdatesNotification from "./Components/Layout/UpdatesNotification"
 import LoadingLayout from "./Components/Layout/LoadingLayout"
 import { LoadingProvider } from "./Components/Context/LoadingContext"
 import Tests from "./Components/Pages/Tests"
+import { Notifications } from "./Components/Pages/Notifications"
 
 const darkTheme = createTheme({
   palette: {
@@ -152,8 +153,8 @@ function App() {
                           />
                         </Route>
                         <Route
-                          path="/tests"
-                          element={<Tests />}
+                          path="/updates"
+                          element={<Notifications />}
                         />
                       </Routes>
                     </AnimatePresence>

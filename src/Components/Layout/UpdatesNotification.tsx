@@ -24,7 +24,6 @@ interface DataType {
 }
 
 export default function UpdatesNotification() {
-  // eslint-disable-next-line
   const [data, setData] = useState<DataType[]>([])
 
   const { isLoading, isLogged } = useCurrentAuth()
