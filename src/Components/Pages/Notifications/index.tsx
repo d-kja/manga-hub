@@ -9,7 +9,6 @@ import { motion } from "framer-motion"
 import { getAuth } from "firebase/auth"
 import {
   collection,
-  deleteDoc,
   doc,
   deleteField,
   getDocs,
@@ -20,7 +19,6 @@ import {
 import { db } from "../../../firebase.config"
 
 import { useCurrentAuth } from "../../../Hooks/useCurrentAuth"
-import Spinner from "../../Layout/LoadingLayout/Spinner"
 import { NotificationItem } from "./NotificationItem"
 import { toast } from "react-toastify"
 
@@ -32,6 +30,7 @@ interface DataType {
 
 export const Notifications = () => {
   const [data, setData] = useState<DataType[]>([])
+  const [id, setId] = useState<string>("")
 
   const { isLoading, isLogged } = useCurrentAuth()
   const auth = getAuth()
@@ -54,22 +53,25 @@ export const Notifications = () => {
 
         if (docSnap) {
           docSnap.forEach((item) => {
+            setId(item.id)
             const { updates } = item.data()
-            console.log(updates)
-            updates.forEach(
-              (manga: {
-                id: string
-                name: string
-                imgUrl: string
-              }) =>
-                temp.push({
-                  id: manga.id,
-                  name: manga.name,
-                  img: manga.imgUrl,
-                })
-            )
+            if (updates)
+              updates.forEach(
+                (manga: {
+                  id: string
+                  name: string
+                  imgUrl: string
+                }) =>
+                  temp.push({
+                    id: manga?.id,
+                    name: manga?.name,
+                    img: manga?.imgUrl,
+                  })
+              )
           })
-          setData(temp.reverse())
+
+          if (temp && temp.length > 0)
+            setData(temp.reverse())
         }
       } catch (error) {
         console.log(error)
@@ -78,32 +80,32 @@ export const Notifications = () => {
 
     // eslint-disable-next-line
   }, [isLoading, isLogged])
-
-  const handleDropNotifications = async (data: any) => {
+  console.log(data)
+  const handleDropNotifications = async (params: any) => {
     try {
       if (!auth.currentUser)
         throw new Error("User not found")
 
-      //   await deleteDoc(doc(db, "mangas", data))
-      // toast.success("Item deleted!", { theme: "dark" })
-      // setMangas((prev) =>
-      //   prev.filter((item) => item.id !== data)
-      // )
+      if (id.length <= 0 || !(data && data.length > 0))
+        throw new Error("Nothing to clear")
 
-      const bookmarkRef = collection(db, "bookmarks")
-      const q = query(
-        bookmarkRef,
-        where("userRef", "==", auth.currentUser.uid)
-      )
+      const bookmarkRef = doc(db, "bookmarks", id)
 
-      // await updateDoc(q, {
-      //   updates: deleteField(),
-      // })
+      await updateDoc(bookmarkRef, {
+        updates: deleteField(),
+      })
 
-      toast.success("Item deleted!", { theme: "dark" })
+      toast.success("Notifications cleared", {
+        theme: "dark",
+      })
       setData([])
-    } catch (error) {
-      toast.error("Something went wrong", { theme: "dark" })
+    } catch (error: any) {
+      const errorMessage =
+        typeof error.message === "string"
+          ? error.message
+          : "Something went wrong"
+
+      toast.error(errorMessage, { theme: "dark" })
       console.error(error)
     }
   }
@@ -129,7 +131,10 @@ export const Notifications = () => {
           <h2 className="font-bold text-xl uppercase">
             All notifications
           </h2>
-          <button className="btn btn-xs md:btn-sm btn-primary ml-auto flex gap-2">
+          <button
+            className="btn btn-xs md:btn-sm btn-primary ml-auto flex gap-2"
+            onClick={handleDropNotifications}
+          >
             Clear
             <span className="hidden md:inline-block">
               notifications
