@@ -93,8 +93,9 @@ function SignUp() {
                   marginBottom: 2,
                 }}
               />
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-                Sign up right NOW, MADGE
+              <h2 className="flex items-center justify-center gap-3 mt-6 text-center text-3xl font-extrabold text-white">
+                Sign up right NOW,{" "}
+                <img src="/madge.png" alt="madge icon" />
               </h2>
             </div>
             <form

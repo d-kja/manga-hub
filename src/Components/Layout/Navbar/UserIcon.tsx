@@ -31,7 +31,7 @@ export default function UserIcon({
   return (
     <div className="top-16">
       <Menu as="div" className="relative inline-block">
-        <Menu.Button className="btn btn-square bg-transparent hover:text-primary transition-colors hover:bg-transparent border-none">
+        <Menu.Button className="btn btn-square bg-transparent hover:text-primary transition-colors hover:bg-transparent border-none text-base-content">
           <UserCircle weight="light" size={28} />
         </Menu.Button>
         <Transition

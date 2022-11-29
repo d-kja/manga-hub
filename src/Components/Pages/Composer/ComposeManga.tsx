@@ -94,6 +94,7 @@ export default function ComposeManga({
       const docRef = collection(db, "mangas")
       await addDoc(docRef, formDataDupe)
 
+      localStorage.removeItem("mangas")
       toast.success("Item added", { theme: "dark" })
     } catch (error) {
       console.error(error)

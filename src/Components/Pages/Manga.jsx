@@ -294,11 +294,13 @@ function Manga() {
           payload: mangaRef,
         })
 
-        setRating(
-          mangaRef.rating.totalRating /
-            mangaRef.rating.totalUsers /
-            2
-        )
+        const ratingValue =
+          (mangaRef?.rating?.totalRating ?? 0) /
+          (mangaRef?.rating?.totalUsers ?? 0) /
+          2
+        const ratingUpdated = ratingValue ? ratingValue : 0
+
+        setRating(ratingUpdated)
         if (auth.currentUser) {
           const userId = auth.currentUser.uid
           if (!mangaRef?.clicks.includes(userId)) {

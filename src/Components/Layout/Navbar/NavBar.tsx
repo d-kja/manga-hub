@@ -158,7 +158,7 @@ function NavBar() {
                 </ul>
               </li>
               <li>
-                <Link to="/list">List</Link>
+                <Link to="/list">All mangas</Link>
               </li>
             </ul>
           </div>
@@ -215,7 +215,7 @@ function NavBar() {
             </li>
             <li>
               <Link className="rounded-lg" to="/list">
-                List
+                All mangas
               </Link>
             </li>
           </ul>
@@ -273,11 +273,11 @@ function NavBar() {
                                 alt="manga small banner"
                                 className="w-16 object-cover object-center rounded"
                               />
-                              <div className="flex flex-col gap-2">
+                              <div className="flex flex-col gap-2 text-base-content">
                                 <h2 className="card-title text-base font-semibold">
                                   {manga.name}
                                 </h2>
-                                <p className="text-sm font-normal opacity-75">
+                                <p className="text-sm font-normal opacity-75 text-left">
                                   {manga.others.synopsis.slice(
                                     0,
                                     50
@@ -355,7 +355,7 @@ function NavBar() {
 
           {isLogged && auth.currentUser != null && (
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="btn bg-transparent px-0 ml-2 mx-0 hover:bg-transparent hover:text-primary transition-colors border-none outline-none ring-0 focus-visible:outline-none focos:border-none">
+              <DropdownMenu.Trigger className="btn bg-transparent px-0 ml-2 mx-0 hover:bg-transparent hover:text-primary transition-colors border-none outline-none ring-0 focus-visible:outline-none focus:outline-none text-base-content">
                 <Bell className="w-5 h-5" weight="bold" />
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>

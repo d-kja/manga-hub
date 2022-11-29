@@ -45,12 +45,19 @@ function Profile() {
     e.preventDefault()
 
     try {
-      if (!changeBtn) {
-        toast.info(
-          "Wait just a second, we are uploading your profile image",
-          { theme: "dark", position: "bottom-center" }
+      if (!(email.length && name.length)) {
+        toast.error(
+          "Please enter a valid email and/or password",
+          {
+            theme: "dark",
+          }
         )
 
+        setChangeBtn(true)
+        return
+      }
+
+      if (!changeBtn) {
         const docRef = doc(
           db,
           "users",
@@ -62,10 +69,21 @@ function Profile() {
           auth.currentUser.name !== name ||
           auth.currentUser.photoURL !== photoURL
         ) {
-          const url = await upload(photoURL, "users")
+          let photo = auth.currentUser.photoURL
+          console.log(photoURL, photo)
+          if (photoURL && typeof photoURL !== "string") {
+            toast.info(
+              "Wait just a second, we are uploading your profile image",
+              { theme: "dark", position: "bottom-center" }
+            )
+
+            const url = await upload(photoURL, "users")
+            photo = url
+          }
+
           await updateProfile(auth.currentUser, {
             displayName: name,
-            photoURL: url,
+            photoURL: photo ?? auth.currentUser?.photoURL,
           })
           await updateEmail(auth.currentUser, email)
           await updateDoc(docRef, {
@@ -92,6 +110,7 @@ function Profile() {
       ...prev,
       [id]: value,
     }))
+
     console.log(photoURL)
   }
 
@@ -103,6 +122,8 @@ function Profile() {
       [id]: files[0],
     }))
   }
+
+  console.log("User info", user)
 
   return (
     <motion.div
@@ -183,6 +204,7 @@ function Profile() {
               name="name"
               value={name}
               id="name"
+              required
               onChange={handleChange}
               className={`input input-bordered input-primary w-full ${
                 !changeBtn &&
@@ -202,6 +224,7 @@ function Profile() {
               placeholder="Email"
               name="email"
               value={email}
+              required
               id="email"
               onChange={handleChange}
               disabled={!changeBtn}

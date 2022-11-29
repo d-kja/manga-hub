@@ -164,7 +164,7 @@ export default function UpdateManga({
           },
           lastUpdate: serverTimestamp(),
           chapters: [
-            ...manga.data.chapters,
+            ...(manga?.data?.chapters ?? []),
             { title, strip: stripImages },
           ],
         }
@@ -176,7 +176,7 @@ export default function UpdateManga({
       } else {
         const formDataDupe = {
           // Setting the old values
-          ...manga.data,
+          ...manga?.data,
 
           // Updating the old values
           status: +status,
@@ -218,23 +218,26 @@ export default function UpdateManga({
       if (docSnap) {
         docSnap.forEach((item) => {
           const ref = doc(db, "bookmarks", item?.id)
-          const data = item.data()?.updates
-            ? [
-                ...item.data().updates,
-                {
-                  id: mangaId,
-                  name: manga.data.name,
-                  imgUrl: manga.data.bannerSmall,
-                },
-              ]
-            : [
-                {
-                  id: mangaId,
-                  name: manga.name,
-                  imgUrl: manga.bannerSmall,
-                },
-              ]
+          const document = item.data()
+          const data =
+            document?.updates?.length ?? false
+              ? [
+                  ...document.updates,
+                  {
+                    id: mangaId,
+                    name: manga?.data?.name ?? "",
+                    imgUrl: manga?.data?.bannerSmall ?? "",
+                  },
+                ]
+              : [
+                  {
+                    id: mangaId,
+                    name: manga?.data?.name ?? "",
+                    imgUrl: manga?.data?.bannerSmall ?? "",
+                  },
+                ]
 
+          console.log(ref, data)
           batch.update(ref, {
             updates: data,
           })

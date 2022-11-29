@@ -14,6 +14,7 @@ import {
   queryTag,
 } from "../Context/Search/SearchActions"
 import { fetchMangas } from "../Context/Mangas/MangaActions"
+import { toast } from "react-toastify"
 
 function SearchManga() {
   const { dispatch } = useContext(MangaContext)
@@ -30,7 +31,9 @@ function SearchManga() {
       dispatch({ type: "SET_MANGAS", payload: mangaRef })
     }
 
-    searchInput.trim().length > 0 && instaSearchManga()
+    if (searchInput.trim().replace(/\s+/, "").length > 0) {
+      instaSearchManga()
+    }
   }, [searchInput, dispatch])
 
   // @USE On select input update, search tag
@@ -41,15 +44,16 @@ function SearchManga() {
       dispatch({ type: "SET_MANGAS", payload: mangaRef })
     }
 
-    selectInput.trim().length > 0 &&
+    if (
       selectInput !== null &&
+      selectInput.trim().length > 0
+    )
       searchTag()
   }, [selectInput, dispatch])
 
   // @USE Reset listing based on the lack of current queries
   useEffect(() => {
     const resetQuery = async () => {
-      dispatch({ type: "SET_LOADING" })
       const mangaRef = await fetchMangas({})
       dispatch({ type: "SET_MANGAS", payload: mangaRef })
     }
@@ -61,6 +65,12 @@ function SearchManga() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (
+      selectInput.trim().length === 0 &&
+      searchInput.trim().length === 0
+    )
+      return
+
     dispatch({ type: "SET_LOADING" })
     const mangaRef = await queryManga(searchInput)
     dispatch({ type: "SET_MANGAS", payload: mangaRef })
@@ -69,6 +79,7 @@ function SearchManga() {
 
   const handleChange = async (e) => {
     const { value, id } = e.target
+
     if (id === "searchInput") {
       setSearchInput(value)
       setSelectInput("")

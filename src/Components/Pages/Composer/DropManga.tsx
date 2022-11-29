@@ -75,6 +75,7 @@ export default function DropManga({
     try {
       await deleteDoc(doc(db, "mangas", data))
       toast.success("Item deleted!", { theme: "dark" })
+      localStorage.removeItem("mangas")
       setMangas((prev) =>
         prev.filter((item) => item.id !== data)
       )

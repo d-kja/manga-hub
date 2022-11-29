@@ -47,8 +47,10 @@ export default function UpdatesNotification() {
 
         if (docSnap) {
           docSnap.forEach((item) => {
-            const { updates } = item.data()
-            updates.forEach(
+            const data = item.data()
+            console.log(data)
+
+            data.updates?.forEach(
               (manga: {
                 id: string
                 name: string
