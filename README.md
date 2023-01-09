@@ -41,7 +41,7 @@ To run the current version you need to open your CLI and type the following:
 
 ## Preview 
 
--   [Live](https://ny-manga-app.vercel.app) ~offline~
+-   [Live](https://ny-manga-app.vercel.app) (offline)
 
 _image preview isn't updated_
 
