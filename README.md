@@ -12,6 +12,10 @@
     - [Mobile](#mobile)
   - [Others](#others)
 
+## Obs
+
+I'm probably going to make a better version later as this one was done when I was just learning React
+
 ## Summary
 
 This application is based on the idea of distributing mangas for free, unfortunately it's only (CC) content :c
